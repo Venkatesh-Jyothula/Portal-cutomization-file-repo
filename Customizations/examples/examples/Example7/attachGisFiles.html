@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Attach Shape File</title>
+
+<body onload="main()">
+	<div>
+		<label for="shp_upload">Choose a file to upload (zipped shp)</label>
+		<input type="file" id="fileInput" name="fileInput" accept=".zip">
+	</div>
+	<br />
+	<br />
+	<div>
+		<label for="EPSG">Source EPSG (4326=WGS84)</label>
+		<input id="sourceEPSG" type="text" value="4326" width="10"/>
+	</div>
+	<br />
+	<br />	
+	<div>
+		<button id="btnAttach" onclick="loadFile()">Attach</button>
+	</div>
+	<script type="text/javascript" charset="UTF-8">	
+var counter = 0;
+var layerName = 'shapeLayer';
+var sourceName = 'shapeSource';
+var layers = [];
+
+function loadFile() {
+	if (fileInput.files.length === 0) {
+		$NWP.msg.showWarning("Select a file.");
+		return;
+	}
+	var viewProj = $NWP.map.getViewState().projection;
+	loadshp({
+	url: fileInput.files[0], 
+	encoding: 'utf-8',
+	sourceEPSG: sourceEPSG.value,
+	displayEPSG: viewProj.split(":")[1],	
+	extent: undefined,
+	loaddbf: true,
+	},function(geojson,curFile) {
+		console.log(curFile);
+		console.log(geojson);
+		counter += 1;
+		var layer = $NWP.map.addLegendEntry({
+			type: 'source',
+			name: layerName + counter,
+			userName: curFile,
+			visible: true,
+			queryable: true,
+			drawingPriority: 100,
+			projection: viewProj,
+			source: {
+				type: 'localvector',
+				name: sourceName + counter,
+				userName: curFile
+			}	
+		});
+		var source = layer.getSource();
+		source.addFeatures((new ol.format.GeoJSON()).readFeatures(geojson));
+	});
+}
+
+function main() {
+	//Retrieving the openlayer and Networks Portal references
+	window.ol = parent.ol;
+	window.proj4 = parent.proj4;
+	window.$NWP = parent.$NWP;
+}
+</script>
+	<script src="lib/jszip.js"></script>
+	<script src="lib/jszip-utils.js"></script>
+	<!--[if IE]>
+	<script type="text/javascript" src="lib/jszip-utils-ie.js"></script>
+	<![endif]-->
+	<!--<script src="semantic.min.js"></script>-->
+	<script src="preprocessshp.js"></script>
+	<script src="previewshp.js"></script>
+</body>
+</html>

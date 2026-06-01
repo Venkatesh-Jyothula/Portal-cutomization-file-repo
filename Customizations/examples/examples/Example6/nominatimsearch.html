@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Nominatim Search</title>
+
+<script>
+class SearchManager {
+     constructor() {
+           const me = this;
+           const btn = document.getElementById("searchBtn");
+           btn.onclick = ()=>{me.executeSearch()};
+     }
+     executeSearch() {
+		   const country = ' ';
+           const me = this;
+           const textBox = document.getElementById("searchBox");
+     fetch("https://nominatim.openstreetmap.org/search?q=" + country + textBox.value + "&format=geojson").then(
+                (response) => {
+                      return response.json();
+                }
+           ).then((json) => {me.onResultLoad(json)});
+     }
+	 
+	onResultLoad(featureCollection) {
+//     console.log(featureCollection);
+           const features = featureCollection.features;
+           const table = document.getElementById("searchResults");
+           // Clear any existing results
+           table.innerHTML = "";
+           for (let i=0, ll = features.length; i < ll; i++) {
+                let feature = features[i];
+//console.log(feature);
+                this.insertRow(table, feature);
+           }
+     }
+     
+     insertRow(table, feature) {
+           const me = this;
+           const tableRow = table.insertRow();
+          tableRow.onmouseover = function() {
+             me.highlightRow(tableRow);
+           };
+          tableRow.onmouseout = function() {
+           me.unhighlightRow(tableRow);
+           };
+
+           const tableCell = tableRow.insertCell();
+          //tableCell.innerText = feature.properties.display_name;
+		  if(feature.properties.icon){
+			//var img = document.createElement('img');
+			//img.src = feature.properties.icon;
+			//tableCell.appendChild(img);
+			tableCell.innerHTML="<img src='"+feature.properties.icon +"'> "+feature.properties.display_name+"</img>";
+		}
+		else{
+			tableCell.innerText = feature.properties.display_name;
+		}
+           tableCell.onclick = function() {
+                me.onRowClick(feature);
+           };         
+           
+     }
+     highlightRow(tableRow) {
+     tableRow.style.backgroundColor = "#BFD7EF";
+     }
+    unhighlightRow(tableRow) {
+     tableRow.style.backgroundColor = "inherit";
+     }
+	 
+	onRowClick(feature) { 
+	
+	//console.log(feature);
+
+//The 2 next lines could be used if you want to convert the coordinates to another coordinate system, using the epsg.io coordinate reference
+	//proj4.defs("EPSG:28992","+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 +ellps=bessel +towgs84=565.417,50.3319,465.552,-0.398957,0.343988,-1.8774,4.0725 +units=m +no_defs");
+	//var point=ol.proj.fromLonLat([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], 'EPSG:28992');
+
+//Getting the current coordinate system	
+	var viewProj = $NWP.map.getViewState().projection;
+//Converting from WGS84 to the current coordinate system
+	//var point=ol.proj.fromLonLat([feature.geometry.coordinates[0], feature.geometry.coordinates[1]], viewProj);
+	// Get the bounds
+	console.log(feature);
+	var bbox = feature.bbox;
+	// Transform the bounds to portal projection.
+	bbox = ol.proj.transformExtent(bbox, 'EPSG:4326', viewProj);
+	var geom = ol.geom.Polygon.fromExtent(bbox);
+	console.log(geom);
+	var fmt = new ol.format.GeoJSON();
+	f = fmt.writeFeatureObject(geom);
+	
+	console.log(f);
+	// Highlight the created feature.
+	$NWP.features.highlight([f], true, true, 5000);		
+	 
+	}     
+};
+
+function main() {
+	const manager = new SearchManager();
+	//Retrieving the openlayer and Networks Portal references
+	window.ol = parent.ol;
+	window.proj4 = parent.proj4;
+	window.$NWP = parent.$NWP;
+	
+	document.getElementById("searchBox")
+    .addEventListener("keyup", function(event) {
+		event.preventDefault();
+		if (event.keyCode === 13) {
+			document.getElementById("searchBtn").click();
+		}
+	});
+}
+</script>
+</head>
+<style>
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-style: normal;
+		font-variant-ligatures: normal;
+		font-variant-caps: normal;
+		font-variant-numeric: normal;
+		font-variant-east-asian: normal;
+		font-weight: 400;
+		font-stretch: normal;
+		font-size: 14px;
+		line-height: 20px;
+		font-family: arial;
+	}
+
+	.nominatim
+	{
+
+	}
+	.nominatim tr
+	{ 
+		padding: 0px;
+		margin: 0px;
+	}
+	.nominatim td
+	{ 
+		border-top: 1px solid #D1D1D1;		
+		padding: 7px 10px 6px;
+	}
+	
+	.nominatim-form 
+	{
+		padding: 15px 10px 6px;
+	}
+	
+	.nominatim-form input
+	{
+		height: 28px;
+		width: 150px;
+		vertical-align: bottom
+	}
+
+	.nominatim-form button
+	{
+		margin-top: 5px;
+		margin-bottom: 0px;
+		height: 28px;
+	}
+	
+</style>
+
+<body onload="main()">
+<!--
+<div class='nominatim-form'>
+	<span>Insert address</span>
+	<input id="searchBox" type="text"></input>
+	<button id="searchBtn"><img src="./find.png" /></button>
+<div>
+-->
+<div class='nominatim-form'>
+<span>Insert address</span>
+<div><input id="searchBox" type="text"/>
+<button id="searchBtn"><img src="./find.png" /></button>
+</div>
+</div>
+<table id="searchResults" class='nominatim'>
+</table>
+</body>
+</html>

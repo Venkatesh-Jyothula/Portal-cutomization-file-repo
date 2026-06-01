@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fiber Branch Enclosure Selection</title>
+    <style>
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            border: 1px solid #ccc; /* Grey lines */
+            padding: 8px;
+            text-align: center;
+            color: #335ca5; /* Text color */
+            font-family: "Times New Roman", Times, serif; /* Font family */
+			font-size: 16px;
+        }
+
+        .table th {
+            background-color: #f2f2f2; /* Light grey background */
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light grey background for even rows */
+        }
+
+        /* Button styles */
+        .button-container {
+            width: 100%; /* Ensure the container takes the full width */
+			text-align: right; /* Align text (and buttons) to the right */
+			margin-top: 20px; 
+        }
+
+        .button {
+            background-color: #335ca5; /* Blue color */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d3b73; /* Darker blue color on hover */
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+    <!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="./Datatable.css">
+    <!-- jQuery library (required for DataTables) -->
+	<!-- <script src="./jquery-3.5.0.js"></script>  -->
+    <script src="./jquery-3.6.0.min.js"></script>    
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" src="./Datatable.js"></script>
+</head>
+<body>
+    <div class="form-container">
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+					    <th></th>
+                        <th>Feature Number</th>
+                        <th>G3E_FNO</th>
+                        <th>G3E_CNO</th>
+                        <th>Label</th>
+                        <th>Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+		<div class="button-container">
+			<button class="button btnAssociate">Associate</button>
+			<button class="button btnExit">Exit</button>
+		</div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+		
+			 
+			 const valuesToBePassed = JSON.parse(localStorage.getItem('formValues'));
+			 
+            if (valuesToBePassed && Array.isArray(valuesToBePassed)) {
+                console.log('Received values:', valuesToBePassed);
+                // Use the values as needed in your script
+                // For example, populate the table with these values
+                    var tableBody = $('#result-table tbody');
+                    valuesToBePassed.forEach(function(value) {
+                    var row = document.createElement('tr');
+					
+					// Add a checkbox column
+					var checkboxCell = document.createElement('td');
+					var checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkboxCell.appendChild(checkbox);
+					row.appendChild(checkboxCell);
+			
+
+                    var cell1 = document.createElement('td');
+                    cell1.textContent = value.G3E_FID;
+                    row.appendChild(cell1);
+
+                    var cell2 = document.createElement('td');
+                    cell2.textContent = value.G3E_FNO;
+                    row.appendChild(cell2);
+
+                    var cell3 = document.createElement('td');
+                    cell3.textContent = value.G3E_CNO;
+                    row.appendChild(cell3);
+
+                    var cell4 = document.createElement('td');
+                    cell4.textContent = value.LABEL;
+                    row.appendChild(cell4);
+
+                    var cell5 = document.createElement('td');
+                    cell5.textContent = value.MODEL;
+                    row.appendChild(cell5);
+
+                    tableBody.append(row);
+                });
+			 }            
+            else {
+                console.error('No values found in local storage');
+            }
+
+            // Initialize DataTable
+            var table = $('#result-table').DataTable({
+				"pageLength": 4,
+				"info": false,
+                // Enable sorting
+                "order": [],
+                // Enable filtering
+                "searching": true,
+                // Enable multi-select checkbox
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": 0 // First column
+                }],
+                "columns": [
+                    null,
+					null,
+                    { "visible": false }, // g3e_fno
+                    { "visible": false }, // g3e_cno
+                    null,
+                    null                    
+                ],
+                dom: '<"button-left"f>rtip'
+            });
+
+            // Add the Fit button
+            $('div.button-left').prepend('<button class="button fit-button" title="Fit and Highlight">Fit</button>');
+            // Add CSS to align the button to the right
+            $('head').append('<style>' +
+                'div.button-left {' +
+                    'display: flex;' +
+                    'align-items: center;' +
+                '}' +
+                'div.button-left .fit-button {' +
+                    'margin-left: auto;' + // Aligns the button to the right
+                    'width: 30px;' +      // Set the width of the button
+                    'height: 30px;' +      // Set the height of the button
+                    'background-image: url("./Images/Unselected.png");' + // Set the background image
+                    'background-size: contain;' + // Ensure the image fits within the button
+                    'background-repeat: no-repeat;' + // Prevent the image from repeating
+                    'background-position: center;' + // Center the image
+                    'border: none;' +       // Remove the default button border
+                    'color: transparent;' + // Make the button text transparent
+                    'text-indent: -9999px;' + // Hide the button text
+                    'padding: 0;' +         // Remove default padding
+                '}' +
+            '</style>');
+
+            // Add click event for the Fit button
+            $(document).on('click', 'button.fit-button', function() {
+                var $button = $(this);
+                // Change the background image to "./Images/Selected.png"
+                $button.css('background-image', 'url("./Images/Selected.png")');
+                var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+                var g3e_fnoArray = [];
+                var g3e_fidArray = [];
+
+                // Loop through the checked rows and populate the arrays
+                checkedRows.each(function() {
+                    var table = $('#result-table').DataTable();
+                    var rowData = table.row($(this)).data();
+                    var vg3e_fno = parseInt(rowData[2], 10);
+                    var vg3e_fid = parseInt(rowData[1], 10);
+
+                    g3e_fnoArray.push(vg3e_fno);
+                    g3e_fidArray.push(vg3e_fid);
+                });
+
+                // Check if vg3e_fidArray count is zero
+                if (g3e_fidArray.length === 0) {
+                    parent.$NWP.msg.showInfo("Nothing to Fit");
+                } else {
+                    // Construct the featureKeys array
+                    var featureKeys = [];
+                    for (var i = 0; i < g3e_fnoArray.length; i++) {
+                        featureKeys.push({ G3E_FNO: g3e_fnoArray[i], G3E_FID: g3e_fidArray[i] });
+                    }
+
+                    // Fetch GTech features for all G3E_FNO and G3E_FID values
+                    parent.$NWP.features.fetchGTechFeatures(featureKeys).then(function(result) {
+                        if (result.success) {
+                            parent.$NWP.features.highlight(result.data, true);
+                        }
+                    });
+                }
+
+                $button.css('background-image', 'url("./Images/Unselected.png")');
+            });
+
+            // Recalculate column widths when DataTable redraws (e.g., after sorting)
+            <!-- table.on('draw.dt', function() { -->
+                <!-- $('#result-table thead').colResizable({ -->
+                    <!-- disable: true -->
+                <!-- }); -->
+                <!-- $('#result-table thead').colResizable({ -->
+                    <!-- liveDrag: true, -->
+                    <!-- gripInnerHtml: "<div class='grip'></div>", -->
+                    <!-- draggingClass: "dragging" -->
+                <!-- }); -->
+            <!-- }); -->
+
+            enableShiftClickSelection();
+
+            // Event listener for the "Associate" button
+            $('.btnAssociate').on('click', function() {                            
+                parent.$NWP.msg.showInfo("Associate button clicked");
+            });
+
+            // Event listener for the "Exit" button
+            $('.btnExit').on('click', function() { 
+                parent.$NWP.msg.showInfo("Exit button clicked");
+				
+            });
+
+
+        });
+
+        var lastChecked = null;
+
+        function enableShiftClickSelection() {
+            const checkboxes = $('#result-table tbody input[type="checkbox"]');
+
+            checkboxes.on('click', function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    const start = checkboxes.index(this);
+                    const end = checkboxes.index(lastChecked);
+
+                    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        }
+
+        function displayErrorMessage(message) {
+            alert(message); // Display error message in a pop-up
+        }
+
+    </script>
+</body>
+</html>

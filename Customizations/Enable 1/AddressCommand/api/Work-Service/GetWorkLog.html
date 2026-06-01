@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetWorkLog </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetWorkLog ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getworklog">GetWorkLog</h1>
+
+<p>Get log of work request processing.</p>
+<h2 id="request">Request</h2>
+<h3 id="uri">URI</h3>
+<p><strong>GET</strong> /work/<strong>{workload}</strong>/<strong>{wid}</strong>/log?start=<strong>{start}</strong>&amp;count=<strong>{count}</strong></p>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>workload</td>
+<td>String</td>
+<td>Y</td>
+<td>Workload type (e.g. convertcad, print, trace)</td>
+</tr>
+<tr>
+<td>wid</td>
+<td>String</td>
+<td>Y</td>
+<td>Work request identifier, returned originally from SubmitWork</td>
+</tr>
+<tr>
+<td>start</td>
+<td>Integer</td>
+<td>Y</td>
+<td>Index of the first log line returned (0-based). Default is 0.</td>
+</tr>
+<tr>
+<td>count</td>
+<td>Integer</td>
+<td>Y</td>
+<td>Number of log lines to return. Default is 1000, maximum is 100000.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-body">Request body</h3>
+<p>N/A</p>
+<h2 id="response">Response</h2>
+<p>Response body contains payload as returned from processing. Format depends on the workload type.</p>
+<p>Example:</p>
+<pre><code class="lang-json">{
+    &quot;start&quot;: 0,
+    &quot;total&quot;: 10,
+    &quot;lines&quot;: [
+        &quot;Starting...&quot;,
+        &quot;Sleeping for 5 seconds...&quot;,
+        &quot;5&quot;,
+        &quot;4&quot;,
+        &quot;3&quot;,
+        &quot;2&quot;,
+        &quot;1&quot;,
+        &quot;0&quot;,
+        &quot;Writing response to tmp8781.tmp&quot;,
+        &quot;Exiting with 0.&quot;
+    ]
+}
+</code></pre>
+<h3 id="bad-request-400---invalid-identifier">Bad request (400) - Invalid identifier</h3>
+<p>Returned when the request has invalid parameters.</p>
+<pre><code class="lang-json">{
+    &quot;success&quot;: false,
+    &quot;errorCode&quot;: &quot;ERR_NO_SUCH_WORK_REQUEST&quot;,
+    &quot;errorMessage&quot;: &quot;Work request identifier was not found&quot;
+}
+</code></pre>
+<h3 id="authentication-failure-401">Authentication failure (401)</h3>
+<p>Returned when authorization token is missing or invalid.</p>
+<h3 id="server-error-500">Server error (500)</h3>
+<p>Returned when internal processing in the Work server fails.</p>
+<pre><code class="lang-json">{
+    &quot;success&quot;: false,
+    &quot;ErrorCode&quot;: &quot;ERR_INTERNAL_ERROR&quot;,
+    &quot;ErrorMessage&quot;: &quot;Error details&quot;
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

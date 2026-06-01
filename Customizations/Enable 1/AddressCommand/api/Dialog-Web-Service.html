@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Dialog Web Service </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Dialog Web Service ">
+      
+      <link rel="icon" href="../wsfavicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="dialog-web-service">Dialog Web Service</h1>
+
+<h2 id="gtdws-operations">GTDWS Operations</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><a href="Dialog-Web-Service/AutoPopulateAttribute.html">/AutoPopulateAttribute/{TRIGGERTANO}</a></td>
+<td>AutoPopulates the Attributes with given TANO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DetailWindows.html">/DetailWindows/{pFNO}/{pFID}</a></td>
+<td>Retrieves NetWorks detail windows by providing FeatureId and Feature number(optional).</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/Dialog.html">/Dialog/{FNO}/{FID=null}</a></td>
+<td>Read feature dialog metadata information for a given feature number and type.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DialogTab.html">/DialogTab/{DTNO}/{FID=null}/{CID=null}</a></td>
+<td>Gets the dialog tab attributes information for the selected dialog tab number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DomainDialogAttribute.html">/DomainDialogAttribute/{DomainTable}/{DomainField}/{DomainId}</a></td>
+<td>Gets the Domain query Dialog Attributes.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DeleteFeatures.html">/Feature/{FNO}/{FID}/Delete</a></td>
+<td>Delete feature instance</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DeleteFeatures.html">/Feature/{FNO}/{FID}/{CNO}/Delete</a></td>
+<td>Delete feature component</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/DeleteFeatures.html">/Feature/{FNO}/{FID}/{CNO}/{CID}/Delete</a></td>
+<td>Delete Features by providing FNO and FID and optionally CNO and/or CID.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/Get-Geometry.html">/Feature/{FNO}/{FID}/{CNO}/{CID}/Geometry</a></td>
+<td>Gets geometry.</td>
+</tr>
+<tr>
+<td>POST<br>PUT</td>
+<td><a href="Dialog-Web-Service/Geometry.html">/Feature/{FNO}/{FID}/{CNO}/Geometry<br>/Feature/{FNO}/{FID}/{CNO}/{CID}/Geometry</a></td>
+<td>Create or update geometry.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/FeatureName.html">/Feature/{FNO}/{FID}/Name</a></td>
+<td>Gets the feature name for the selected feature identifier.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/CreateFeature.html">/Feature/{FNO}/Create</a></td>
+<td>Creates a new instance of feature for the input feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/Get-Feature-Class-Name.html">/Feature/{FNO}/Name</a></td>
+<td>Gets the feature name of the selected feature number.</td>
+</tr>
+<tr>
+<td>PUT<br>POST</td>
+<td><a href="Dialog-Web-Service/AttributeUpdate.html">/Feature/Attribute</a></td>
+<td>Inserts and updates the record for the selected attributes record.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/FeatureEditable.html">Feature/IsEditable/{FNO}</a></td>
+<td>Gets whether the feature is editable for a Feature Number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/FileDownload.html">/File</a></td>
+<td>Downloads file to shared data storage.</td>
+</tr>
+<tr>
+<td>PUT<br>POST</td>
+<td><a href="Dialog-Web-Service/FileUpload.html">/File/{fileName}</a></td>
+<td>Uploads and updates the file for the selected features hyperlink attribute.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Dialog-Web-Service/FKDialogAttribute">/FKDialogAttribute/{FKTABLE}/{FKFIELD}[/{FKID}]</a></td>
+<td>Gets the foreign key table records for the selected foreign key table and key field.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/GetPicklist.html">/PickList/{ANO}</a></td>
+<td>Gets the picklist records for the selected attribute number.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Dialog-Web-Service/PostPicklisttab.html">/PickList/{TANO}</a></td>
+<td>Posts the picklist records for the selected tab attribute number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/GetPicklistTano.html">/PickList/TANO/{TANO}</a></td>
+<td>Gets the picklist records for the selected tab attribute number.</td>
+</tr>
+<tr>
+<td>GET<br>POST</td>
+<td><a href="Dialog-Web-Service/FeatureByPolygon.html">/Query/FeatureByPolygon</a></td>
+<td>Gets and updates the feature list FNO, FID, username for given polygon.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/FeatureRelationshipInformation.html">/RelationshipList/{FNO}</a></td>
+<td>Gets the feature relationships information for the selected feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/FeatureRelationInfo.html">/RelationshipObject/{FNO}/{FID}</a></td>
+<td>Gets the relationship information for the selected feature identifier and relation feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Dialog-Web-Service/GetSecondaryDataInfo.html">/SecondaryData/Features</a></td>
+<td>Gets the list of secondary data feature numbers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gtdws-iam-authentication">GTDWS IAM Authentication</h2>
+<p>GTDWS services that are IAM enabled will load the connection string from GTechnologyconnectstring assigned for that particular user in the IAM ADSI.</p>
+<h2 id="return-values">Return Values</h2>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Description</th>
+<th>Example Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Success</td>
+<td>Each payload will be different depending on the method called.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>&quot;Could not checkout 1 NetWorks_GTDWS_Read_esc license(s).&quot;</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>&quot;Could not checkout 1 NetWorks_GTDWS_Write_esc license(s).&quot;</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetDetailByDetailIdAndFno </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetDetailByDetailIdAndFno ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getdetailbydetailidandfno">GetDetailByDetailIdAndFno</h1>
+
+<p>Gets the MBR of a detail given its detail number and feature class.</p>
+<p>The lookup for the detail is done only on detail referencing tables of the G3E_FNO.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{AnalyticalServiceName}/search/detail/{detailId}/{fno}[?lsno={lsno}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>detailId</td>
+<td>Detail number (typically G3E_DETAILID value).</td>
+</tr>
+<tr>
+<td>fno</td>
+<td>Feature number (G3E_FNO).</td>
+</tr>
+<tr>
+<td>lsno</td>
+<td>Legend settings number (typically G3E_LSNO value). Optional. When provided, the searchs filters out detail records with different legend settings number.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;G3E_DETAILID&quot;: 53,
+    &quot;G3E_LSNO&quot;: 16,
+    &quot;geographicBoundingBox&quot;: {
+        &quot;minx&quot;: 12.030446432767203,
+        &quot;miny&quot;: 53.460928420993866,
+        &quot;maxx&quot;: 12.030478076793822,
+        &quot;maxy&quot;: 53.460966150550675
+    },
+    &quot;boundingBox&quot;: [
+        {
+            &quot;CRS&quot;: &quot;EPSG:3857&quot;,
+            &quot;minx&quot;: 1339223.1709114008,
+            &quot;miny&quot;: 7068716.5015556915,
+            &quot;maxx&quot;: 1339226.6935083314,
+            &quot;maxy&quot;: 7068723.556044708
+        }
+    ]
+}
+</code></pre>
+<p><strong>Note</strong></p>
+<p>If the detail can't be found, the method returns HTTP status code 400 (Bad request) and informational message in the body.</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,382 @@
+<root>
+	<!-- Basic action button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>actionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Action</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testaction</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Map action button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>mapactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-select</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Map Action</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testmapaction</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Draw point button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>drawactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-marker-draw</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test draw point</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testdrawpoint</JValue>
+		</JProperty>
+		<JProperty name="drawMode">
+			<JValue>drawpoint</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Draw line button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>drawactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-polyline-draw</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test draw line</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testdrawline</JValue>
+		</JProperty>
+		<JProperty name="drawMode">
+			<JValue>drawline</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Draw polygon button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>drawactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-polygon-draw</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test draw polygon</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testdrawpolygon</JValue>
+		</JProperty>
+		<JProperty name="drawMode">
+			<JValue>drawpolygon</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Draw polygon rectangle -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>drawactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-rectangle-draw</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test draw rectangle</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testdrawrectangle</JValue>
+		</JProperty>
+		<JProperty name="drawMode">
+			<JValue>drawrectangle</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Draw polygon circle -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>drawactionbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-hxgn icon-circle-draw</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test draw circle</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>testdrawcircle</JValue>
+		</JProperty>
+		<JProperty name="drawMode">
+			<JValue>drawcircle</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature action button without filter -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featureactionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Action (No filter)</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>featureactionwofilter</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature action button with postive filter -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featureactionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Action +(305)</JValue>
+		</JProperty>
+		<JProperty name="enableOnFNOs">
+			<JValue>305</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>featureactionwpfilter</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature action button with postive filter (305, 306, 328) -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featureactionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Action +(305, 306, 328)</JValue>
+		</JProperty>
+		<JProperty name="enableOnFNOs">
+			<JValue>305, 306, 328</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>featureactionwpfilter</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature action button with negative filter -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featureactionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Action -(305)</JValue>
+		</JProperty>
+		<JProperty name="disableOnFNOs">
+			<JValue>305</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>featureactionwnfilter</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature action button with negative filter -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featureactionbutton</JValue>
+		</JProperty>
+		<JProperty name="icon">
+			<JValue>/websites/edit.svg</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Action -(305, 306, 328)</JValue>
+		</JProperty>
+		<JProperty name="disableOnFNOs">
+			<JValue>305, 306, 328</JValue>
+		</JProperty>
+		<JProperty name="actionName">
+			<JValue>featureactionwnfilter</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Link button new frame -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>linkbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-fa fa-link</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Simple Link In New Frame</JValue>
+		</JProperty>
+		<JProperty name="linkUrl">
+			<JValue>examples/empty.html</JValue>
+		</JProperty>
+		<JProperty name="linkTarget">
+			<JValue>portallinkframe</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Link button new iframe -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>linkbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-fa fa-link</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Simple Link In IFrame</JValue>
+		</JProperty>
+		<JProperty name="linkUrl">
+			<JValue>examples/empty.html</JValue>
+		</JProperty>
+		<JProperty name="useWindow">
+			<JValue>true</JValue>
+		</JProperty>
+		<JProperty name="windowConfig">
+			<JObject>
+				<JProperty name="title">
+					<JValue>Foo!</JValue>
+				</JProperty>
+				<JProperty name="height">
+					<JValue>600px</JValue>
+				</JProperty>
+				<JProperty name="width">
+					<JValue>1000px</JValue>
+				</JProperty>
+			</JObject>
+		</JProperty>
+	</JObject>
+	
+	<!-- Map link button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>maplinkbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-fa fa-link</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Map Link</JValue>
+		</JProperty>
+		<JProperty name="linkUrl">
+			<JValue>examples/empty.html?center={center}&amp;extent={extent}&amp;geographicCenter={geographicCenter}&amp;height={height}&amp;width={width}&amp;projection={projection}&amp;legend={legend}&amp;resolution={resolution}&amp;rotation={rotation}&amp;x={x}&amp;y={y}&amp;lon={lon}&amp;lat={lat}</JValue>
+		</JProperty>
+		<JProperty name="linkTarget">
+			<JValue>portallinkframe</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature link button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featurelinkbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-fa fa-link</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Link</JValue>
+		</JProperty>
+		<JProperty name="linkUrl">
+			<JValue>examples/empty.html?G3E_FID={G3E_FID}&amp;G3E_FNO={G3E_FNO}</JValue>
+		</JProperty>
+		<JProperty name="linkTarget">
+			<JValue>portallinkframe</JValue>
+		</JProperty>
+	</JObject>
+	
+	<!-- Feature link button -->
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>featurelinkbutton</JValue>
+		</JProperty>
+		<JProperty name="iconCls">
+			<JValue>x-fa fa-link</JValue>
+		</JProperty>
+		<JProperty name="enableOnFNOs">
+			<JValue>305, 306, 328</JValue>
+		</JProperty>
+		<JProperty name="tooltip">
+			<JValue>Test Feature Link With Filter +(305, 306, 328)</JValue>
+		</JProperty>
+		<JProperty name="linkUrl">
+			<JValue>examples/empty.html?G3E_FID={G3E_FID}&amp;G3E_FNO={G3E_FNO}</JValue>
+		</JProperty>
+		<JProperty name="useWindow">
+			<JValue>true</JValue>
+		</JProperty>
+		<JProperty name="windowConfig">
+			<JObject>
+				<JProperty name="title">
+					<JValue>Foo!</JValue>
+				</JProperty>
+				<JProperty name="height">
+					<JValue>600px</JValue>
+				</JProperty>
+				<JProperty name="width">
+					<JValue>800px</JValue>
+				</JProperty>
+			</JObject>
+		</JProperty>
+	</JObject>
+	
+	<JObject>
+		<JProperty name="xtype">
+			<JValue>iframepanel</JValue>
+		</JProperty>
+		<JProperty name="title">
+			<JValue>Test</JValue>
+		</JProperty>
+		<JProperty name="url">
+			<JValue>examples/empty.html</JValue>
+		</JProperty>
+	</JObject>
+	
+	  <Function name="main">
+		<Config>
+			<JProperty name="xtype"><JValue>hxgn-container</JValue></JProperty>
+			<JProperty name="layout"><JValue>border</JValue></JProperty>
+			<JProperty name="items">
+				<JArray>
+					<JObject>
+						<JProperty name="xtype"><JValue>hxgn-sidebarpanel</JValue></JProperty>
+						<JProperty name="region"><JValue>west</JValue></JProperty>
+						<JProperty name="tabRotation"><JValue>default</JValue></JProperty>						
+					</JObject>
+					<JObject>
+						<JProperty name="xtype"><JValue>hxgn-mapmainpanel</JValue></JProperty>
+						<JProperty name="region"><JValue>center</JValue></JProperty>
+						<JProperty name="modes">
+							<JArray>
+								<JValue>pointselect</JValue>
+							</JArray>
+						</JProperty>
+						<JProperty name="defaultMode"><JValue>pointselect</JValue></JProperty>
+					</JObject>
+				</JArray>
+			</JProperty>
+		</Config>
+	  </Function>	
+</root>

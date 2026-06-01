@@ -1,0 +1,11 @@
+﻿			  <JObject>
+                    <JProperty name="xtype">
+                        <JValue>iframepanel</JValue>
+                    </JProperty>
+                    <JProperty name="title">
+                        <JValue>Measure</JValue>
+                    </JProperty>
+                    <JProperty name="url">
+                        <JValue>/measure/measure.html</JValue>
+                    </JProperty>
+                </JObject>

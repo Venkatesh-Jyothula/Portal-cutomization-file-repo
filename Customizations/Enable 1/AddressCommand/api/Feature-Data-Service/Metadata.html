@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Metadata </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Metadata ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="metadata">Metadata</h1>
+
+<h2 id="general">General</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Metadata/GetGeneralParameters.html">GetGeneralParameters</a></td>
+<td>GET</td>
+<td>/metadata/parameter</td>
+<td>Get NetWorks Web Services general parameters.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetJobDefinition.html">GetJobDefinition</a></td>
+<td>GET</td>
+<td>/metadata/jobs/definition</td>
+<td>Get job definition and attribute defaults.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetFeatureRoleInfo.html">GetFeatureRoleInfo</a></td>
+<td>GET</td>
+<td>/metadata/feature/roleinfo</td>
+<td>Get list of readable and editable feature classes.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetInterfaceMapping.html">GetInterfaceMapping</a></td>
+<td>GET</td>
+<td>/metadata/interface/{platform}</td>
+<td>Get platform mappings for custom interfaces.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="features">Features</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Metadata/GetFeatureComponents.html">GetFeatureComponents</a></td>
+<td>GET</td>
+<td>/metadata/feature/{fno}/components</td>
+<td>Get feature component and attribute metadata.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="placement">Placement</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Metadata/GetProcessSelection.html">GetProcessSelection</a></td>
+<td>GET</td>
+<td>/metadata/placement/selection</td>
+<td>Get placement selection.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetFeaturePlacement.html">GetFeaturePlacement</a></td>
+<td>GET</td>
+<td>/metadata/placement/feature/{fno}</td>
+<td>Get feature placement metadata.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetPlacementConfiguration.html">GetPlacementConfiguration</a></td>
+<td>GET</td>
+<td>/metadata/placement/configuration/{pcno}</td>
+<td>Get placement configuration metadata.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dialogs">Dialogs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Metadata/GetDialogMetadata.html">GetDialogMetadata</a></td>
+<td>GET</td>
+<td>/metadata/dialog/tabs/{fno}</td>
+<td>Get dialogs for feature class.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetDialogMetadataForType.html">GetDialogMetadataForType</a></td>
+<td>GET</td>
+<td>/metadata/dialog/tabs</td>
+<td>Get dialogs for a type.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetDialogTabMetadata.html">GetDialogTabMetadata</a></td>
+<td>GET</td>
+<td>/metadata/dialog/tab/{dtno}</td>
+<td>Get dialog tab and attribute metadata for a dialog tab.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="styles-and-labels">Styles and labels</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Metadata/GetStyleRule.html">GetStyleRule</a></td>
+<td>GET</td>
+<td>/metadata/style/rule/{srno}</td>
+<td>Get style rule definition.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetStyleMap.html">GetStyleMap</a></td>
+<td>GET</td>
+<td>/metadata/style/map</td>
+<td>Get style definitions.</td>
+</tr>
+<tr>
+<td><a href="Metadata/GetLabelRule.html">GetLabelRule</a></td>
+<td>GET</td>
+<td>/metadata/style/map</td>
+<td>Get label rule definitions.</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

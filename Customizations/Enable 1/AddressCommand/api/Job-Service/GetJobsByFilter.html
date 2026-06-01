@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetJobsByFilter </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetJobsByFilter ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getjobsbyfilter">GetJobsByFilter</h1>
+
+<p>Provides job attribute information for the jobs that match one or more filter parameters.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{JobServiceName}/jobs?id={id}&amp;owner={owner}&amp;status={status}&amp;description={description}&amp;jobDialogType={jobDialogType}&amp;pageNo={pageNo}&amp;pageSize={pageSize}</p>
+<p><strong>Request Parameters</strong></p>
+<p>Any combination of the filter parameters, id, owner, status and description, can be specified.
+Requests must include at least one filter.
+The filter parameter values are used in a wild card match to the values in the corresponding columns in the job table.
+Multiple filters are AND'ed together in the query for jobs.
+JobDialogType is not a filtering condition, but it defines set of additional properties returned for each job.
+PageNo and pageSize are used for paging the result.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Job identifier</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>The user identity that created the job.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Job status (typical values: Open, Closed, Posted, Partially Posted, Discarded).</td>
+</tr>
+<tr>
+<td>description</td>
+<td>A brief description of what the job is about.</td>
+</tr>
+<tr>
+<td>jobDialogType</td>
+<td>Job dialog type identifier, specifying set of properties returned for each job.</td>
+</tr>
+<tr>
+<td>pageNo</td>
+<td>Number of the page for paged result.</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>Size of one page for paged result.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetworksJobService/jobs?owner=WMSADMIN&amp;description=Permanent</p>
+<p><strong>Sample Response</strong></p>
+<p>All jobs that have &quot;WMSADMIN&quot; as part of their owner value and have &quot;Permanent&quot; in the description field will be returned.</p>
+<pre><code>[
+  {
+    Identifier: &quot;WmsTestJob&quot;,
+    Description: &quot;Permanent Job - Do not delete&quot;,
+    Owner: &quot;WMSADMIN&quot;,
+    Status: &quot;Open&quot;,
+    Properties: []
+  },
+  {
+    Identifier: &quot;WmsTestJob2&quot;,
+    Description: &quot;Permanent Job - Do not delete&quot;,
+    Owner: &quot;WMSADMIN&quot;,
+    Status: &quot;Open&quot;,
+    Properties: []
+  },
+  {
+    Identifier: &quot;WmsTestJob3&quot;,
+    Description: &quot;Permanent Job - Do not delete&quot;,
+    Owner: &quot;WMSADMIN&quot;,
+    Status: &quot;Open&quot;,
+    Properties: []
+  }
+]
+</code></pre>
+<p><strong>Sample Request #2</strong></p>
+<p>http://localhost/NetworksJobService/jobs?owner=WMSADMIN&amp;description=Permanent&amp;pageNo=1&amp;pageSize=10</p>
+<p><strong>Sample Response</strong></p>
+<p>All jobs that have &quot;WMSADMIN&quot; as part of their owner value and have &quot;Permanent&quot; in the description field will be returned. Return only the first page of 10 jobs per page.</p>
+<pre><code>[
+  {
+    &quot;Identifier&quot;: &quot;WmsTestJob&quot;,
+    &quot;Description&quot;: &quot;Permanent Job - Do not delete&quot;,
+    &quot;Owner&quot;: &quot;WMSADMIN&quot;,
+    &quot;Status&quot;: &quot;Open&quot;,
+    &quot;Properties&quot;: []
+
+  },
+  {
+    &quot;Identifier&quot;: &quot;WmsTestJob2&quot;,
+    &quot;Description&quot;: &quot;Permanent Job - Do not delete&quot;,
+    &quot;Owner&quot;: &quot;WMSADMIN&quot;,
+    &quot;Status&quot;: &quot;Open&quot;,
+    &quot;Properties&quot;: []
+  },
+  {
+    &quot;Identifier&quot;: &quot;WmsTestJob3&quot;,
+    &quot;Description&quot;: &quot;Permanent Job - Do not delete&quot;,
+    &quot;Owner&quot;: &quot;WMSADMIN&quot;,
+    &quot;Status&quot;: &quot;Open&quot;,
+    &quot;Properties&quot;: []
+  }
+]
+</code></pre>
+<p><strong>Sample Request #3</strong></p>
+<p>http://localhost/NetWorksJobService/jobs?id=WmsTestJob3&amp;jobDialogType=G3E_NEWJOB</p>
+<p><strong>Sample Response</strong></p>
+<p>Get the job that has an identifier value of &quot;WmsTestJob3&quot; and return job properties that are specified by the G3E_NEWJOB dialog.</p>
+<pre><code>[
+    {
+        &quot;Identifier&quot;: &quot;WmsTestJob3&quot;,
+        &quot;Description&quot;: &quot;Permanent Job - Do not delete&quot;,
+        &quot;Owner&quot;: &quot;WMSADMIN&quot;,
+        &quot;Status&quot;: &quot;Open&quot;,
+        &quot;Properties&quot;: [
+            {
+                &quot;FieldName&quot;: &quot;G3E_IDENTIFIER&quot;,
+                &quot;UserName&quot;: &quot;Job ID&quot;,
+                &quot;Value&quot;: &quot;WmsTestJob3&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_DESCRIPTION&quot;,
+                &quot;UserName&quot;: &quot;Job Description&quot;,
+                &quot;Value&quot;: &quot;Permanent Job - Do not delete&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_OWNER&quot;,
+                &quot;UserName&quot;: &quot;Job Owner&quot;,
+                &quot;Value&quot;: &quot;WMSADMIN&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_STATUS&quot;,
+                &quot;UserName&quot;: &quot;Job Status&quot;,
+                &quot;Value&quot;: &quot;Open&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_CREATION&quot;,
+                &quot;UserName&quot;: &quot;Job Creation Date&quot;,
+                &quot;Value&quot;: &quot;6/22/2017 12:00:00 AM&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_POSTED&quot;,
+                &quot;UserName&quot;: &quot;Job Posted Date&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_CLOSED&quot;,
+                &quot;UserName&quot;: &quot;Job Closed Date&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_ADDJOBATTR&quot;,
+                &quot;UserName&quot;: &quot;Additional Job Attribute&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_ID&quot;,
+                &quot;UserName&quot;: &quot;G3E Key Identifier&quot;,
+                &quot;Value&quot;: &quot;116&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_STATUS_CODE&quot;,
+                &quot;UserName&quot;: &quot;Job State CODE&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;G3E_JOBCLASS&quot;,
+                &quot;UserName&quot;: &quot;Job Classification&quot;,
+                &quot;Value&quot;: &quot;0&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;WR_STATE_CODE&quot;,
+                &quot;UserName&quot;: &quot;Job STATE&quot;,
+                &quot;Value&quot;: &quot;Proposed&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;DIFFICULTY_FACTOR&quot;,
+                &quot;UserName&quot;: &quot;Difficulty Factor&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;ADITIOAL_JOB_OVERHEAD_COST&quot;,
+                &quot;UserName&quot;: &quot;Additional Job Overhead Cost $&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;ADITIOAL_JOB_LABOR_COST&quot;,
+                &quot;UserName&quot;: &quot;Additional Job Labor Cost $&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;ADITIOAL_JOB_MATERIAL_COST&quot;,
+                &quot;UserName&quot;: &quot;Additional Job Material Cost $&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            },
+            {
+                &quot;FieldName&quot;: &quot;ADITIOAL_JOB_EQUIP_COST&quot;,
+                &quot;UserName&quot;: &quot;Additional Job Equipment Cost $&quot;,
+                &quot;Value&quot;: &quot;&quot;
+            }
+        ]
+    }
+]
+</code></pre>
+<p><strong>Remarks</strong>
+This method supports optional pagination. It returns the job information in pages honoring the page size, when pagination parameters are specified. The response header will contain paging attributes to help the clients keep track of what page they are on. For example, when pagination parameters are passed on the request, the response header will contain extra attributes like the following:</p>
+<p>X-Paging-PageCount: 8</p>
+<p>X-Paging-PageNo: 3</p>
+<p>X-Paging-PageSize: 10</p>
+<p>X-Paging-TotalRecordCount: 72</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

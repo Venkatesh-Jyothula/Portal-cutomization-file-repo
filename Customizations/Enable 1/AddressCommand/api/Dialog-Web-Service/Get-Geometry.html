@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Geometry </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Geometry ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-geometry">Get Geometry</h1>
+
+<p>Get feature geometry in WKT format.</p>
+<h2 id="request">Request</h2>
+<h3 id="uri">URI</h3>
+<p>GET /Feature/{FNO}/{FID}/{CNO}/Geometry[?pCONF={PCONF}&amp;pJOB={PJOB}&amp;apiVersion={apiVersion}]&amp;[ Jobs={list of job names} | ActiveJob={job name}]</p>
+<p>GET /Feature/{FNO}/{FID}/{CNO}/{CID}/Geometry[?pCONF={PCONF}&amp;pLCID={PLCID}&amp;pJOB={PJOB}&amp;apiVersion={apiVersion}]&amp;[ Jobs={list of job names} | ActiveJob={job name}]</p>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FNO</td>
+<td>Feature Number</td>
+</tr>
+<tr>
+<td>FID</td>
+<td>Feature Identifier</td>
+</tr>
+<tr>
+<td>CNO</td>
+<td>Component Number</td>
+</tr>
+<tr>
+<td>CNO</td>
+<td>Component Identifier</td>
+</tr>
+<tr>
+<td>PCONF</td>
+<td>Connected GTech configuration</td>
+</tr>
+<tr>
+<td>PJOB</td>
+<td>GTech job identifier. Use of pJob parameter is deprecated. If specified, it is mapped to ActiveJob={pJob value}.</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>GTDWS service version. Supported versions are 2.2.0 and 2.3.0.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional. Edits from this request are added to the job's pending edits.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional comma separated list of jobs whose pending edits will particate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<h3 id="normal-response-200">Normal response (200)</h3>
+<p>Geometry in WKT format, wrapped in JSON.</p>
+<pre><code class="lang-js">{&quot;data&quot;:&quot;POINT (7444192.63276376 1047047.55949793)&quot;}
+</code></pre>
+<h3 id="invalid-operation-500">Invalid operation (500)</h3>
+<p>When there is an error from package related to metadata, a generic error will be shown. The Oracle error along with the ORA error code will be logged in database.</p>
+<h2 id="examples">Examples</h2>
+<p><strong>Sample Request</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/Feature/306/7680002/3060/Geometry?apiVersion=2.2.0&amp;Jobs=JOBNO8093</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address to Network Association</title>
+<style>
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            border: 1px solid #ccc; /* Grey lines */
+            padding: 8px;
+            text-align: center;
+            color: #335ca5; /* Text color */
+			font-family: "Times New Roman", Times, serif; /* Font family */
+        }
+
+        .table th {
+            background-color: #f2f2f2; /* Light grey background */
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light grey background for even rows */
+        }
+		        /* Button styles */
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .button {
+            background-color: #335ca5; /* Blue color */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d3b73; /* Darker blue color on hover */
+        }
+		.loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+	<!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="./Datatable.css">
+    <!-- jQuery library (required for DataTables) -->
+    <script src="./jquery-3.5.0.js"></script> 
+	<script src="./jquery-3.6.0.min.js"></script>	
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" src="./Datatable.js"></script>
+</head>
+<body>
+    <div class="form-container">
+	  <div class="loading" id="loading">
+        <img src="./Images/loading.gif" alt="Loading...">
+      </div>
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+                        <!-- Column names will be populated here dynamically -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+        <button class="button btnSelect">Select Fiber Branch Enclosure</button>
+        <button class="button btnExit">Exit</button>
+        </div>
+
+    <script>
+	let lastChecked = null;
+	var IsDelete = "No";
+	var urlSolution=null;
+	var dbAliasName=null; // Declare a variable to store the result
+	var AnalyticalUrl = null;
+	var FBESelectedWindow = null;
+	function sendPostRequest(url,payload) {
+    // Convert payload to JSON string
+    var payloadString = JSON.stringify(payload);
+
+    // Create new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Set the HTTP method, URL, and asynchronous flag
+    xhr.open('POST', url, true);
+
+    // Set the request header
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Define the function to handle the response
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Request was successful
+            console.log('Request successful');
+            console.log(xhr.responseText);
+        } else {
+            // Request failed
+            console.error('Request failed');
+            console.error(xhr.statusText);
+        }
+    };
+
+    // Define the function to handle network errors
+    xhr.onerror = function () {
+        console.error('Network error');
+    };
+
+    // Send the request with the payload
+    xhr.send(payloadString);
+	IsDelete = "Yes";
+}
+
+		async function fetchNetworkSolutionData() {
+		try {
+			// Get the mapsource section
+			var mapsource = parent.$NWP.workspace.getSection("mapsource");
+
+			// Initialize variables
+			var vectorServiceURL;
+
+			// Loop through mapsource items to find the NetworksVector type
+			for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+				if (mapsource.items[i].type === 'NetworksVector') {
+					vectorServiceURL = mapsource.items[i].url;
+					urlSolution = vectorServiceURL.substring(0, vectorServiceURL.lastIndexOf('/')) + '/NetWorksSolutionService';
+					break;
+				}
+			}
+
+			// Check if urlSolution was found
+			if (!urlSolution) {
+				throw new Error("NetworksVector type not found in mapsource items.");
+			}
+			
+			//Retrieve the DB Alias for the Solution Service
+			var dbAlias=await parent.$NWP.fetchJson({ url: urlSolution });
+
+			// Fetch data from the selected option endpoint
+			const response = await fetch(`${urlSolution}/${dbAlias}/`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			// Check if the response is ok
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// Parse the response data as JSON
+			const urlSolutiondata = await response.json();
+
+			// Check if urlSolutiondata is null
+			if (urlSolutiondata === null) {
+				throw new Error("Received null data from the network solution service.");
+			}
+
+			// Return the parsed data
+			return urlSolutiondata;
+
+		} catch (error) {
+			// Handle errors
+			console.error('Error fetching network solution data:', error);
+			throw error;  // Re-throw the error after logging it
+		}
+	}
+		function findServiceUrl(urlSolutiondata, serviceType) {
+			for (const service of urlSolutiondata) {
+				if (service.Type === serviceType) {
+					return service.Url;
+				}
+			}
+			throw new Error(`${serviceType} not found in network solution data.`);
+		}
+
+		async function getServiceUrl(serviceType) {
+			try {
+				// Fetch network solution data
+				const urlSolutiondata = await fetchNetworkSolutionData();
+
+				// Find and return the service URL for the specified service type
+				const serviceUrl = findServiceUrl(urlSolutiondata, serviceType);
+				return serviceUrl;
+			} catch (error) {
+				console.error('Error:', error);
+				throw error;
+			}
+		}
+
+	var urlNetWorkSolutiondata = null;
+	async function fetchData() {
+    try {
+        AnalyticalUrl = await getServiceUrl('AnalyticalService');
+        console.log('Service URL:', AnalyticalUrl);
+
+        if (AnalyticalUrl != null) {
+            const response = await fetch(AnalyticalUrl + '/Search/QuickSearches');
+            const data = await response.json();
+
+            // Loop through each object in the response array
+            let g3e_amno = null;
+            for (let item of data) {
+                // Check if the UserName matches the targetUserName
+                if (item.UserName === "Address to Network Entry") {
+                    // Store the G3E_AMNO in a variable
+                    g3e_amno = item.G3E_AMNO;
+                    break; // Exit the loop once the match is found
+                }
+            }
+
+            if (g3e_amno != null) {
+                // Replace with the actual AnalyticalUrl and g3e_amno
+                var url = AnalyticalUrl + '/search/execute/' + g3e_amno;
+                var requestData = {
+                    "Parameters": [{
+                        "ParameterId": 1,
+                        "PickListKey": 2
+                    }]
+                };
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) { // When the request is complete
+                        if (this.status == 200) { // If the request was successful
+                            var data = JSON.parse(this.responseText);
+                            console.log("responseText:" + this.responseText);
+                            console.log("data :" + data);
+                            populateTable(data); // Populate table with received data
+                            $('#loading').remove();
+                        } else {
+                            var errorMessage = 'Error: ' + this.status;
+                            displayErrorMessage(errorMessage); // Display error message
+                        }
+                    }
+                };
+
+                xhttp.send(JSON.stringify(requestData)); // Send the request with JSON data
+            } else {
+                console.error('G3E_AMNO not found.');
+            }
+        } else {
+            console.error('AnalyticalUrl is null.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+        function populateTable(data) {
+    var table = document.getElementById('result-table');
+    var thead = table.querySelector('thead');
+    var tbody = table.querySelector('tbody');
+
+    // Clear existing table rows and column headers
+    tbody.innerHTML = '';
+    thead.innerHTML = '';
+
+    if (Array.isArray(data.ResultItems) && data.ResultItems.length > 0) {
+        // Create column headers
+        var headerRow = document.createElement('tr');
+		
+		// Add an empty cell for the checkbox column in the header row
+        var checkboxHeaderCell = document.createElement('th');
+        headerRow.appendChild(checkboxHeaderCell);
+		
+        Object.keys(data.ResultItems[0]).forEach(key => {
+            var headerCell = document.createElement('th');
+            headerCell.textContent = key;
+            headerRow.appendChild(headerCell);
+        });
+        thead.appendChild(headerRow);
+
+        // Iterate over each address item
+        data.ResultItems.forEach(address => {
+            var row = document.createElement('tr');
+
+            // Add a checkbox column
+            var checkboxCell = document.createElement('td');
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkboxCell.appendChild(checkbox);
+            row.appendChild(checkboxCell);
+
+            // Iterate over each property of the address item
+            Object.values(address).forEach(value => {
+                var cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        // Initialize DataTable
+        $(document).ready(function() {
+    var table = $('#result-table').DataTable({
+        // Enable sorting
+        "order": [],
+        // Enable filtering
+        "searching": true,
+        // Enable multi-select checkbox
+        "columnDefs": [{
+            "orderable": false,
+            "targets": 0 // First column
+        }],
+		"columns": [
+		     null,
+            { "visible": false }, // G3E_FNO
+            { "visible": false }, // G3E_FID
+			null,
+			null,
+			null,
+			null,
+			null,
+            { "visible": false }, // GAO_NET_FEATURENAME
+            { "visible": false }, // G3E_VIEW
+        ],
+		dom: '<"button-left"f>rtip'
+    });
+    // Add the button
+	$('div.button-left').prepend('<button class="button fit-button" title="Fit and Highlight">Fit</button>');
+	// Add CSS to align the button to the right
+	$('head').append('<style>' +
+		'div.button-left {' +
+			'display: flex;' +
+			'align-items: center;' +
+		'}' +
+		'div.button-left .fit-button {' +
+			'margin-left: auto;' + // Aligns the button to the right
+			'width: 30px;' +      // Set the width of the button
+			'height: 30px;' +      // Set the height of the button
+			'background-image: url("./Images/Unselected.png");' + // Set the background image
+			'background-size: contain;' + // Ensure the image fits within the button
+			'background-repeat: no-repeat;' + // Prevent the image from repeating
+			'background-position: center;' + // Center the image
+			'border: none;' +       // Remove the default button border
+			'color: transparent;' + // Make the button text transparent
+			'text-indent: -9999px;' + // Hide the button text
+			'padding: 0;' +         // Remove default padding
+		'}' +
+	'</style>');
+			// Add click event for the button
+		$(document).on('click', 'button.fit-button', function() {
+			var $button = $(this);
+			// Change the background image to "./Images/Selected.png"
+			$button.css('background-image', 'url("./Images/Selected.png")');
+			var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+			var g3e_fnoArray = [];
+			var g3e_fidArray = [];
+
+			// Loop through the checked rows and populate the arrays
+			checkedRows.each(function() {
+				var table = $('#result-table').DataTable();
+				var rowData = table.row($(this)).data();
+				var vg3e_fno = parseInt(rowData[1], 10);
+				var vg3e_fid = parseInt(rowData[2], 10);
+
+				g3e_fnoArray.push(vg3e_fno);
+				g3e_fidArray.push(vg3e_fid);
+			});
+
+			// Check if vg3e_fidArray count is zero
+			if (g3e_fidArray.length === 0) {
+				parent.$NWP.msg.showInfo("Nothing to Fit");
+			} else {
+				// Construct the featureKeys array
+			var featureKeys = [];
+			for (var i = 0; i < g3e_fnoArray.length; i++) {
+				featureKeys.push({ G3E_FNO: g3e_fnoArray[i], G3E_FID: g3e_fidArray[i] });
+			}
+
+			// Fetch GTech features for all G3E_FNO and G3E_FID values
+			parent.$NWP.features.fetchGTechFeatures(featureKeys).then(function(result) {
+				if (result.success) {
+					parent.$NWP.features.highlight(result.data, true);
+				}
+			});
+			}
+
+			
+			$button.css('background-image', 'url("./Images/Unselected.png")');
+
+		});
+    // Initialize colResizable on DataTable's header
+    <!-- $('#result-table thead').colResizable({ -->
+        <!-- liveDrag: true, -->
+        <!-- gripInnerHtml: "<div class='grip'></div>", -->
+        <!-- draggingClass: "dragging" -->
+    <!-- }); -->
+
+    // Recalculate column widths when DataTable redraws (e.g., after sorting)
+    table.on('draw.dt', function() {
+        $('#result-table thead').colResizable({
+            disable: true
+        });
+        $('#result-table thead').colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging"
+        });
+    });
+	});
+	enableShiftClickSelection();
+    } else {
+        console.error('ResultItems is not an array or is empty:', data);
+        // Optionally, you can handle this error by displaying a message to the user
+    }
+}
+
+
+        function displayErrorMessage(message) {
+            alert(message); // Display error message in a pop-up
+        }
+		
+		function enableShiftClickSelection() {
+            const checkboxes = $('#result-table tbody input[type="checkbox"]');
+
+            checkboxes.on('click', function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    const start = checkboxes.index(this);
+                    const end = checkboxes.index(lastChecked);
+
+                    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        }
+		async function fetchLeno() {
+			try {
+			
+				var mapsource = parent.$NWP.workspace.getSection("mapsource");
+					// Initialize variables
+					var vectorServiceURL=null;
+					// Loop through mapsource items to find the NetworksVector type
+					for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+						if (mapsource.items[i].type === 'NetworksVector') {
+							vectorServiceURL = mapsource.items[i].url;
+							break;
+						}
+					}
+				// Step 1: Fetch the JSON data
+				const response = await fetch(vectorServiceURL+'/displaycontrol/1/entries');
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				const arrayLegendEntries = await response.json();
+
+				// Step 2: Find the entry with the specified name
+				const targetEntry = arrayLegendEntries.find(entry => entry.name === 'Fiber Branch Enclosure Geo Symbol');
+
+				// Step 3: Extract the `leno` value from that entry
+				if (targetEntry) {
+					const g3e_leno = targetEntry.leno;
+
+					// Step 4: Store the extracted value in a variable
+					console.log('Extracted leno:', g3e_leno);
+					return g3e_leno;
+				} else {
+					throw new Error('Entry with the specified name not found');
+				}
+			} catch (error) {
+				console.error('Error fetching or processing data:', error);
+			}
+		}
+		
+		async function DisplayFBE(DataURL, transformedJson) {
+				try {
+					 var valuesToBePassed = [];
+					// Post the transformedJson to the DataURL
+					const response = await fetch(DataURL, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(transformedJson)
+					});
+
+					if (!response.ok) {
+						throw new Error('Network response was not ok ' + response.statusText);
+					}
+
+					const responseData = await response.json();
+
+					// Extract and log the attributes fields from the response data
+					if (responseData.type === 'FeatureCollection' && Array.isArray(responseData.features)) {
+						responseData.features.forEach(feature => {
+							if (feature.properties && feature.properties.attributes) {
+                                const { G3E_FID, G3E_FNO, G3E_CNO, LABEL, MODEL } = feature.properties.attributes;
+								console.log(`G3E_FID: ${G3E_FID}, G3E_FNO: ${G3E_FNO}, G3E_CNO: ${G3E_CNO}, LABEL: ${LABEL}, MODEL: ${MODEL}`);
+								valuesToBePassed.push({ G3E_FID, G3E_FNO, G3E_CNO, LABEL, MODEL });
+							}
+						});
+					}
+					
+					
+					// Store the collected values in local storage
+					localStorage.setItem('formValues', JSON.stringify(valuesToBePassed));
+
+					if (valuesToBePassed.length === 0) {
+							parent.$NWP.msg.showInfo("No Fiber Branch Enclosure features found");						 
+						}
+					else {
+					
+					if (FBESelectedWindow)
+					{
+						FBESelectedWindow.destroy();
+					}
+					// Use the parent.$NWP.createWindow function to open the second form
+					FBESelectedWindow = parent.$NWP.createWindow({
+						title: "Fiber Branch Enclosure Selection",
+						height: 400,
+						width: 600,
+						url: '/AddressCommand/form_FiberBranchEnclosure.html'
+					});
+					window.childFBEwindow = FBESelectedWindow;
+					FBESelectedWindow.show();
+						}
+				} catch (error) {
+					console.error('Error posting data:', error);
+					throw error;
+				}
+			}
+		
+		    // Event listener for the "Select" button
+		   $('.btnSelect').on('click', function() {
+			// If records are zero then show message and dont go further
+			// Initialize the DataTable
+			var table = $('#result-table').DataTable();
+			var vLeno = null;
+			var vectorServiceURL= null;
+			var boundingBox=null;
+			var vresolution = parent.$NWP.map.getViewState().resolution;
+			var transformedJson = null;
+			// Check if the table has no rows
+			if (table.rows().count() === 0) {
+				// Show info message if no data is found
+				parent.$NWP.msg.showInfo("No Data Found to process");
+			} else {					
+					var mapsource = parent.$NWP.workspace.getSection("mapsource");
+					// Initialize variables
+
+					// Loop through mapsource items to find the NetworksVector type
+					for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+						if (mapsource.items[i].type === 'NetworksVector') {
+							vectorServiceURL = mapsource.items[i].url;
+							break;
+						}
+					}
+				// Draw geometry and handle the result if data is found
+				parent.$NWP.map.drawGeometry(parent.$NWP.map.geometryType.POINT).then(function(result) {
+				if (result && result.type === 'Point' && Array.isArray(result.coordinates)) {
+					const [x, y] = result.coordinates;
+					const radius = 10; // 10 meter radius
+
+					const minX = x - radius;
+					const maxX = x + radius;
+					const minY = y - radius;
+					const maxY = y + radius;
+
+					boundingBox = [
+						minX, minY, maxX, maxY
+					];					
+					
+					fetchLeno().then(g3e_leno => {
+						vLeno = g3e_leno;
+						console.log('Stored g3e_leno:', g3e_leno);
+					var DataURL = vectorServiceURL+"/data?g=1&attrs=1";
+					<!-- parent.$NWP.msg.showInfo("Leno:"+vLeno); -->
+					<!-- parent.$NWP.msg.showInfo("DataURL:"+DataURL); -->
+					<!-- parent.$NWP.msg.showInfo("boundingBox:"+boundingBox); -->
+					<!-- parent.$NWP.msg.showInfo("resolution:"+vresolution); -->
+					console.log('Bounding Box:', boundingBox);
+					
+					transformedJson = {
+						"lsno": 1,
+						"bbox": boundingBox,
+						"resolution": vresolution,
+						"entries": [{"l": vLeno, "s": 1}],
+						"filters": null
+					};
+					console.log(JSON.stringify(transformedJson));
+					DisplayFBE(DataURL, transformedJson);
+
+					});
+
+					
+				} else {
+					console.log('Invalid result:', result);
+				}
+			});
+
+			}
+		
+			parent.$NWP.msg.showInfo("Click on Map to Select FBE");
+});	
+
+ // Event listener for the "Exit" button
+   $('.btnExit').on('click', function() {   
+	parent.$NWP.msg.showInfo("Exit button clicked");
+	 // Close the current window
+	if (window.parent.currentNewWindow) {
+                window.parent.currentNewWindow.destroy();
+            }
+	if (FBESelectedWindow)
+			{
+							FBESelectedWindow.destroy();
+			}
+	});		
+		fetchData();
+		function parentMethod() {
+            parent.$NWP.msg.showInfo("Parent method called!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Vector Service </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Vector Service ">
+      
+      <link rel="icon" href="../wsfavicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="vector-service">Vector Service</h1>
+
+<p>Vector Service provides NetWorks feature data as GeoJSON geometries with additional properties required for rendering on the client.</p>
+<p>Only vector geometries published in DDC are supported.</p>
+<h2 id="api">API</h2>
+<p><a href="Vector-Service/CoordinateSystem.html">Coordinate System</a></p>
+<p><a href="Vector-Service/Legends.html">Legends</a></p>
+<p><a href="Vector-Service/Styles.html">Styles</a></p>
+<p><a href="Vector-Service/Features.html">Features</a></p>
+<p><a href="Vector-Service/Tooltips.html">Tooltips</a></p>
+<h2 id="job-support">Job Support</h2>
+<p>All requests working with feature data accept additional optional parameters <strong>{jobs}</strong> and <strong>{force}</strong> passed in the query string.</p>
+<p><strong>Format</strong></p>
+<p><code>?jobs={jobs}&amp;force={force}</code></p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobs</td>
+<td>String</td>
+<td>N</td>
+<td>Comma separated list of job names.</td>
+</tr>
+<tr>
+<td>force</td>
+<td>String</td>
+<td>N</td>
+<td>When set to 1, Vector Service forces the refresh of deltas from database. When missing or any other value, job deltas are cached in memory and refreshed only after the cache becomes stale. Default is 10 minutes.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p><code>http://machinename/NetworksVectorService/data?jobs=JOB1,JOB2</code></p>
+<p><code>http://machinename/NetworksVectorService/data/323/123454?jobs=JOB3</code></p>
+<p><code>http://machinename/NetworksVectorService/tooltip/323/123454?jobs=JOB3&amp;force=1</code></p>
+<h2 id="3d-support">3D Support</h2>
+<p><code>/data</code> and <code>/geometry</code> endpoints support additional query parameter <strong>dims</strong> with allowed values of <code>2</code> (default) and <code>3</code>. When <code>3</code> is passed in (or configuration parameter GeoJSON:Dimensions is set to 3), the vertices in GeoJSON output include the Z dimension as stored in the DDCs.</p>
+<p><strong>Sample Request</strong></p>
+<p><code>http://machinename/NetworksVectorService/data/323/123454?dims=3</code></p>
+<p><strong>Notes</strong></p>
+<ul>
+<li>Polyline and polygon clipping is <strong>turned off</strong> when 3D geometries are requested. Configuration parameters can't override this behavior.</li>
+<li>Vertex reduction (dependent on resolution) follows the configuration in the <a href="Vector-Service/Features/GetFeatures.html">GetFeatures</a> endpoint. The default for vertex reduction is <strong>on</strong>, which may cause the geometries to be distorted if they should be visualized with a different resolution. If you want full geometries to be returned, turn off vertex reduction in the configuration.</li>
+</ul>
+<h2 id="component-view-attributes">Component view attributes</h2>
+<p><code>/data</code> and <code>/geometry</code> endpoints support additional query parameter <strong>attrs</strong> with allowed values of <code>0</code> (default) and <code>1</code>. When <code>1</code> is passed in, <code>attributes</code> property is added to the GeoJSON Feature <code>properties</code>. The <code>attributes</code> is an JSON object, whose properties are the component view fields. Geometry and binary fields are not added to the output.</p>
+<p><strong>Sample Request</strong></p>
+<p><code>http://machinename/NetworksVectorService/geometry/323/1027199?g=1&amp;attrs=1</code></p>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;type&quot;: &quot;Feature&quot;,
+    &quot;geometry&quot;: {
+        &quot;type&quot;: &quot;Point&quot;,
+        &quot;coordinates&quot;: [
+            4502310.509,
+            5925580.203
+        ]
+    },
+    &quot;properties&quot;: {
+        &quot;ID&quot;: &quot;1027199,323,1,5943,V_E_STATIO_32300_I_PT&quot;,
+        &quot;ROT&quot;: -0.45,
+        &quot;IsPrimary&quot;: 1,
+        &quot;attributes&quot;: {
+            &quot;G3E_ID&quot;: 28,
+            &quot;G3E_FNO&quot;: 323,
+            &quot;G3E_CNO&quot;: 5943,
+            &quot;G3E_FID&quot;: 1027199,
+            &quot;G3E_CID&quot;: 1,
+            &quot;STATE&quot;: 0,
+            &quot;DATA_CATEGORY&quot;: 0,
+            &quot;CATEGORY&quot;: 0,
+            &quot;SUBUNIT&quot;: 0
+        }
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

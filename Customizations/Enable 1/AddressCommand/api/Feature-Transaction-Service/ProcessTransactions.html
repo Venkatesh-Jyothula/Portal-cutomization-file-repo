@@ -1,0 +1,657 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ProcessTransactions </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ProcessTransactions ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="processtransactions">ProcessTransactions</h1>
+
+<p>Synchronously processes CUD transactions on feature data. The transactions are processed in a job specified in parameters or outside of a job context (STT mode), if not job was specified.
+The result of the transaction is returned in output. It includes newly created identifiers (e.g. G3E_FID, G3E_CID, G3E_DETAILID), mapped to temporary identifiers in the request.</p>
+<p>See also:</p>
+<ul>
+<li><a href="ProcessTransactions/Internal-workflow.html">Internal workflow</a> for details on processing.</li>
+<li><a href="ProcessTransactions/Hyperlink-mapping.html">Hyperlink mapping</a></li>
+</ul>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>POST</p>
+<p><strong>URL Template</strong></p>
+<p><code>/transaction[?jobs={jobs}&amp;lcid={lcid}]</code></p>
+<p><strong>Query params</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobs</td>
+<td>String</td>
+<td></td>
+<td>Job identifier. When not present, the transaction is executed without a job context.</td>
+</tr>
+<tr>
+<td>lcid</td>
+<td>String</td>
+<td></td>
+<td>LCID to use when retrieving metadata. When not present, the default LCID is used – explicitly configured LCID in service settings or the current culture of the process if no LCID is configured.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="request-body">Request body</h2>
+<p>Instance of <a href="#processtransactionrequest">ProcessTransactionRequest</a>.</p>
+<h3 id="processtransactionrequest">ProcessTransactionRequest</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transactions</td>
+<td>Array of <a href="#transaction">Transaction</a></td>
+<td>Y</td>
+<td>List of transactions to process.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="transaction">Transaction</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>Y</td>
+<td>Type of the transaction</td>
+</tr>
+<tr>
+<td>tref</td>
+<td>Int</td>
+<td></td>
+<td>Transaction reference. The value is copied to the corresponding element in the output, to be used by the caller to correlate transaction entries in request and response. Not used internally by the transaction processing.</td>
+</tr>
+</tbody>
+</table>
+<p>Allowed transaction types:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateFeature</td>
+<td>Create a new feature.</td>
+</tr>
+<tr>
+<td>UpdateFeature</td>
+<td>Update an existing feature.</td>
+</tr>
+<tr>
+<td>DeleteFeature</td>
+<td>Delete an existing feature completely.</td>
+</tr>
+<tr>
+<td>CreateComponent</td>
+<td>Create a component instance in a newly created or existing feature instance.</td>
+</tr>
+<tr>
+<td>UpdateComponent</td>
+<td>Update a component instance in an existing feature instance.</td>
+</tr>
+<tr>
+<td>DeleteComponent</td>
+<td>Delete a component instance in an existing feature instance.</td>
+</tr>
+<tr>
+<td>EstablishRelationship</td>
+<td>Establish a relationship between two features. Any of the features can be new or already exist in the database.</td>
+</tr>
+<tr>
+<td>DeleteRelatioship</td>
+<td>Delete relationship between two features. The relationship must already exist.</td>
+</tr>
+<tr>
+<td>CreateDetail</td>
+<td>Create a new detail window (G3E_DETAILID).</td>
+</tr>
+<tr>
+<td>UpdateDetail</td>
+<td>Update an existing detail window (identified by G3E_DETAILID).</td>
+</tr>
+<tr>
+<td>AttachDetail</td>
+<td>Attach a detail window to detail attribute component of a feature.</td>
+</tr>
+<tr>
+<td>DetachDetail</td>
+<td>Detach a detail window from detail attribute component of a feature.</td>
+</tr>
+</tbody>
+</table>
+<p>A <em>CreateFeature</em> or <em>UpdateFeature</em> record is needed when updating feature attributes, creating or deleting components or establishing/deleting relationships (for features on both sides of the relationship).</p>
+<h3 id="featuretransactionbase">FeatureTransactionBase</h3>
+<p>Derived from <a href="#transaction">Transaction</a>. The type attribute must match one of the following:</p>
+<ul>
+<li>CreateFeature</li>
+<li>UpdateFeature</li>
+<li>DeleteFeature</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fref</td>
+<td>int</td>
+<td>Y</td>
+<td>Feature reference. The value identifies this feature in other transactions in the request. This mechanism enables referencing feature instances before their G3E_FID is available.<br>The actual value has no meaning outside of the context of this request.</td>
+</tr>
+<tr>
+<td>G3E_FNO</td>
+<td>Int</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+<tr>
+<td>G3E_FID</td>
+<td>Int</td>
+<td>(Y)</td>
+<td>G3E_FID. For <em>CreateFeature</em> the value must not be present, for others it is mandatory.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="componenttransactionbase">ComponentTransactionBase</h3>
+<p>Derived from <a href="#transaction">Transaction</a>. The type attribute must match one of the following:</p>
+<p><strong>CreateComponent</strong> creates a new component instance in related feature and sets its attributes. For non-repeating components of a feature, it behaves like Create-or-Update (if G3E_CID is not specified). If G3E_CID is specified, it must not match any existing row. For repeating components, a new row is always created.</p>
+<p><strong>UpdateComponent</strong> updates attributes of a component instance. For non-repeating components of a feature, it behaves like Create-or-Update (if G3E_CID is not specified). If G3E_CID is specified, it must match an existing row. For repeating components, G3E_CID is mandatory.</p>
+<p><strong>DeleteComponent</strong> deletes a component instance. G3E_CID is mandatory.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Feature reference. References fref in a CreateFeature or UpdateFeature record which preceeds this transaction.</td>
+</tr>
+<tr>
+<td>G3E_CNO</td>
+<td>Int</td>
+<td>Y</td>
+<td>G3E_CNO</td>
+</tr>
+<tr>
+<td>G3E_CID</td>
+<td>Int</td>
+<td>(Y)</td>
+<td>G3E_CID. For CreateComponent the value is optional, for UpdateComponent it is mandatory only for repeating components, for DeleteComponent it is mandatory.</td>
+</tr>
+<tr>
+<td>dref</td>
+<td>Int</td>
+<td></td>
+<td>Detail (schematic) window reference. Identifies a CreateDetail or UpdateDetail transaction which precedes this transaction.<br><br>When populated, G3E_DETAILID from the detail transaction is written into this component instance.</td>
+</tr>
+<tr>
+<td>attributes</td>
+<td>object</td>
+<td></td>
+<td>Attribute values encoded as JSON object. <br><br>The property key is the attribute field name in uppercase. LTT key attributes (G3E_ID, G3E_FNO, G3E_FID, G3E_CNO, G3D_CID) are ignored even if present.<br><br>The property value is the attribute value.<br><br>See <a href="ProcessTransactions/Attribute-value-encoding.html">Attribute value encoding</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="relationshiptransactionbase">RelationshipTransactionBase</h3>
+<p>Derived from <a href="#transaction">Transaction</a>. The type attribute must match one of the following:</p>
+<ul>
+<li>EstablishRelationship</li>
+<li>DeleteRelationship</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Feature reference of the active feature. References fref in a CreateFeature or UpdateFeature record which preceeds this transaction.</td>
+</tr>
+<tr>
+<td>node</td>
+<td>Int</td>
+<td></td>
+<td>Logical node (0, 1 or 2) on the active feature. Mandatory only for selected relationships.<br><br><em>Ownership</em><br><br>For Child-Parent direction, identifies primary (1) or secondary (2) owner. If not present, primary is assumed.<br><br><em>Node-Edge Connectivity</em><br><br>Node1 or Node2 of the feature.</td>
+</tr>
+<tr>
+<td>relatedfref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Feature reference of the related feature. References fref in a CreateFeature or UpdateFeature record which preceeds this transaction.</td>
+</tr>
+<tr>
+<td>relatednode</td>
+<td>Int</td>
+<td></td>
+<td>Logical node (0, 1 or 2) on the related feature. Mandatory only for selected relationships.<br><br><em>Ownership</em><br><br>For Parent-Child direction, identifies primary (1) or secondary (2) owner in the child. If not present, primary is assumed.<br><br><em>Node-Edge Connectivity</em><br><br>Node1 or Node2 of the feature.</td>
+</tr>
+<tr>
+<td>G3E_RNO</td>
+<td>Int</td>
+<td>Y</td>
+<td>G3E_RNO of the relationship.</td>
+</tr>
+<tr>
+<td>attributes</td>
+<td>Object</td>
+<td></td>
+<td>Attribute values encoded as JSON object. The attribute values are written to the relationship support component of the active feature.<br><br>For Node-Ordered Connectivity, the attributes are written to the linear feature regardless of if it’s active or related.<br><br>See <a href="ProcessTransactions/Attribute-value-encoding.html">Attribute value encoding</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detailtransactionbase">DetailTransactionBase</h3>
+<p>Derived from <a href="#transaction">Transaction</a>. The type attribute must match one of the following:</p>
+<p><strong>CreateDetail</strong> transaction creates a new detail window reference. Technically this only means that a new G3E_DETAILID is generated. Subsequent AttachDetail command must be received to attach this G3E_DETAILID to a detail attribute component of a feature. CreateDetail allows explicit G3E_DETAILID to be passed in.
+Newly created G3E_DETAILID is reported in response.</p>
+<p><strong>UpdateDetail</strong> does the same as CreateDetail, except for that it requires G3E_DETAILID to be passed in. Alternatively, it can be retrieved from other CreateDetail or UpdateDetail within the same transaction if multiple detail references to the same G3E_DETAILID need to be created (with different attributes).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Detail (schematic) window reference. The value identifies this detail window in other transactions in the request. This mechanism enables referencing detail windows before their G3E_DETAILID is available.</td>
+</tr>
+<tr>
+<td>G3E_DETAILID</td>
+<td>Int</td>
+<td></td>
+<td>G3E_DETAILID – identifier of the detail window. When processing a CreateDetail window, this value is optional. If missing, a new value is generated from the database.</td>
+</tr>
+<tr>
+<td>relateddref</td>
+<td>Int</td>
+<td></td>
+<td>Detail transaction reference. When this property is populated, it must contain a valid dref in this transaction, which resolves to a valid G3E_DETAILID.<br><br>The design goal of this property is to allow the caller to create multiple references to the same detail window (identified by G3E_DETAILID) with possibly different attributes.</td>
+</tr>
+<tr>
+<td>attributes</td>
+<td>object</td>
+<td></td>
+<td>Detail window attribute values encoded as JSON object. The encoding is the same is in CreateComponent. See Detail window attributes (below) for a list of allowed attribute names.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Detail window attributes</strong></p>
+<p>The attributes names used in the request are fixed. They're mapped to attributes in the model using metadata.
+All attributes are optional. AttachDetail only writes the provided attributes to the detail attribute component. Completeness and validity of the data is the responsibility of the client.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USERNAME</td>
+<td>String</td>
+<td>G3E_USERNAMEANO</td>
+<td>Detail window user name.</td>
+</tr>
+<tr>
+<td>LEGEND</td>
+<td>Int</td>
+<td>G3E_LEGENDSETT-INGSNUMBERANO</td>
+<td>Legend settings number.</td>
+</tr>
+<tr>
+<td>MBRXLO</td>
+<td>double</td>
+<td>G3E_DETAILMBRXLOANO</td>
+<td>XLO of the MBR. See also MBR attribute.</td>
+</tr>
+<tr>
+<td>MBRYLO</td>
+<td>double</td>
+<td>G3E_DETAILMBRYLOANO</td>
+<td>YLO of the MBR. See also MBR attribute.</td>
+</tr>
+<tr>
+<td>MBRXHI</td>
+<td>double</td>
+<td>G3E_DETAILMBRXHIGHANO</td>
+<td>XHI of the MBR. See also MBR attribute.</td>
+</tr>
+<tr>
+<td>MBRYHI</td>
+<td>double</td>
+<td>G3E_DETAILMBRYHIGHANO</td>
+<td>YHI of the MBR. See also MBR attribute.</td>
+</tr>
+<tr>
+<td>MBR</td>
+<td>Geometry</td>
+<td>G3E_DETAILMBRXLOANO<br><br>G3E_DETAILMBRYLOANO<br><br>G3E_DETAILMBRXHIGHANO<br><br>G3E_DETAILMBRYHIGHANO</td>
+<td>Alternative way of passing the detail MBR as a geometry.<br><br>AttachDetail computes the MBR of the geometry passed in (any type) and stores the geometry MBR in the detail window attributes.</td>
+</tr>
+<tr>
+<td>DETAILTYPE</td>
+<td>Int</td>
+<td>G3E_DETAILTYPEANO</td>
+<td>Detail type.</td>
+</tr>
+<tr>
+<td>LOCATION</td>
+<td>String</td>
+<td>G3E_LOCATIONANO</td>
+<td>Location.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detailreferencetransactionbase">DetailReferenceTransactionBase</h3>
+<p>Derived from <a href="#transaction">Transaction</a>. The type attribute must match one of the following:</p>
+<ul>
+<li>AttachDetail</li>
+<li>DetachDetail</li>
+</ul>
+<p><strong>AttachDetail</strong> transaction attaches a detail window to a detail attribute component of a feature. If there is more than one component which can store detail attribute reference, a related component transaction (CreateComponent or UpdateComponent) must be referenced to properly identify the G3E_CNO, and for repeating components, also G3E_CID.
+If the component is not repeating, the transaction creates instance of the detail attribute component and updates its attributes.
+If the component is repeating and does not exist yet, a new component instance is created. If it necessary to create or update a specific instance, issue a CreateComponent or UpdateComponent transaction before AttachDetail and reference it using <em>componenttref</em>.</p>
+<p><strong>DetachDetail</strong> detaches the G3E_DETAILID from the detail attribute component of the instance. The transaction looks for G3E_DETAILID in detail attribute records and sets the attribute to NULL if it matches. If componenttref is populated, G3E_DETAILID is only removed when both G3E_CNO, G3E_CID and G3E_DETAILID match. This way it’s possible to selectively remove a detail from a feature.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Feature reference. References fref in a CreateFeature or UpdateFeature record which preceeds this transaction.</td>
+</tr>
+<tr>
+<td>dref</td>
+<td>Int</td>
+<td>Y</td>
+<td>Detail (schematic) window reference. Identifies a CreateDetail or UpdateDetail transaction which precedes this transaction.</td>
+</tr>
+<tr>
+<td>componenttref</td>
+<td>Int</td>
+<td></td>
+<td>Component transaction reference. When this property is populated, it must contain a valid tref in this transaction, which identifies a CreateComponent or UpdateComponent transaction which precedes this transaction.<br><br>AttachDetail or UpdateDetail uses G3E_CNO and G3E_CID values to precisely identify the component instance to update.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>The response contains a list of transactions in the same structure as the request, except:</p>
+<ul>
+<li>property <code>tref</code> is the same as in the request object. This enables matching transaction records in request and response.</li>
+<li><code>attributes</code> are not written to the response.</li>
+<li>newly generated G3E_CID and/or G3E_CID values are present.</li>
+<li><code>errors</code> property contains a list of errors from validation or processing. If any error is present (with some exceptions, see table), the transactions in the request were not executed and the HTTP status code is 400.</li>
+<li><code>links</code> property contains mapped hyperlink and file references. <code>source</code> property contains the original value passed in the request, <code>destination</code> contains the mapped physical path. The file is not copied by Feature Transaction Service, it is the duty of the caller to use source and destination to do the physical file operation.</li>
+</ul>
+<h2 id="error-codes">Error codes</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ERR_DUPLICATE_FREF</td>
+<td>A single <code>fref</code> is used by more than one CreateFeature, UpdateFeature or DeleteFeature transaction.</td>
+</tr>
+<tr>
+<td>ERR_DUPLICATE_FID</td>
+<td>A single G3E_FID is used by more than one CreateFeature, UpdateFeature or DeleteFeature transaction.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_FREF</td>
+<td><code>fref</code> value is not registered in any CreateFeature, UpdateFeature or DeleteFeature transaction.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_FNO</td>
+<td>G3E_FNO is invalid.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_CNO</td>
+<td>G3E_CNO is invalid.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_FID</td>
+<td>Invalid G3E_FID used for DeleteFeature.<br><br>Note: This error code is only a warning and does not cause the request to fail.</td>
+</tr>
+<tr>
+<td>ERR_NO_FID</td>
+<td>G3E_FID is missing.</td>
+</tr>
+<tr>
+<td>ERR_FID_NOT_EXPECTED</td>
+<td>G3E_FID is not expected in CreateFeature transaction.</td>
+</tr>
+<tr>
+<td>ERR_NO_CID</td>
+<td>G3E_CID is missing.</td>
+</tr>
+<tr>
+<td>ERR_ACCESS_DENIED</td>
+<td>User does not have role to execute the operation.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_RELATIONSHIP</td>
+<td>G3E_RNO, G3E_FNO and related G3E_FNO do not have a valid relationship metadata record.</td>
+</tr>
+<tr>
+<td>ERR_CID_ALREADY_EXISTS</td>
+<td>G3E_CID already exists in the component referenced in CreateComponent transaction.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_CNO_FOR_FNO</td>
+<td>Invalid G3E_CNO referenced for a G3E_FNO.</td>
+</tr>
+<tr>
+<td>ERR_DATA_TYPE_MISMATCH</td>
+<td>Attribute data contains invalid value for configured data type.</td>
+</tr>
+<tr>
+<td>ERR_CID_NOT_FOUND</td>
+<td>Row with G3E_CID was not found when trying to update or delete a component.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_RNO</td>
+<td>G3E_RNO is invalid.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_RELATIONSHIP_NODE</td>
+<td>Relationship node identifier of the feature (1 or 2) can’t be processed for this relationship.</td>
+</tr>
+<tr>
+<td>ERR_NO_RELATIONSHIP</td>
+<td>Relationship you're trying to delete does not exist.</td>
+</tr>
+<tr>
+<td>ERR_DB_ERROR</td>
+<td>Error was raised by the database during execution of a DML statement. Check server logs for details.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_TREF</td>
+<td>Referenced <code>tref</code> is not registered in any transaction.</td>
+</tr>
+<tr>
+<td>ERR_DUPLICATE_DREF</td>
+<td>A single <code>dref</code> is used by more than one CreateDetail or UpdateDetail transaction.</td>
+</tr>
+<tr>
+<td>ERR_INVALID_DREF</td>
+<td><code>dref</code> is not registered in any CreateDetail or UpdateDetail transaction.</td>
+</tr>
+<tr>
+<td>ERR_NO_DETAIL_REF_CNO</td>
+<td>G3E_CNO of detail attribute reference can’t be determined from provided data or no such G3E_CNO exists.</td>
+</tr>
+<tr>
+<td>ERR_NO_DETAILID</td>
+<td>G3E_DETAILID was not provided.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="ProcessTransactions/Request-examples.html">Request examples</a></li>
+<li><a href="ProcessTransactions/Response-examples.html">Response examples</a></li>
+</ul>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

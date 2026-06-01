@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address with Status 3</title>
+    <style>
+        /* Your CSS styles */
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="button-container">
+            <button class="button" onclick="fetchData()">Fetch Data</button>
+        </div>
+    </div>
+
+    <script>
+        function fetchData() {
+            var url = 'http://venbgt104pdc1.ingrnet.com/NwAnalyticalService1905/search/execute/114';
+            var requestData = {
+                "Parameters": [{
+                    "ParameterId": 1,
+                    "PickListKey": 3
+                }]
+            };
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) { // When the request is complete
+                    if (this.status == 200) { // If the request was successful
+                        var data = JSON.parse(this.responseText);
+                        populateTable(data); // Populate table with received data
+                    } else {
+                        var errorMessage = 'Error: ' + this.status;
+                        displayErrorMessage(errorMessage); // Display error message
+                    }
+                }
+            };
+
+            xhttp.send(JSON.stringify(requestData)); // Send the request with JSON data
+        }
+
+
+function populateTable(data) {
+    var tbody = document.getElementById('result-table').querySelector('tbody');
+    tbody.innerHTML = ''; // Clear existing table rows
+
+    if (Array.isArray(data.ResultItems)) {
+        // If ResultItems is an array, iterate over each address item
+        data.ResultItems.forEach(address => {
+            var row = document.createElement('tr');
+
+            // Iterate over each property of the address item
+            Object.entries(address).forEach(([key, value]) => {
+                var cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+    } else {
+        console.error('ResultItems is not an array or is missing in the data:', data);
+        // Optionally, you can handle this error by displaying a message to the user
+    }
+}
+        function displayErrorMessage(message) {
+            alert(message); // Display error message in a pop-up
+        }
+    </script>
+</body>
+</html>

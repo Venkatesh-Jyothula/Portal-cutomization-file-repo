@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetFeaturePrimaryGeometry </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetFeaturePrimaryGeometry ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getfeatureprimarygeometry">GetFeaturePrimaryGeometry</h1>
+
+<p>Get geometry of primary geographic component of a feature.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>GET</p>
+<p><strong>URL Template</strong></p>
+<p>/data/{G3E_FNO}/{G3E_FID}</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G3E_FNO</td>
+<td>Integer</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+<tr>
+<td>G3E_FID</td>
+<td>Integer</td>
+<td>Y</td>
+<td>G3E_FID</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>If a feature is available, the HTTP status code is 200 and response body contains data of the feature as GeoJSON FeatureCollection. If there are multiple component instances, each instance is returned as separate Feature.</p>
+<p>If a feature is not available for input parameters, HTTP status code is 200 and the FeatureCollection contains no features.</p>
+<p>If input parameters are invalid (non existent FNO, no primary geometry defined), HTTP status code is 400 and the response body contains error description.</p>
+<h2 id="sample">Sample</h2>
+<p><strong>Sample Request</strong></p>
+<p>http://machinename/NetworksVectorService/data/722/51746615</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;type&quot;: &quot;FeatureCollection&quot;,
+    &quot;features&quot;: [
+        {
+            &quot;type&quot;: &quot;Feature&quot;,
+            &quot;geometry&quot;: {
+                &quot;type&quot;: &quot;Polygon&quot;,
+                &quot;coordinates&quot;: [
+                    [
+                        [
+                            1339571.413,
+                            7069025.964
+                        ],
+                        [
+                            1339604.912,
+                            7068978.907
+                        ],
+                        [
+                            1339640.131,
+                            7069025.932
+                        ],
+                        [
+                            1339640.131,
+                            7069025.932
+                        ],
+                        [
+                            1339571.413,
+                            7069025.964
+                        ]
+                    ]
+                ]
+            },
+            &quot;properties&quot;: {
+                &quot;ID&quot;: &quot;51746615,722,1,20276,0&quot;
+            }
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Error Response</strong></p>
+<pre><code>{
+    &quot;Success&quot;: false,
+    &quot;ErrorCode&quot;: &quot;InvalidArgument&quot;,
+    &quot;ErrorMessage&quot;: &quot;Feature class 153 has no primary geographic component.&quot;
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

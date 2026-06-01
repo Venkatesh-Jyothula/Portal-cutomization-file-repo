@@ -1,0 +1,376 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Internal workflow </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Internal workflow ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="internal-workflow">Internal workflow</h1>
+
+<h2 id="feature-crud">Feature CRUD</h2>
+<p>Feature CUD transactions are executed in the order specified in the request. It is therefore important that transactions which establish context (CreateFeature, UpdateFeature, CreateDetail, UpdateDetail) precede those which reference given feature or detail window.</p>
+<table>
+<thead>
+<tr>
+<th>Transaction</th>
+<th>Processing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CreateFeature</td>
+<td>* Generate G3E_FID from database.<br>* Initialize internal mapping (fref -&gt; G3E_FID).</td>
+</tr>
+<tr>
+<td>UpdateFeature</td>
+<td>* Initialize internal mapping (fref -&gt; G3E_FID).</td>
+</tr>
+<tr>
+<td>DeleteFeature</td>
+<td>* Initialize internal mapping (fref -&gt; G3E_FID).<br>* Mark given (G3E_FNO, G3E_FID) pair for deletion.</td>
+</tr>
+<tr>
+<td>CreateDetail</td>
+<td>* Generate G3E_DETAILID from database (if not explicitly specified in request).<br>* Initialize internal mapping (dref -&gt; G3E_DETAILID).</td>
+</tr>
+<tr>
+<td>UpdateDetail</td>
+<td>* Initialize internal mapping (dref -&gt; G3E_DETAILID).</td>
+</tr>
+<tr>
+<td>CreateComponent</td>
+<td>* When editing, load existing component instances from database.<br>* Add new component instance.<br>* Determine new G3E_CID (as maximum + 1)<br>* Set attribute values from request.<br>* Set G3E_DETAILID (if requested)</td>
+</tr>
+<tr>
+<td>UpdateComponent</td>
+<td>* Load existing component instances from database.<br>* Find component instance by G3E_CID.<br>* Set attribute values from request.<br>* Set G3E_DETAILID (if requested)</td>
+</tr>
+<tr>
+<td>DeleteComponent</td>
+<td>* Load existing component instances from database.<br>* Find component instance by G3E_CID.<br>* Mark component for deletion.</td>
+</tr>
+<tr>
+<td>AttachDetail</td>
+<td>* Determine detail attribute component from metadata.<br>* Create new detail attribute component instance (if it does not exist) or find existing component instance (using componenttref)<br>* Compute detail MBR from data in request.<br>* Perform configuration to storage coordinate transformation.<br>* Set detail reference attributes (from referenced CreateDetail or UpdateDetail).</td>
+</tr>
+<tr>
+<td>DetachDetail</td>
+<td>* Determine detail attribute component from metadata.<br>* Create new detail attribute component instance (if it does not exist) or find existing component instance (using componenttref)<br>* Remove G3E_DETAILID (set to NULL)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="functional-interfaces">Functional interfaces</h2>
+<p>Feature Transaction Service is not binary-compatible with original G3E.exe model, therefore it does not support direct execution of Functional and other interfaces.
+Some built-in interfaces are reimplemented for the FTS model and executed:</p>
+<ul>
+<li>PFIFace.SetSubsettingAttribute
+Computes regional subsetting region from feature geometry and sets the subsetting attribute.</li>
+</ul>
+<h2 id="serialize-model-to-database-transactions">Serialize model to database transactions</h2>
+<p>The cumulative updates done to the feature object model in memory are executed as individual DELETE, UPDATE or INSERT statements to the database. Multiple updates to the same component by more than one transaction result in only one command.</p>
+<p>The logic in pseudo-code:</p>
+<pre><code>For each feature in current transaction:
+    If (feature is marked for deletion)
+        For each component (order by G3E_DELETEORDINAL)
+           Delete all instances 
+    Else
+        For each component (order by G3E_DELETEORDINAL) 
+            If &quot;deleted&quot;
+                DELETE
+        For each component (order by G3E_INSERTORDINAL)
+            If &quot;updated&quot;
+                UPDATE (updated attributes)
+            If &quot;inserted&quot;
+                INSERT (attributes with explicitly set values)
+</code></pre>
+<h2 id="relationships">Relationships</h2>
+<p>Relationship processing in FTS matches logic implemented by Relationship Manager in HxGN NetWorks Core.</p>
+<p><strong>EstablishRelationship</strong> transaction processing:</p>
+<p><strong>Ownership</strong></p>
+<ul>
+<li>Create support component in parent (if needed).</li>
+<li>Get G3E_ID of parent component (this involves a database request).</li>
+<li>Create support component in child (if needed).</li>
+<li>Set owner ID field in child.</li>
+</ul>
+<p><strong>Many-Ownership</strong></p>
+<ul>
+<li>Create support component in parent (if needed).</li>
+<li>Verify that parent is not already among existing parents in child support component.</li>
+<li>Create support component in child (if needed).</li>
+<li>Set owner in child component.</li>
+</ul>
+<p><strong>Node-Edge Connectivity</strong></p>
+<ul>
+<li>Create support component in active feature (if needed).</li>
+<li>Create support component in related feature (if needed).</li>
+<li>Find node IDs for both features.</li>
+<li>Determine new node ID
+<ul>
+<li>If both are NULL or 0, generate new ID from sequence in database.</li>
+<li>If node ID of active feature is empty, use ID of related feature.</li>
+<li>If both IDs are populated, use node ID of related feature.</li>
+</ul>
+</li>
+<li>Set corresponding node attributes.</li>
+</ul>
+<p><strong>Node-Ordered Connectivity</strong></p>
+<ul>
+<li>Determine Linear feature from Active and Related feature.</li>
+<li>Create support component in Linear feature (if needed).</li>
+<li>Update corresponding FNO and FID fields.</li>
+</ul>
+<p><strong>DeleteRelationship</strong> transaction processing:</p>
+<p><strong>Ownership</strong></p>
+<ul>
+<li>Get support component in parent (if needed).</li>
+<li>Get G3E_ID of parent component.</li>
+<li>Get support component in child (if needed).</li>
+<li>Check if relationship exists.</li>
+<li>Set child owner ID to NULL.</li>
+</ul>
+<p><strong>Many-Ownership</strong></p>
+<ul>
+<li>Get support component in child (if needed).</li>
+<li>Find related component instance with related parent feature.</li>
+<li>Delete component instance in child.</li>
+</ul>
+<p><strong>Node-Edge Connectivity</strong></p>
+<ul>
+<li>Get list of related features of active feature.</li>
+<li>Get list of related features of related feature.</li>
+<li>Get support component in active feature.</li>
+<li>Get support component in related feature.</li>
+<li>Set corresponding nodes (see table below).</li>
+</ul>
+<p><strong>Node-Ordered Connectivity</strong></p>
+<ul>
+<li>Determine Linear feature from Active and Related feature.</li>
+<li>Get support component in Linear feature (if needed).</li>
+<li>Find related (non-Linear) feature row.</li>
+<li>Update corresponding FNO and FID fields to NULL.</li>
+</ul>
+<p><strong>Node-Edge connectivity</strong> delete logic</p>
+<p>A = Active feature
+R = related feature</p>
+<table>
+<thead>
+<tr>
+<th>Active nodes of FNO</th>
+<th>Related nodes of FNO</th>
+<th>Active node ID occurrences</th>
+<th>Related node ID occurrences</th>
+<th>Actions (nodes set to NULL)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>A(1), A(2), R(1), R(2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>M</td>
+<td>A(1), A(2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>M</td>
+<td>1</td>
+<td>R(1), R(2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>M</td>
+<td>M</td>
+<td>A(1), A(2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>R(node)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>M</td>
+<td>A(1), A(2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>M</td>
+<td>1</td>
+<td>R(node)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>M</td>
+<td>M</td>
+<td>R(node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>A(node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>M</td>
+<td>A(node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>M</td>
+<td>1</td>
+<td>R(1), R(2)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>M</td>
+<td>M</td>
+<td>A(node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>A(node), R(related node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>M</td>
+<td>A(node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>M</td>
+<td>1</td>
+<td>R(related node)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>M</td>
+<td>M</td>
+<td>R(related node)</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

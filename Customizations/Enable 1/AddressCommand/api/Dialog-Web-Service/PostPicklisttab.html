@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>PostPicklisttab </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="PostPicklisttab ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="postpicklisttab">PostPicklisttab</h1>
+
+<p>This API is to support field value filter along with multicolumn. The response includes key, value, and additional columns value for a given G3E_TANO.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{ServiceName}/PickList/{TANO}?pCONF={pCONF}&amp;pLCID={PLCID}&amp;pJOB={pJOB}&amp;Index={PINDEX}&amp;Size={PSIZE}&amp;pFID={PFID}&amp;pCID={PCID}&amp;Filter={PFILTER}&amp;apiVersion={apiVersion}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pCONF</td>
+<td>Connected GTech configuration</td>
+</tr>
+<tr>
+<td>pLCID</td>
+<td>Locale language indentifier of client</td>
+</tr>
+<tr>
+<td>pJOB</td>
+<td>GTech job identifier</td>
+</tr>
+<tr>
+<td>PINDEX</td>
+<td>Paging index number</td>
+</tr>
+<tr>
+<td>PSIZE</td>
+<td>Paged records to be returned</td>
+</tr>
+<tr>
+<td>PFID</td>
+<td>Feature Identifier used for Fieldvalue Filtering</td>
+</tr>
+<tr>
+<td>PCID</td>
+<td>Compoenent Identifier used for Fieldvalue Filtering</td>
+</tr>
+<tr>
+<td>PFILTER</td>
+<td>Filter string for Picklist</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>GTDWS service version. Supported versions are 2.2.0 and 2.3.0.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>FieldValue Filter</strong></p>
+<p>When G3E_FIELDVALUEFILTER for TANO is not null, this API helps to retrieve the filtered picklist.
+In the request, TANO along with the involved TANOs and its values should be passed in request body. The response returns the filtered Picklist.</p>
+<p>For example: TANO - 208010008 has G3E_FIELDVALUEFILTER set. In request body, the TANO's and selected values are sent. The service will evaluate the filter using these values.</p>
+<p>If FID is passed, field value filter is evaluated by considering database values for missing TANOs.</p>
+<p><strong>Case 1: FID is null</strong></p>
+<p>TANO and value of all attributes in the filter need to be sent in post body.</p>
+<p><strong>Case 2: FID and CID are not null</strong></p>
+<p>TANO and value of all attributes in the filter need not to be sent in post body. The missing values will be considered from database. This is applicable when Field value filter attributes are available in multiple tabs.</p>
+<p>Note: When CID is null/invalid first available record for the given FID will be considered.</p>
+<p>For type ahead filtering, if filter needs to be done on reserved characters, partially encoded value needs to be sent from client. Specially partial encoding needs to be done for &quot;+&quot;,&quot;/&quot;</p>
+<p>For example: reserved character &quot;+&quot; needs to be sent like %2B, &quot;/&quot; needs to be sent with %2f.</p>
+<p>http://{HostName}/{GTDWS ServiceName}/PickList/7118?pLCID=0009&amp;pFID=133167742&amp;apiVersion=2.2.0&amp;pFilter=Z%2b</p>
+<p>When there is an error from package related to metadata, a generic error will be shown. The Oracle error along with the ORA error code will be logged in database.</p>
+<p><strong>Sample Request</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/picklist/300100172?pLCID=0009&amp;FID=133167742&amp;CID=1&amp;apiVersion=2.2.0</p>
+<p><strong>Sample Request</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/PickList/22010101?apiVersion=2.2.0&amp;FID=231957315&amp;pFilter=ARM</p>
+<p><strong>Post Request Body</strong></p>
+<pre><code class="lang-js">[
+    {&quot;ATTRIBUTETANO&quot;:22010102,&quot;ATTRIBUTEVALUE&quot;:&quot;BELL&quot;},
+    {&quot;ATTRIBUTETANO&quot;:22010181,&quot;ATTRIBUTEVALUE&quot;:&quot;CLD&quot;},
+    {&quot;ATTRIBUTETANO&quot;:22010182,&quot;ATTRIBUTEVALUE&quot;:&quot;EXT&quot;}
+]
+</code></pre>
+<p><strong>Post Request Body with Field value filter</strong></p>
+<pre><code class="lang-js">[
+    {&quot;ATTRIBUTETANO&quot;:22010102,&quot;ATTRIBUTEVALUE&quot;:&quot;BELL&quot;}
+]
+</code></pre>
+<p><strong>Sample Response with field value filter</strong></p>
+<pre><code class="lang-js">{
+  &quot;items&quot;: [
+    {
+      &quot;ATTRIBUTEPNOKEY&quot;: &quot;ARMCO&quot;,
+      &quot;ATTRIBUTEPNOVALUE&quot;: &quot;ARMCO PIPE&quot;,
+      &quot;ATTRIBUTEADDITIONAL&quot;: null
+    },
+    {
+      &quot;ATTRIBUTEPNOKEY&quot;: &quot;CONDUIT&quot;,
+      &quot;ATTRIBUTEPNOVALUE&quot;: &quot;CONDUIT&quot;,
+      &quot;ATTRIBUTEADDITIONAL&quot;: null
+    }
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

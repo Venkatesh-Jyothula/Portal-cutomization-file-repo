@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetTraceResults </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetTraceResults ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="gettraceresults">GetTraceResults</h1>
+
+<p>Returns all the trace results corresponding to the given trace number (tno).</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{TraceServiceName}/results/trace/{tno}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Optional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tno</td>
+<td>Trace Number.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>pageNo</td>
+<td>Page Number.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>Page Size.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Augment</td>
+<td>Adding new attributes to the result set by providing attribute numbers(ano's) or attribute field names (ComponentName.AttributeFieldName).</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Sum</td>
+<td>Sum of a response parameter or simple arithmetic computation of response fields.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Avg</td>
+<td>Average of a response parameter or simple arithmetic computation of response fields.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>Maximum value of a response parameter or simple arithmetic computation of response fields.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Min</td>
+<td>Minimum value of a response parameter or simple arithmetic computation of response fields.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GroupBy</td>
+<td>Grouping the response with a response parameters.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>OrderBy</td>
+<td>Ordering the response with a response parameters.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Distinct</td>
+<td>Distinct value of the response with a response parameter.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Subst</td>
+<td>Substituting a parameter in the result.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Function</td>
+<td>Executing an oracle function which always returns a scalar value.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksAnayticalService/trace/results/37976?pageNo=1&amp;pageSize=1&amp;Sum=G3E_FID-G3E_CID&amp;Sum=G3E_FID&amp;Min=G3E_CID&amp;Max=G3E_FID&amp;Avg=G3E_FID&amp;Subst==G3E_CID,G3E_FID=831964,Small&amp;Augment=310003@INSTALLEDDATE&amp;OrderBy=G3E_FID</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;totalCount&quot;: 2683,
+    &quot;aggregate&quot;: [
+        {
+            &quot;name&quot;: &quot;Sum&quot;,
+            &quot;field&quot;: &quot;G3E_FID-G3E_CID&quot;,
+            &quot;value&quot;: 2397719970
+        },
+        {
+            &quot;name&quot;: &quot;Sum&quot;,
+            &quot;field&quot;: &quot;G3E_FID&quot;,
+            &quot;value&quot;: 2397722653
+        },
+        {
+            &quot;name&quot;: &quot;Average&quot;,
+            &quot;field&quot;: &quot;G3E_FID&quot;,
+            &quot;value&quot;: 893672.25232948188
+        },
+        {
+            &quot;name&quot;: &quot;Max&quot;,
+            &quot;field&quot;: &quot;G3E_FID&quot;,
+            &quot;value&quot;: 7677909
+        },
+        {
+            &quot;name&quot;: &quot;Min&quot;,
+            &quot;field&quot;: &quot;G3E_CID&quot;,
+            &quot;value&quot;: 1
+        }
+    ],
+    &quot;items&quot;: [
+        {
+            &quot;G3E_TNO&quot;: 38004,
+            &quot;G3E_GROUP&quot;: &quot;831964&quot;,
+            &quot;G3E_TRACEORDER&quot;: 1,
+            &quot;G3E_SOURCEID&quot;: 0,
+            &quot;G3E_SOURCEFID&quot;: 0,
+            &quot;G3E_SOURCECID&quot;: 0,
+            &quot;G3E_SOURCENODE&quot;: 0,
+            &quot;G3E_COST&quot;: 0,
+            &quot;G3E_NODE1&quot;: 70007495,
+            &quot;G3E_NODE2&quot;: 0,
+            &quot;G3E_ID&quot;: 556193,
+            &quot;G3E_FID&quot;: 831964,
+            &quot;G3E_FNO&quot;: 313,
+            &quot;G3E_CNO&quot;: 30,
+            &quot;G3E_CID&quot;: Small,
+            &quot;USER_COL1&quot;: null,
+            &quot;USER_COL2&quot;: null,
+            &quot;USER_COL3&quot;: null,
+            &quot;G3E_FNO1&quot;: null,
+            &quot;G3E_FNO2&quot;: null,
+            &quot;G3E_REVFLAG&quot;: null,
+            &quot;STOP_CRITERIA&quot;: null,
+            &quot;CUMULATIVE_STOP_CRITERIA&quot;: null,
+            &quot;INSTALLEDDATE&quot;: &quot;2005-05-03T09:40:17&quot;
+        }...
+     }
+</code></pre>
+<p><strong>Sample Request for GroupBy</strong></p>
+<p>http://hostname/NetworksAnayticalService/trace/results/37976?GroupBy=G3E_FNO</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;totalCount&quot;: 11,
+    &quot;items&quot;: [
+        {
+            &quot;G3E_FNO&quot;: 313,
+            &quot;count&quot;: 270
+        },
+        {
+            &quot;G3E_FNO&quot;: 306,
+            &quot;count&quot;: 1591
+        }...
+    ]
+}
+</code></pre>
+<p><strong>Sample Request for substitution</strong></p>
+<p>http://hostname/NetworksAnayticalService/trace/results/37976?Subst=G3E_CID,G3E_FID=831964,Small</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;totalCount&quot;: 2683,
+    &quot;items&quot;: [
+        {
+            &quot;G3E_TNO&quot;: 38004,
+            &quot;G3E_GROUP&quot;: &quot;831964&quot;,
+            &quot;G3E_TRACEORDER&quot;: 1,
+            &quot;G3E_SOURCEID&quot;: 0,
+            &quot;G3E_SOURCEFID&quot;: 0,
+            &quot;G3E_SOURCECID&quot;: 0,
+            &quot;G3E_SOURCENODE&quot;: 0,
+            &quot;G3E_COST&quot;: 0,
+            &quot;G3E_NODE1&quot;: 70007495,
+            &quot;G3E_NODE2&quot;: 0,
+            &quot;G3E_ID&quot;: 556193,
+            &quot;G3E_FID&quot;: 831964,
+            &quot;G3E_FNO&quot;: 313,
+            &quot;G3E_CNO&quot;: 30,
+            &quot;G3E_CID&quot;: Small,
+            &quot;USER_COL1&quot;: null,
+            &quot;USER_COL2&quot;: null,
+            &quot;USER_COL3&quot;: null,
+            &quot;G3E_FNO1&quot;: null,
+            &quot;G3E_FNO2&quot;: null,
+            &quot;G3E_REVFLAG&quot;: null,
+            &quot;STOP_CRITERIA&quot;: null,
+            &quot;CUMULATIVE_STOP_CRITERIA&quot;: null,
+            &quot;INSTALLEDDATE&quot;: &quot;2005-05-03T09:40:17&quot;
+        }...
+     }
+</code></pre>
+<p><strong>Sample Request for functions</strong></p>
+<p>http://hostname/NetworksAnayticalService/trace/results/37976?augment=BUS_N.SUBSTATION_NAME&amp;function=GETFEATURENAME.GETFEATURENAMEBYFNOANDFID@FeatureName,FindFeatureNameByFNOANDFID</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;totalCount&quot;: 2683,
+    &quot;items&quot;: [
+        {
+            &quot;G3E_TNO&quot;: 38004,
+            &quot;G3E_GROUP&quot;: &quot;831964&quot;,
+            &quot;G3E_TRACEORDER&quot;: 1,
+            &quot;G3E_SOURCEID&quot;: 0,
+            &quot;G3E_SOURCEFID&quot;: 0,
+            &quot;G3E_SOURCECID&quot;: 0,
+            &quot;G3E_SOURCENODE&quot;: 0,
+            &quot;G3E_COST&quot;: 0,
+            &quot;G3E_NODE1&quot;: 70007495,
+            &quot;G3E_NODE2&quot;: 0,
+            &quot;G3E_ID&quot;: 556193,
+            &quot;G3E_FID&quot;: 831964,
+            &quot;G3E_FNO&quot;: 313,
+            &quot;G3E_CNO&quot;: 30,
+            &quot;G3E_CID&quot;: 1,
+            &quot;USER_COL1&quot;: null,
+            &quot;USER_COL2&quot;: null,
+            &quot;USER_COL3&quot;: null,
+            &quot;G3E_FNO1&quot;: null,
+            &quot;G3E_FNO2&quot;: null,
+            &quot;G3E_REVFLAG&quot;: null,
+            &quot;STOP_CRITERIA&quot;: null,
+            &quot;CUMULATIVE_STOP_CRITERIA&quot;: null,
+            &quot;FEATURENAME&quot;: &quot;Primary Switch&quot;,
+            &quot;FINDFEATURENAMEBYFNOANDFID&quot;: &quot;Primary Switch&quot;
+        }...
+     }
+</code></pre>
+<h2 id="remarks">Remarks</h2>
+<p>This method supports pagination and aggregation. If pagination parameters are specified, it returns all the trace parameters in pages honoring the page size, when pagination parameters are specified.</p>
+<p>It returns entire Trace results corresponding to the given Trace number, including the additional attributes.</p>
+<p>If aggregation parameters are specified, then aggregation is performed on the result set. These requests are included as part of optional parameters. Multiple aggregation parameters will be supported.
+All the operations performed are added under a new parameter &quot;aggregate&quot;. It includes name, field and value of the requested aggregates.
+Simple arithmetic operations can also be performed on the response fields for aggregation. Supported operators for arithmetic operation are +, -, *, /.
+The arithmetic expression will be evaluated for each response item and then the resulting aggregation will be performed.
+Accepted input types for aggregation are attribute numbers and response field names. The corresponding field name for the specified attribute number should be part of the response.
+Sample allowable inputs: SUM=100, MIN=g3e_fid</p>
+<p>For augmentation, accepted input types are attribute number and ComponentName.AttributeFieldName. user can also specify an alias name which is used to display in the result set.
+The augmented fields can also participate in aggregation or substitution. Multiple augmented fields can be specified using a comma seperator.
+Sample allowable inputs: augment=100,100@augmentedfield1,componentname.augmentfield2,componentname.augmentfield2@augmentedfield3</p>
+<p>Substitution is performed on individual attributes or attributes in specific ranges. First parameter is the attribute parameter that needs to be evaluated, second parameter is the expression that needs to be evaluated upon and the third parameter is the substituted value that is assigned.
+The switching value will be replaced with the original value in the response. For any response item that do not fall under the expression, the original value for that parameter is retained. Multiple substitution fileds can be provided by using a comma seperator. Supported operators are : =, &lt;&gt;, &lt;, &gt;, &gt;=, &lt;=, OR, AND, NOT LIKE, LIKE, IN.
+Sample allowable inputs: Subst=G3E_FID,Small,G3E_FID &gt;= 470408 AND G3E_FID &lt;= 470600, G3E_FID,Medium,G3E_CNO = 29 AND G3E_CID = 1</p>
+<p>If function parameter is specified, then the input function is executed. The function return value when executed is always a scalar value.
+Adds a new parameter to the result set with its response as the function return value. The new parameter name is provided as the alias name when specifying the function parameter. When alias name is not provided the function name will be added as the new parameter name.
+The parameters to the Oracle function will always be G3E_FNO and G3E_FID from the output result set. The resulting value through the execution of this function is always a single value which is displayed as the parameter value.</p>
+<p>When input parameters include augmentation, functions, aggregation and substituion, the order of execution is augmentation, functions, substitution, GroupBy/OrderBy/Distinct and then aggregation.</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

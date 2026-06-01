@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Metadata for Features </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Metadata for Features ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-metadata-for-features">Get Metadata for Features</h1>
+
+<p>Returns metadata about the HxGN NetWorks Core feature types.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/metadata/features/{filter?}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter</td>
+<td>Optional</td>
+<td>Controls what type of metadata is returned in the response. Possible values are as follows: (1) <not specified=""> - default response includes basic metadata about the feature. (2) all - include metadata for all components, attributes and relationships of the feature. (3) components - include metadata about the components of the feature. (4) relationships - include metadata about the relationships of the feature. (5) components,relationships - include metadata about the components and relationships of the feature.</not></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFeatureModelService/metadata/features/components</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>[
+    {
+        &quot;Fno&quot;: 11,
+        &quot;Username&quot;: &quot;Water Pump&quot;,
+        &quot;Name&quot;: &quot;WaterPump&quot;,
+        &quot;PrimaryGeographicCno&quot;: 1102,
+        &quot;PrimaryAttributeCno&quot;: 1101,
+        &quot;PrimaryDetailCno&quot;: 1104,
+        &quot;Components&quot;: [
+            {
+                &quot;Cno&quot;: 1101,
+                &quot;Username&quot;: &quot;Water Pump Attributes&quot;,
+                &quot;Name&quot;: &quot;WATERPUMP_N&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;WATERPUMP_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 1102,
+                &quot;Username&quot;: &quot;Water Pump Point&quot;,
+                &quot;Name&quot;: &quot;WATERPUMP_PT&quot;,
+                &quot;Type&quot;: &quot;SpatialPoint&quot;,
+                &quot;GeometryType&quot;: &quot;OrientedPointGeometry&quot;,
+                &quot;Table&quot;: &quot;WATERPUMP_PT&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 1103,
+                &quot;Username&quot;: &quot;Water Pump Label&quot;,
+                &quot;Name&quot;: &quot;WATERPUMP_LB&quot;,
+                &quot;Type&quot;: &quot;GraphicText&quot;,
+                &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+                &quot;Table&quot;: &quot;WATERPUMP_LB&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 31,
+                &quot;Username&quot;: &quot;Common Attributes&quot;,
+                &quot;Name&quot;: &quot;COMMON_RECORD&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;COMMON_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 32,
+                &quot;Username&quot;: &quot;Compatible Unit Attributes&quot;,
+                &quot;Name&quot;: &quot;CUC_RECORD&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;COMPUNIT_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            },
+            {
+                &quot;Cno&quot;: 33,
+                &quot;Username&quot;: &quot;Hyperlink Attributes&quot;,
+                &quot;Name&quot;: &quot;HYPERLINK_RECORD&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            },
+            {
+                &quot;Cno&quot;: 55,
+                &quot;Username&quot;: &quot;Water Connectivity Attributes&quot;,
+                &quot;Name&quot;: &quot;WATERCONNECT_N&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;WATERCONNECT_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 56,
+                &quot;Username&quot;: &quot;Water Common Attributes&quot;,
+                &quot;Name&quot;: &quot;WATERCOMMON_N&quot;,
+                &quot;Type&quot;: &quot;NonGraphic&quot;,
+                &quot;Table&quot;: &quot;WATERCOMMON_N&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 40,
+                &quot;Username&quot;: &quot;Miscellaneous Label&quot;,
+                &quot;Name&quot;: &quot;MISC_LABEL&quot;,
+                &quot;Type&quot;: &quot;GraphicText&quot;,
+                &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+                &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            },
+            {
+                &quot;Cno&quot;: 41,
+                &quot;Username&quot;: &quot;Leader Line&quot;,
+                &quot;Name&quot;: &quot;LEADER_LINE&quot;,
+                &quot;Type&quot;: &quot;SpatialLine&quot;,
+                &quot;GeometryType&quot;: &quot;PolylineGeometry&quot;,
+                &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                &quot;IsDetail&quot;: false,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            },
+            {
+                &quot;Cno&quot;: 1104,
+                &quot;Username&quot;: &quot;Water Pump Point Detail&quot;,
+                &quot;Name&quot;: &quot;WATERPUMPDET_PT&quot;,
+                &quot;Type&quot;: &quot;SpatialPoint&quot;,
+                &quot;GeometryType&quot;: &quot;OrientedPointGeometry&quot;,
+                &quot;Table&quot;: &quot;WATERPUMPDET_PT&quot;,
+                &quot;IsDetail&quot;: true,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 1105,
+                &quot;Username&quot;: &quot;Water Pump Label Detail&quot;,
+                &quot;Name&quot;: &quot;WATERPUMPDET_LB&quot;,
+                &quot;Type&quot;: &quot;GraphicText&quot;,
+                &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+                &quot;Table&quot;: &quot;WATERPUMPDET_LB&quot;,
+                &quot;IsDetail&quot;: true,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: false
+            },
+            {
+                &quot;Cno&quot;: 45,
+                &quot;Username&quot;: &quot;Detail Miscellaneous Label&quot;,
+                &quot;Name&quot;: &quot;MISCLABDET_ML&quot;,
+                &quot;Type&quot;: &quot;GraphicText&quot;,
+                &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+                &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                &quot;IsDetail&quot;: true,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            },
+            {
+                &quot;Cno&quot;: 44,
+                &quot;Username&quot;: &quot;Detail Leader Line&quot;,
+                &quot;Name&quot;: &quot;LDRLINDET_LL&quot;,
+                &quot;Type&quot;: &quot;SpatialLine&quot;,
+                &quot;GeometryType&quot;: &quot;PolylineGeometry&quot;,
+                &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                &quot;IsDetail&quot;: true,
+                &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+                &quot;IsLTT&quot;: true,
+                &quot;IsRepeating&quot;: true
+            }
+        ]
+    },
+    ... truncated for brevity
+]
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

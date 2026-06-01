@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Merkband Names</title>    
+	<style>
+        * {
+            box-sizing: border-box;
+        }
+		body {
+            margin: 0;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, button, select {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+	<script src="Merkband.js"></script>
+    <div class="container">
+        <!-- <h2>Reserve Merkband Names</h2> -->
+        
+        <label for="numMerkbandNames">Number of Merkband Names</label>
+        <input type="number" id="numMerkbandNames" placeholder="Enter number">
+        <button id="btnReserve" onclick="reserveNames()">Reserve</button>
+
+        <label for="reservedList">Reserved Merkband Names</label>
+        <select id="reservedList" multiple size="6">
+            <!-- Dynamically populated options -->
+        </select>
+
+        <div class="button-group">
+            <button id="btnAgree" onclick="agreeAction()">Agree</button>
+            <button id="btnDisagree" onclick="disagreeAction()">Disagree</button>
+        </div>       
+    </div>
+	
+	
+	<!--
+    <script>
+        function reserveNames() {
+             let numMerkbandNames = document.getElementById('numMerkbandNames').value;
+            if (!numMerkbandNames || isNaN(numMerkbandNames)) {
+                parent.$NWP.msg.showInfo('Please enter a numeric value');
+                return;
+            }
+            numMerkbandNames = parseInt(numMerkbandNames);
+            if (numMerkbandNames <= 0 || numMerkbandNames > 10) {
+                numMerkbandNames>10 ?  
+					parent.$NWP.msg.showInfo("Can not generate more than 10 merkband names at  a time."):
+					parent.$NWP.msg.showInfo("Number of merkband names to be reserved cannot be negative or zero.");
+                return;
+								
+            }
+			getMerkbandNumbers(numMerkbandNames);
+        }
+		async function getMerkbandNumbers(noOfMerkbandNumbers) {
+		  try {
+		    debugger;
+		    const ReserveMerkbandAPIUrl = `${baseURL}/ReserveMerkbandPortalCustomService/PortalCustomization/reserve/${noOfMerkbandNumbers}`;
+			const response = await fetch(ReserveMerkbandAPIUrl, {
+			  method: 'GET',
+			  headers: {
+				'Content-Type': 'application/json'
+			  }
+			});
+            console.log(response);
+			if (!response.ok) {
+			  throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const data = await response.json();
+			console.log("Merkband Numbers:", data.merkbandNumbers);
+			populateReservedList(data.merkbandNumbers);
+			
+		  } catch (error) {
+			parent.$NWP.msg.showError("Error fetching Merkband numbers:" + error.message);
+		  }
+		  
+        }
+		function populateReservedList(merkbandNumbers) {
+            const reservedList = document.getElementById('reservedList');
+            reservedList.innerHTML = ''; // Clear existing entries
+
+            merkbandNumbers.forEach(number => {
+                const option = document.createElement('option');
+                option.value = number;
+                option.textContent = number;
+                reservedList.appendChild(option);
+            });
+
+            parent.$NWP.msg.showInfo(`${merkbandNumbers.length} Merkband numbers reserved.`);
+        }
+		async function deleteReservedMerkbandNames() {
+			const reservedList = Array.from(document.getElementById('reservedList').options)
+			.map(option => parseInt(option.value));
+
+			if (reservedList.length === 0) {
+				parent.$NWP.msg.showInfo("Please select Merkband numbers to delete.");
+				return;
+			}
+			
+			try {
+				const DeleteMErkbandAPIUrl = '${baseURL}/ReserveMerkbandPortalCustomService/PortalCustomization/DeleteReservedMerkbandNames';
+				const response = await fetch(DeleteMErkbandAPIUrl, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(reservedList)
+				});
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+                console.log(response);
+				const message = await response.text();
+				await parent.$NWP.msg.showInfo(message);
+
+				closeWindow();
+
+			} catch (error) {
+				parent.$NWP.msg.showError("Error deleting Merkband numbers: " + error.message);
+			}
+		}
+		
+        function agreeAction() {
+           ;
+			closeWindow();
+        }
+        function disagreeAction() {
+            
+			deleteReservedMerkbandNames();
+        }
+        function closeWindow() {
+           
+			closeWindow();
+        }
+		function closeWindow() {
+			if (window.parent.currentNewWindow) {
+                window.parent.currentNewWindow.destroy();
+            }
+        }
+    </script>
+	-->
+</body>
+</html>

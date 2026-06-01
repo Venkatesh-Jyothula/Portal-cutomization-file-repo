@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Feature Model API Overview </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Feature Model API Overview ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="feature-model-api-overview">Feature Model API Overview</h1>
+
+<p>The HxGN NetWorks Feature Model Service is a standard OData v4.0 web service that exposes HxGN NetWorks Core data and metadata as a simple, hierarchical data model of features, components, attributes and relationships. Support for the OData protocol makes the Feature Model Service immediately accessible by clients (such as Microsoft Excel and Power BI) that understand OData data sources. This greatly simplifies the extract, transform and load steps when performing business analytics on the HxGN NetWorks Core data.</p>
+<p>The HxGN NetWorks Core Web Services | Admin Console's Service Deployment module allows the administrator to easily define a feature model by selecting the features and components to include from a grid of all possible features and their components. After defining the model, the administrator deploys an instance of the Feature Model Service that can work with the model.</p>
+<p>The model features have simple properties for the FNO and FID and have complex properties for the components of the feature. The components have properties for each of their attributes. Repeating components are collections of complex properties. The relationship types that the feature participates in are also modeled as collection properties of the feature (e.g. Owns, OwnedBy, ConnectsTo, ConnectsFrom, Contains, ContainedBy, Node1Connects, Node2Connects).</p>
+<p>All of the workflows supported by the HxGN NetWorks Feature Model Service require a NetWorks_WFS license feature, except for the edit workflows, which require a NetWorks_WFST license feature.</p>
+<h1 id="supported-feature-model-service-workflows">Supported Feature Model Service Workflows</h1>
+<h2 id="querying-feature-data">Querying feature data:</h2>
+<p>The Feature Model Service supports a workflow that is essentially a spatially restricted, ad-hoc query within a single feature class.</p>
+<p>Clients use the $filter query parameter in the service call to fetch just the instances of the feature class that match the filter expression. The OData filter syntax supports logical, relational, arithmetic operators and a set of built-in functions that operator on numeric, string, date / time and collection data types.</p>
+<p>The queries for feature data can be spatially restricted via an optional bounding box parameter. OData’s support for spatial operations was limited to point features, which was insufficient for HxGN NetWorks Core data. Hence, the Feature Model Service replaced those built-in functions with a new bounding box (BBox) query parameter that spatially restricts the search for all feature geometry types.</p>
+<p>The queries for feature data can be further restricted to just the set features that are contained in a specified “FilterSet” parameter. The filter set can specify the result of a previous analytical operation (such as a trace or search from the Analytical Service) or from the pending feature edits in a job as follows:</p>
+<p>FilterSet = Trace.<trace id=""></trace></p>
+<p>FilterSet = Search.<search id=""></search></p>
+<p>FilterSet = Job.<job id=""></job></p>
+<p>FilterSet = <any table="">.<column>.<column value=""></column></column></any></p>
+<p>FilterSet can be used in addition to OData $filter expression and the BBOX spatial restriction query parameter.</p>
+<p>When the MeasureFeatures=true parameter is specified, then the linear and area type geometry components will be measured and returned in the response. If the BBOX parameter is specified then the percent of the feature that falls within the bounding box is also computed. For linear geometry feature components, there will be Length and Percent attributes added to the component. For area geometry components, there will be Area and Percent attributes added to the component.</p>
+<p>By default, all measurements are done using the curved Earth model (i.e. using geographic reference space). If MeasureOnCurvedEarth=false is specified, then the measurement will use the projection reference space.</p>
+<p>Client applications have full control over which feature properties are returned in the service response. There is also support for pagination of the response data via OData’s &quot;$count=true&quot;, “$top=N”, “$skip=N” and &quot;$orderBy={attribute}&quot; query parameters.</p>
+<p>For details, see the following topic:</p>
+<p><a href="Query-Feature-Data.html">Get Feature Data</a></p>
+<h2 id="editing-feature-data">Editing feature data:</h2>
+<p>The Feature Model Service provides a simple set of REST APIs for creating, updating and deleting HxGN NetWorks Core features.</p>
+<p>Clients create a new feature by sending an HTTP POST body with a Json description of the feature. This can be as simple as a Json object with just a G3E_FNO property specified. If the client requests that some or all components be returned in the response, it will see the components with their default attribute values filled in plus any attribute values populated by functional interfaces associated with feature creation.</p>
+<p>To update a feature, the client simply queries for the feature and requests that the components to be modified be returned in the response. Then the client updates the attributes and sends the feature and modified components back to the service with a HTTP PUT operation. To add a new repeating component to a feature, the client creates the Json for the component and omits the G3E_CID value or sets it to zero and includes the new component in a feature update operation.</p>
+<p>Features are easily deleted by sending a HTTP DELETE message with the feature type and G3E_FID in the URL.</p>
+<p>For details, see the following topic:</p>
+<p><a href="Edit-Feature-Data.html">Edit Feature Data</a></p>
+<h2 id="querying-feature-metadata">Querying feature metadata:</h2>
+<p>The Feature Model Service also provides easy access to feature metadata. There are two sets of API for metadata; one set returns metadata about the features, components, attributes and relationships for just the features in the published model, and the other set of APIs returns metadata on all HxGN NetWorks Core features, components, attributes and relationships. For details, see the following topics:</p>
+<p><a href="Model-Feature-Metadata.html">Get Model Metadata for Features</a></p>
+<p><a href="General-Feature-Metadata.html">Get General Metadata for Features</a></p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

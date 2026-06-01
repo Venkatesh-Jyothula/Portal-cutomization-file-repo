@@ -1,0 +1,822 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Execute </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Execute ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="execute">Execute</h1>
+
+<p>Perform a search and return the results.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{AnalyticalServiceName}/search/execute/{amno}?[Jobs={list of job names} | ActiveJob={job name} | apiVersion={apiVersion}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>amno</td>
+<td>G3E_AMNO from the search definition.</td>
+</tr>
+<tr>
+<td>pageNo</td>
+<td>Optional page Number. When pagination parameters are specified, the query results are returned in pages based on the requested page number and page size. Page number 1 is the first page.</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>Optional page Size.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>Analytical service version. Supported versions are 2.0.2012 and above.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Templates</strong></p>
+<p>Text Parameter</p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;TextValue&quot;: &quot;{text}&quot;
+        }
+    ]
+}
+</code></pre>
+<p>DateTime Parameter</p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;DateTimeValue&quot;: &quot;{date time string}&quot;
+        }
+    ]
+}
+</code></pre>
+<p>PickList Parameter</p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;PickListKey&quot;: &quot;{pick list key}&quot;
+        }
+    ]
+}
+</code></pre>
+<p>Text Parameter and AOI/AOILI and FilterSet</p>
+<pre><code class="lang-js">{
+  &quot;Parameters&quot; : [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;{text}&quot;
+    }
+  ],
+  &quot;Aoi&quot; : { // Object returned by the /Areas endpoint. E.g. :
+    &quot;UserName&quot;: &quot;{Area Name}&quot;,
+    &quot;Id&quot;: {
+      &quot;G3E_FID&quot;: {FID},
+      &quot;G3E_FNO&quot;: {FNO},
+      &quot;AOILIID&quot;: &quot;{AOILI}&quot;
+    },
+    &quot;Children&quot;: []
+  },
+  &quot;OverrideAoiThreshold&quot;: false,
+  &quot;FilterSet&quot;: &quot;Trace.19445&quot;
+}
+</code></pre>
+<p><strong>Post Body</strong></p>
+<table>
+<thead>
+<tr>
+<th>Post Body Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parameters</td>
+<td>Array of search input parameter objects.  Each parameter object can be one of:  TextValue, DateTimeValue, PickListKey</td>
+</tr>
+<tr>
+<td>Parameters[n].ParameterId</td>
+<td>The ID of the parameter.</td>
+</tr>
+<tr>
+<td>Parameters[n].TextValue</td>
+<td>Search definition takes a text string as input.</td>
+</tr>
+<tr>
+<td>Parameters[n].DateTimeValue</td>
+<td>Search definition takes a date / time as input.</td>
+</tr>
+<tr>
+<td>Parameters[n].PickListKey</td>
+<td>Search definition takes a pick list item as input.</td>
+</tr>
+<tr>
+<td>Parameters[n].LongValue</td>
+<td>Search definition takes an integer number as input.</td>
+</tr>
+<tr>
+<td>Parameters[n].DoubleValue</td>
+<td>Search definition takes a floating point number as input.</td>
+</tr>
+<tr>
+<td>Aoi</td>
+<td>Object returned by the Areas endpoint. Used to pass AOI and/or AOILI to a search definition that requires one as input.</td>
+</tr>
+<tr>
+<td>OverrideAoiThreshold</td>
+<td>Optional. The AoiThreshold is a metadata defined limit for the maximum number of features from an area to use when restricting searches. (See the G3E_GENERALPARAMETER topic in the HxGN NetWorks Core-Admin help). If the AoiOverwriteThreshold metadata parameter is set to -1 (meaning override is possible); and if the current database user has the role associated with G3E_AOIOverwriteThreshold in the G3E_ROLEASSOC_OPTABLE, then this OverrideAoiThreshold POST body parameter controls whether or not the limit will be enforced. When OverrideAoiThreshold is set to false and the AOI contains more possible feature instances than the limit, the search execution will return an error message that denotes how many possible matches were in the area. When this value is set to true, the search execution continues and returns all matching results. The default value is false.</td>
+</tr>
+<tr>
+<td>SpatialFilter</td>
+<td>Specifies a GeoJson Polygon that is used to restrict the search execution results. All of the features in the search result will be restricted to features that are within or touching the specified polygon. Detail features are included if their geographic referencing feature is in the polygon. Polygon is the only geometry type supported for spatial filters. A search request cannot contain both an AOI and a SpatialFilter value. The OverrideAoiThreshold parameter and the associated AOI processing also apply to the area defined by the spatial filter.</td>
+</tr>
+<tr>
+<td>MeasureFeatures</td>
+<td>When specified as true, the search result will be augmented with the length or area measurement of each feature that can be measured. If the search result was restricted by an AOI or spatial filter polygon, then the percentage of the features that fall within the spatial filter area will also be computed. Specifically, the geometry of the features that intersect the spatial boundary will be clipped and measured and the clipped measurement / the original measurement will be reported as a percent value.</td>
+</tr>
+<tr>
+<td>MeasureOnCurvedEarth</td>
+<td>When specified as true, the length or area measurement of each feature will be done using the geographic reference space; otherwise, the measurements will be done on the projection reference space.</td>
+</tr>
+<tr>
+<td>FilterSet</td>
+<td>Optional. Specifies a previous trace or search result set to join against to restrict the feature instances that will be included in the response. The pending edits in a job can also serve as a filter set. The FilterSet property value must match one of the following: (1) Trace.{traceId} (2) Search.{searchId} (3) Job.{jobId} (4) {table}.{column}.{value}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Results Template</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: {amno},
+  &quot;ResultId&quot;: &quot;{resultId}&quot;,
+  &quot;ResultUserName&quot;: &quot;{resultUserName}&quot;,
+  &quot;DatabaseAlias&quot;: &quot;{databaseAlias}&quot;,
+  &quot;Configuration&quot;: &quot;{gtechConfiguration}&quot;,
+  &quot;MaxLimitExceeded&quot;: {bool},
+  &quot;AoiThresholdExceededMessage&quot;: {threshold exceeded message},
+  &quot;ComponentField&quot;: &quot;{componentField}&quot;,
+  &quot;ComponentFieldUserName&quot;: &quot;{componentFieldUserName}&quot;,
+  &quot;InformationalField&quot;: &quot;{informationalField}&quot;,
+  &quot;InformationalFieldUserName&quot;: &quot;{informationalFieldUserName}&quot;,
+  &quot;ComponentField2&quot;: &quot;{componentField2}&quot;,
+  &quot;ComponentFieldUserName2&quot;: &quot;{componentFieldUserName2}&quot;,
+  &quot;InformationalField2&quot;: &quot;{informationalField2}&quot;,
+  &quot;InformationalFieldUserName2&quot;: &quot;{informationalFieldUserName2}&quot;,
+  &quot;Parameters&quot;: {inputParameters},
+  &quot;ResultItemsCount&quot;: {resultCount},
+  &quot;ResultItems&quot;: {resultItems}
+}
+</code></pre>
+<p><strong>Results</strong></p>
+<table>
+<thead>
+<tr>
+<th>Results Name</th>
+<th>Always Returned Or Optional</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G3E_AMNO</td>
+<td>Always</td>
+<td>The analysis mapping number for this search. G3E_ANALYSISMAPPING_OPTABLE.G3E_AMNO</td>
+</tr>
+<tr>
+<td>ResultId</td>
+<td>Optional</td>
+<td>The result id used to call WMS.GetLayer and used to call /search/delete or /search/fetch. The resultId is not set for searches that return no rows.</td>
+</tr>
+<tr>
+<td>ResultUserName</td>
+<td>Always</td>
+<td>The user facing name of the search results.</td>
+</tr>
+<tr>
+<td>DatabaseAlias</td>
+<td>Always</td>
+<td>The database service name from tnsnames.ora.</td>
+</tr>
+<tr>
+<td>Configuration</td>
+<td>Always</td>
+<td>The NetWorks configuration name from the CCM file.</td>
+</tr>
+<tr>
+<td>MaxLimitExceeded</td>
+<td>Always</td>
+<td>Boolean true or false if the maximum number of records was exceeded.</td>
+</tr>
+<tr>
+<td>AoiThresholdExceededMessage</td>
+<td>Optional</td>
+<td>This user message is present when the metadata defined AoiThreshold limit has been exceeded and the current user has the necessary user role to override the threshold. Example message: &quot;The number of possible search results from the area of interest, {0}, exceeds the threshold, {1}. Do you want to override the threshold and retrieve all results?&quot; If the user wants to override, the client should resubmit the search execute request with &quot;OverrideAoiThreshold&quot;: true added to the POST body of the request.</td>
+</tr>
+<tr>
+<td>ComponentField</td>
+<td>Optional</td>
+<td>The property name of the component field in the result items.  Use this to find the component field value in the results.</td>
+</tr>
+<tr>
+<td>ComponentFieldUserName</td>
+<td>Optional</td>
+<td>The user facing name of the component field.  Use this for the column header in the master results display.</td>
+</tr>
+<tr>
+<td>InformationalField</td>
+<td>Optional</td>
+<td>The property name of the informational field in the result items.  Use this to find the informational field value in the results.</td>
+</tr>
+<tr>
+<td>InformationalFieldUserName</td>
+<td>Optional</td>
+<td>The user facing name of the first component field. Use this for the column header in the master results display. The metadata for Find Feature and Find Component provides localized names for some of the data columns returned in the result items. The result items array of objects will use the component attribute names and informational attribute names. The corresponding user visible names are provided in the results header for display purposes.</td>
+</tr>
+<tr>
+<td>InformationalField</td>
+<td>Optional</td>
+<td>The property name of the first informational field in the result items. Use this to find the informational field value in the results.</td>
+</tr>
+<tr>
+<td>InformationalFieldUserName</td>
+<td>Optional</td>
+<td>The user facing name of the first informational field. Use this for the column header in the master results display.</td>
+</tr>
+<tr>
+<td>ComponentField2</td>
+<td>Optional</td>
+<td>The property name of the second component field in the result items. Use this to find the component field value in the results.</td>
+</tr>
+<tr>
+<td>ComponentFieldUserName2</td>
+<td>Optional</td>
+<td>The user facing name of the second component field. Use this for the column header in the master results display.</td>
+</tr>
+<tr>
+<td>InformationalField2</td>
+<td>Optional</td>
+<td>The property name of the second informational field in the result items. Use this to find the informational field value in the results.</td>
+</tr>
+<tr>
+<td>InformationalFieldUserName2</td>
+<td>Optional</td>
+<td>The user facing name of the second informational field. Use this for the column header in the master results display.</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>Always</td>
+<td>The search execute input parameters.</td>
+</tr>
+<tr>
+<td>ResultItemsCount</td>
+<td>Always</td>
+<td>The count of the number of result items found.</td>
+</tr>
+<tr>
+<td>ResultItems</td>
+<td>Always</td>
+<td>An array of result items.  Properties added by the search service are prefixed with GAO_NET.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample URL</strong></p>
+<p>Text value input.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/10?pageNo=1&amp;pageSize=5&amp;apiVersion=2.0.2012</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+  &quot;Parameters&quot; : [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;2&quot;
+    }
+  ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 10,
+  &quot;ResultId&quot;: &quot;10.9edd5a24-969e-45c1-b937-60bdbeb5c9b7&quot;,
+  &quot;ResultUserName&quot;: &quot;Find Component Address by Address Nbr&quot;,
+  &quot;DatabaseAlias&quot;: &quot;COMMP12C&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP12C1021&quot;,
+  &quot;MaxLimitExceeded&quot;: false,
+  &quot;ComponentField&quot;: &quot;ADDRESS_NUMBER&quot;,
+  &quot;ComponentFieldUserName&quot;: &quot;Address Nbr&quot;,
+  &quot;InformationalField&quot;: null,
+  &quot;InformationalFieldUserName&quot;: null,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;2&quot;
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 4,
+  &quot;ResultItems&quot;: [
+    {
+      &quot;ADDRESS_NUMBER&quot;: &quot;123&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Closure&quot;,
+      &quot;G3E_FID&quot;: 133525313,
+      &quot;G3E_FNO&quot;: 14900
+    },
+    {
+      &quot;ADDRESS_NUMBER&quot;: &quot;123&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Closure&quot;,
+      &quot;G3E_FID&quot;: 231951485,
+      &quot;G3E_FNO&quot;: 14900
+    },
+    {
+      &quot;ADDRESS_NUMBER&quot;: &quot;265&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Load Coil&quot;,
+      &quot;G3E_FID&quot;: 340138,
+      &quot;G3E_FNO&quot;: 10400
+    },
+    {
+      &quot;ADDRESS_NUMBER&quot;: &quot;2&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Padbase&quot;,
+      &quot;G3E_FID&quot;: 465246,
+      &quot;G3E_FNO&quot;: 2900
+    }
+  ]
+}
+</code></pre>
+<p><strong>Sample URL</strong></p>
+<p>Pick list item input.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/105</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;PickListKey&quot;: &quot;1.07&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 105,
+  &quot;ResultId&quot;: &quot;105.e3e83d3c-f374-47f0-9e54-6a20c4d54dbe&quot;,
+  &quot;ResultUserName&quot;: &quot;Find Feature Manhole by Length&quot;,
+  &quot;DatabaseAlias&quot;: &quot;COMMP12C&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP12C1021&quot;,
+  &quot;MaxLimitExceeded&quot;: false,
+  &quot;ComponentField&quot;: &quot;LENGTH&quot;,
+  &quot;ComponentFieldUserName&quot;: &quot;Length&quot;,
+  &quot;InformationalField&quot;: &quot;NUMBR&quot;,
+  &quot;InformationalFieldUserName&quot;: &quot;Nbr&quot;,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;PickListKey&quot;: &quot;1.07&quot;
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 4,
+  &quot;ResultItems&quot;: [
+    {
+      &quot;NUMBR&quot;: &quot;4&quot;,
+      &quot;LENGTH&quot;: 1.07,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Manhole&quot;,
+      &quot;G3E_FID&quot;: 232031866,
+      &quot;G3E_FNO&quot;: 2700
+    },
+    {
+      &quot;NUMBR&quot;: &quot;3&quot;,
+      &quot;LENGTH&quot;: 1.07,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Manhole&quot;,
+      &quot;G3E_FID&quot;: 232031867,
+      &quot;G3E_FNO&quot;: 2700
+    },
+    {
+      &quot;NUMBR&quot;: &quot;2&quot;,
+      &quot;LENGTH&quot;: 1.07,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Manhole&quot;,
+      &quot;G3E_FID&quot;: 232031835,
+      &quot;G3E_FNO&quot;: 2700
+    },
+    {
+      &quot;NUMBR&quot;: &quot;3-2&quot;,
+      &quot;LENGTH&quot;: 1.07,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Manhole&quot;,
+      &quot;G3E_FID&quot;: 232031836,
+      &quot;G3E_FNO&quot;: 2700
+    }
+  ]
+}
+</code></pre>
+<p><strong>Sample URL</strong></p>
+<p>Date Time value input.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/107</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;DateTimeValue&quot;: &quot;07/21/2016&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 107,
+  &quot;ResultId&quot;: &quot;107.a32d8e4c-5352-4314-b146-bac8f57d80cd&quot;,
+  &quot;ResultUserName&quot;: &quot;Find Feature Closure by Battery Date&quot;,
+  &quot;DatabaseAlias&quot;: &quot;COMMP12C&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP12C1021&quot;,
+  &quot;MaxLimitExceeded&quot;: false,
+  &quot;ComponentField&quot;: &quot;BATTERY_DATE&quot;,
+  &quot;ComponentFieldUserName&quot;: &quot;Date Info. for Battery&quot;,
+  &quot;InformationalField&quot;: &quot;CLOSURE_NAME&quot;,
+  &quot;InformationalFieldUserName&quot;: &quot;Closure Name&quot;,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;DateTimeValue&quot;: &quot;2016-07-21T00:00:00&quot;
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 2,
+  &quot;ResultItems&quot;: [
+    {
+      &quot;CLOSURE_NAME&quot;: &quot;Sample&quot;,
+      &quot;BATTERY_DATE&quot;: &quot;2016-07-21T00:00:00&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Closure&quot;,
+      &quot;G3E_FID&quot;: 231951973,
+      &quot;G3E_FNO&quot;: 14900
+    },
+    {
+      &quot;CLOSURE_NAME&quot;: &quot;Sample&quot;,
+      &quot;BATTERY_DATE&quot;: &quot;2016-07-21T00:00:00&quot;,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Closure&quot;,
+      &quot;G3E_FID&quot;: 231952503,
+      &quot;G3E_FNO&quot;: 14900
+    }
+  ]
+}
+
+</code></pre>
+<p><strong>Sample URL</strong></p>
+<p>Text value and AOI input.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/83</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;TextValue&quot;: &quot;---&quot;
+        }
+    ],
+    &quot;Aoi&quot;: {
+        &quot;UserName&quot;: &quot;SWITCHING CENTRE: PRINCESS&quot;,
+        &quot;Id&quot;: {
+            &quot;G3E_FID&quot;: 435640,
+            &quot;G3E_FNO&quot;: 24000,
+            &quot;AOILIID&quot;: &quot;KGTNON08&quot;
+        },
+        &quot;Children&quot;: []
+    }
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 83,
+  &quot;ResultId&quot;: &quot;83.8e83bb97-2516-4e04-aa40-2625839faf86&quot;,
+  &quot;ResultUserName&quot;: &quot;Find Air Plugs with System ID&quot;,
+  &quot;DatabaseAlias&quot;: &quot;ICOMP13&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP3857&quot;,
+  &quot;MaxLimitExceeded&quot;: true,
+  &quot;ComponentField&quot;: null,
+  &quot;ComponentFieldUserName&quot;: null,
+  &quot;InformationalField&quot;: null,
+  &quot;InformationalFieldUserName&quot;: null,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;---&quot;,
+      &quot;PickListKey&quot;: null,
+      &quot;DateTimeValue&quot;: null
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 500,
+  &quot;ResultItems&quot;: [
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950019,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950020,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950021,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    . . .
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950532,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    }
+  ]
+}
+</code></pre>
+<p><strong>Sample URL</strong></p>
+<p>Response with no records found.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/127</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;Parameters&quot;: [{
+            &quot;ParameterId&quot;: 1,
+            &quot;TextValue&quot;: &quot;231951605&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 127,
+  &quot;ResultUserName&quot;: &quot;Find Component Rack by Feature ID&quot;,
+  &quot;DatabaseAlias&quot;: &quot;COMMP12C&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP12C1021&quot;,
+  &quot;MaxLimitExceeded&quot;: false,
+  &quot;ComponentField&quot;: null,
+  &quot;ComponentFieldUserName&quot;: null,
+  &quot;InformationalField&quot;: null,
+  &quot;InformationalFieldUserName&quot;: null,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;231951605&quot;
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 0,
+  &quot;ResultItems&quot;: []
+}
+</code></pre>
+<p><strong>Sample URL</strong></p>
+<p>Text value and spatial filter input.</p>
+<p>http://localhost/NetWorksAnalyticalServiceCommProd/Search/Execute/83</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code class="lang-js">{
+  &quot;Parameters&quot; : [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;---&quot;
+    }
+  ],
+  &quot;SpatialFilter&quot;: 
+  {
+    &quot;type&quot;: &quot;Polygon&quot;,
+    &quot;coordinates&quot;: 
+    [
+      [
+        [
+          -8515242.91, 5501580.23
+        ],
+        [
+          -8515257.71, 5501519.98
+        ],
+        [
+          -8515152.75, 5501494.02
+        ],
+        [
+          -8515137.95, 5501554.27
+        ],
+        [
+          -8515242.91, 5501580.23
+        ]
+      ]
+    ],
+    &quot;crs&quot;: 
+    {
+      &quot;type&quot;: &quot;name&quot;,
+      &quot;properties&quot;: 
+      {
+        &quot;name&quot;: &quot;EPSG:3857&quot;
+      }
+    }
+  },
+  &quot;OverrideAoiThreshold&quot;: true
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;G3E_AMNO&quot;: 83,
+  &quot;ResultId&quot;: &quot;83.8e83bb97-2516-4e04-aa40-2625839faf86&quot;,
+  &quot;ResultUserName&quot;: &quot;Find Air Plugs with System ID&quot;,
+  &quot;DatabaseAlias&quot;: &quot;ICOMP13&quot;,
+  &quot;Configuration&quot;: &quot;ICOMP3857&quot;,
+  &quot;MaxLimitExceeded&quot;: true,
+  &quot;ComponentField&quot;: null,
+  &quot;ComponentFieldUserName&quot;: null,
+  &quot;InformationalField&quot;: null,
+  &quot;InformationalFieldUserName&quot;: null,
+  &quot;ComponentField2&quot;: null,
+  &quot;ComponentFieldUserName2&quot;: null,
+  &quot;InformationalField2&quot;: null,
+  &quot;InformationalFieldUserName2&quot;: null,
+  &quot;Parameters&quot;: [
+    {
+      &quot;ParameterId&quot;: 1,
+      &quot;TextValue&quot;: &quot;---&quot;,
+      &quot;PickListKey&quot;: null,
+      &quot;DateTimeValue&quot;: null
+    }
+  ],
+  &quot;ResultItemsCount&quot;: 500,
+  &quot;ResultItems&quot;: [
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950019,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950020,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950021,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    },
+    . . .
+    {
+      &quot;G3E_USERNAME&quot;: &quot;Air Plug&quot;,
+      &quot;AIR_SYSTEM_ID&quot;: &quot;---&quot;,
+      &quot;G3E_FID&quot;: 231950532,
+      &quot;G3E_FNO&quot;: 17700,
+      &quot;G3E_CID&quot;: 1,
+      &quot;G3E_CNO&quot;: 17701,
+      &quot;GAO_NET_FEATURENAME&quot;: &quot;Air Plug&quot;,
+      &quot;G3E_VIEW&quot;: null
+    }
+  ]
+}
+</code></pre>
+<p><strong>Remarks</strong>
+This method supports pagination. When pagination parameters are specified, it returns the query results in pages based on the requested page number and page size. When no pagination parameters are specified, it returns all of the search results corresponding to the given result Id. This method supports API versioning, apiVersion value of 2.0.2012 or later will support long and double parameter values.</p>
+<p>The response header will contain the X-Paging-xxx set of header tags (i.e. X-Paging-PageNo, X-Paging-PageSize, X-Paging-PageCount, X-Paging-TotalRecordCount).</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

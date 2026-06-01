@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>WKT </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="WKT ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="wkt">WKT</h1>
+
+<h2 id="serialization-in-json">Serialization in JSON</h2>
+<p>Geometries are serialized to WKT strings wrapped in a JSON object with a single wkt property:</p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POINT (241791.888738 485831.672920)&quot;
+}
+</code></pre>
+<h2 id="supported-geometry-types">Supported geometry types</h2>
+<table>
+<thead>
+<tr>
+<th>Geometry type</th>
+<th>WKT</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#point">Point</a></td>
+<td>POINT</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#orientedpoint">OrientedPoint</a></td>
+<td>POINT M<br>POINT ZM</td>
+<td>Orientation vector is stored in the M dimension</td>
+</tr>
+<tr>
+<td><a href="#textpoint">TextPoint</a></td>
+<td>POINT M<br>POINT ZM</td>
+<td>Orientation vector is stored in the M dimension</td>
+</tr>
+<tr>
+<td><a href="#polyline">Polyline</a></td>
+<td>LINESTRING</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#polygon">Polygon</a></td>
+<td>POLYGON</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#compositepolyline">CompositePolyline</a></td>
+<td>LINESTRING<br>COMPOUNDCURVE</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#compositepolygon">CompositePolygon</a></td>
+<td>POLYGON<br>CURVEPOLYGON</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="#boundary">Boundary</a></td>
+<td>POLYGON<br>CURVEPOLYGON</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>3D versions of the geometries use the Z layout specifier (e.g. <code>LINESTRING Z(1 2 3, 4 5 6))</code>.</p>
+<h2 id="point">Point</h2>
+<p>Native WKT Point without orientation.</p>
+<p>Example</p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POINT (241791.888738 485831.672920)&quot;
+}
+</code></pre>
+<h2 id="orientedpoint">OrientedPoint</h2>
+<p>Used of point symbol and text geometries. Orientation vector is stored in the M dimension using the following formula:</p>
+<pre><code>M = (Azimuth * 1000000) + (Elevation / 10)
+</code></pre>
+<p>Azimuth is angle in radians in the XY plane. Vector (1,0) has azimuth of 0, positive values are counterclockwise.
+Elevation is the angle in radians between the XY plane and the vector, with positive values towards positive Z values. Elevation of 0 is a vector on the XY plane, e.g. (1,0,0). The allowed values are between 0 and π/2 (positive elevation) and 2π and 2π-π/2 (negative elevation + 2π, to avoid negative values).</p>
+<p>The result M is a number whose integer part is the azimuth in the XY plane multiplied by 1000000. The decimal part is the elevation in the Z axis divided by 10, to account for all numbers in the 0-2π range.</p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Azimuth</th>
+<th>Elevation</th>
+<th>M</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(1,0,0)</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>(0,1,0)</td>
+<td>1.570796</td>
+<td>0</td>
+<td>1570796</td>
+</tr>
+<tr>
+<td>(0,-1,0)</td>
+<td>-1.570796</td>
+<td>0</td>
+<td>-1570797</td>
+</tr>
+<tr>
+<td>(0.7071068, 0.7071068,0)</td>
+<td>0.785398</td>
+<td>0</td>
+<td>785398</td>
+</tr>
+<tr>
+<td>(0.5, 0.5, 0.7071068)</td>
+<td>0.785398</td>
+<td>0.785398</td>
+<td>785398.0785398</td>
+</tr>
+<tr>
+<td>(0,0,1)</td>
+<td>0</td>
+<td>1.570796</td>
+<td>0.1570796</td>
+</tr>
+<tr>
+<td>(0,0,-1)</td>
+<td>0</td>
+<td>1.570796</td>
+<td>-0.1570796</td>
+</tr>
+</tbody>
+</table>
+<p>For reference see <a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system">Spherical coordinate system on Wikipedia</a>.</p>
+<p>The semantics of the orientation follow G/Technology logic. The vector is rotated 90 degrees clockwise from the upright position of the symbol. For symbol geometry to be rendered horizontally (i.e. text or symbol &quot;sits&quot; on the unit vector line), vector (1,0,0) should be used.</p>
+<p>Example 2D</p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POINT M(241791.888738 485831.672920 1570796.0)&quot;
+}
+</code></pre>
+<p>Example 3D</p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POINT ZM(241791.888738 485831.672920 123.345 1550000.066)&quot;
+}
+</code></pre>
+<h2 id="textpoint">TextPoint</h2>
+<p>As <a href="#orientedpoint">OrientedPoint</a>. The difference to OrientedPoint is semantic. TextPoint is used to display labels. Alignment is stored as a part of the component data outside of the geometry. Rotation vector is only 2D.</p>
+<h2 id="polyline">Polyline</h2>
+<p>String of vertices encoded as WKT LINESTRING.</p>
+<p><em>Example</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;LINESTRING (241790.888738 485830.672920, 241785.672213 485832.860495, 241747.978613 485851.202470)&quot;
+}
+</code></pre>
+<h2 id="polygon">Polygon</h2>
+<p>One or more rings of vertices. The first ring is the outer ring, the other are holes. WKT POLYGON geometry can map to G/Technology Polygon, CompositePolygon if it contains only one ring. If there are multiple rings, it always maps to Boundary geometry.</p>
+<p><em>Example</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POLYGON ((4502009.984 5925469.015, 4502009.03 5925467.513, 4502011.735, 5925467.513, 4502009.984, 5925469.015))&quot;
+}
+</code></pre>
+<h2 id="compositepolyline">CompositePolyline</h2>
+<p>Polyline composed of linestring and circular arc segments. Encoded as WKT COMPOUNDCURVE.</p>
+<p><strong>Note</strong>
+This type of geometry is supported by the server workflows, but not for placement and editing in the interactive clients.</p>
+<p><em>Example</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;COMPOUNDCURVE Z(CIRCULARSTRING (0 0 0,1 1 0,2 0 0),(2 0 0,6 6 0),(6 6 0,5 5 0))&quot;
+}
+</code></pre>
+<h2 id="compositepolygon">CompositePolygon</h2>
+<p>Polygon composed of linestring and circular arc segments. Encoded as WKT CURVEPOLYGON.</p>
+<p><strong>Note</strong></p>
+<p>This type of geometry is supported by the server workflows, but not for placement and editing in the interactive clients.</p>
+<p><em>Example</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;CURVEPOLYGON Z(COMPOUNDCURVE (CIRCULARSTRING (0 0 0,1 1 0,2 0 0),(2 0 0,6 6 0),(6 6 0,5 5 0)))&quot;
+}
+</code></pre>
+<h2 id="boundary">Boundary</h2>
+<p>As <a href="#polygon">Polygon</a> and <a href="#compositepolygon">CompositePolygon</a>, with multiple inner rings.</p>
+<p><em>Example</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;POLYGON ((4502009.984 5925469.015, 4502009.03 5925467.513, 4502011.735 5925467.513, 4502009.984 5925469.015), (4502019.984 5925469.015, 4502029.03 5925467.513, 4502031.735 5925467.513))&quot;
+}
+</code></pre>
+<p><em>Example 2</em></p>
+<pre><code class="lang-json">{
+  &quot;wkt&quot;: &quot;CURVEPOLYGON Z(COMPOUNDCURVE (CIRCULARSTRING (0 0 0,1 1 0,2 0 0),(2 0 0,6 6 0),(6 6 0,5 5 0)),COMPOUNDCURVE (CIRCULARSTRING (0 0 0,1 1 0,2 0 0),(2 0 0,6 6 0),(6 6 0,5 5 0)))&quot;
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

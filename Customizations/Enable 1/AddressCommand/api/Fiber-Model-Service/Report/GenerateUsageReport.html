@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GenerateUsageReport </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GenerateUsageReport ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="generateusagereport">GenerateUsageReport</h1>
+
+<p>Generates the fiber usage report that describes the usage of a fiber device or conductor.</p>
+<p>The output report shows the percentage and actual count of fibers that are In Use, Available, and Unlit.</p>
+<ul>
+<li>In Use means that the fiber has a light source from a device like a Fiber Patch Panel and is terminated at a customer (for example, Optical Network Unit).</li>
+<li>Available means the fiber has a light source, but is not terminated at any customer downstream.</li>
+<li>Unlit means the fiber has no light source.</li>
+</ul>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Fiber/Report/GenerateUsageReport?Jobs={list of job names}&amp;ActiveJob={job name}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ActiveJob</td>
+<td>Optional</td>
+<td>Job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional</td>
+<td>Comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Templates</strong></p>
+<pre><code>{
+	          &quot;StartFeatureFno&quot;:7200,
+	          &quot;StartFeatureFid&quot;:29758,
+	          &quot;Low&quot;:1,
+	          &quot;High&quot;:10
+          }
+</code></pre>
+<p><strong>Post Body</strong></p>
+<table>
+<thead>
+<tr>
+<th>Post Body Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StartFeatureFno</td>
+<td>Fiber feature number of the starting conductor or device.</td>
+</tr>
+<tr>
+<td>StartFeatureFid</td>
+<td>Fiber feature identitifier of the starting conductor or device.</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>Start device port or conductor strand ordinal.</td>
+</tr>
+<tr>
+<td>High</td>
+<td>End device port or conductor strand ordinal.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Report/GenerateuUsageReport</p>
+<p><strong>Sample Response</strong></p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code>{
+	          &quot;StartFeatureFno&quot;:7200,
+	          &quot;StartFeatureFid&quot;:29758,
+	          &quot;Low&quot;:1,
+	          &quot;High&quot;:10
+          }
+</code></pre>
+<pre><code>&lt;!--Fiber Usage Report - Wednesday, March 13, 2019 at 10:22:25 AM--&gt;
+          &lt;FiberUsageReport Title=&quot;Fiber Usage Report&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; FID=&quot;29758&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 10&quot;&gt;
+              &lt;StrandTerminationInfo&gt;
+                  &lt;Strand StrandNumber=&quot;1&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 1, Fiber Optical Network Unit 29762 : 1, Fiber Splitter - Position  - 29742 : 2, Fiber Patch Panel - Position 5 - 29751 : 19, Fiber Patch Panel - Position 5 - 29747 : 1, Fiber Card - Slot 5 - 29749 : 2, Fiber Patch Panel - Position 23 - 29746 : 19, Fiber Patch Panel - Position 11 - 29745 : 1&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;2&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 2, Fiber Splitter - Position  - 29742 : 3, Fiber Patch Panel - Position 5 - 29751 : 19, Fiber Patch Panel - Position 5 - 29747 : 1, Fiber Card - Slot 5 - 29749 : 2, Fiber Patch Panel - Position 23 - 29746 : 19, Fiber Patch Panel - Position 11 - 29745 : 1&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;3&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 3, Fiber Splitter - Position  - 29742 : 4, Fiber Patch Panel - Position 5 - 29751 : 19, Fiber Patch Panel - Position 5 - 29747 : 1, Fiber Card - Slot 5 - 29749 : 2, Fiber Patch Panel - Position 23 - 29746 : 19, Fiber Patch Panel - Position 11 - 29745 : 1&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;4&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 4, Fiber Optical Network Unit 29763 : 1, Fiber Splitter - Position  - 29742 : 5, Fiber Patch Panel - Position 5 - 29751 : 19, Fiber Patch Panel - Position 5 - 29747 : 1, Fiber Card - Slot 5 - 29749 : 2, Fiber Patch Panel - Position 23 - 29746 : 19, Fiber Patch Panel - Position 11 - 29745 : 1&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;5&quot; TerminationLabel=&quot;&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;6&quot; TerminationLabel=&quot;&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;7&quot; TerminationLabel=&quot;&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;8&quot; TerminationLabel=&quot;&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;9&quot; TerminationLabel=&quot;&quot; /&gt;
+                  &lt;Strand StrandNumber=&quot;10&quot; TerminationLabel=&quot;&quot; /&gt;
+              &lt;/StrandTerminationInfo&gt;
+              &lt;InUse Percent=&quot;20.00%&quot; SubTotal=&quot;2&quot; NumFibers=&quot;10&quot;&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 12 - 29752&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29752&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Optical Network Unit 29762&quot; TerminationLabel=&quot;Fiber Optical Network Unit 29762 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;Description&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29762&quot; TerminatingFNO=&quot;12100&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Splitter - Position  - 29742&quot; TerminationLabel=&quot;Fiber Splitter - Position  - 29742 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 8 PORT SPLITTER&quot; TerminatingPort=&quot;Out Port 1&quot; TerminatingFID=&quot;29742&quot; TerminatingFNO=&quot;12300&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29751&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29751 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29751&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29747&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29747 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29747&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Card - Slot 5 - 29749&quot; TerminationLabel=&quot;Fiber Card - Slot 5 - 29749 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29749&quot; TerminatingFNO=&quot;15900&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 23 - 29746&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 23 - 29746 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29746&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 11 - 29745&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 11 - 29745 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29745&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 1&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 12 - 29752&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 4&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 4&quot; TerminatingFID=&quot;29752&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Optical Network Unit 29763&quot; TerminationLabel=&quot;Fiber Optical Network Unit 29763 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;Description&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29763&quot; TerminatingFNO=&quot;12100&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Splitter - Position  - 29742&quot; TerminationLabel=&quot;Fiber Splitter - Position  - 29742 : 5&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 8 PORT SPLITTER&quot; TerminatingPort=&quot;Out Port 4&quot; TerminatingFID=&quot;29742&quot; TerminatingFNO=&quot;12300&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29751&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29751 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29751&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29747&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29747 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29747&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Card - Slot 5 - 29749&quot; TerminationLabel=&quot;Fiber Card - Slot 5 - 29749 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29749&quot; TerminatingFNO=&quot;15900&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 23 - 29746&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 23 - 29746 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29746&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 11 - 29745&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 11 - 29745 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29745&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 4&quot; /&gt;
+              &lt;/InUse&gt;
+              &lt;Available Percent=&quot;20.00%&quot; SubTotal=&quot;2&quot; NumFibers=&quot;10&quot;&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 12 - 29752&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 2&quot; TerminatingFID=&quot;29752&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Splitter - Position  - 29742&quot; TerminationLabel=&quot;Fiber Splitter - Position  - 29742 : 3&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 8 PORT SPLITTER&quot; TerminatingPort=&quot;Out Port 2&quot; TerminatingFID=&quot;29742&quot; TerminatingFNO=&quot;12300&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29751&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29751 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29751&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29747&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29747 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29747&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Card - Slot 5 - 29749&quot; TerminationLabel=&quot;Fiber Card - Slot 5 - 29749 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29749&quot; TerminatingFNO=&quot;15900&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 23 - 29746&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 23 - 29746 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29746&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 11 - 29745&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 11 - 29745 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29745&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 2&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 12 - 29752&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 12 - 29752 : 3&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 3&quot; TerminatingFID=&quot;29752&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Splitter - Position  - 29742&quot; TerminationLabel=&quot;Fiber Splitter - Position  - 29742 : 4&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 8 PORT SPLITTER&quot; TerminatingPort=&quot;Out Port 3&quot; TerminatingFID=&quot;29742&quot; TerminatingFNO=&quot;12300&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29751&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29751 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29751&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 5 - 29747&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 5 - 29747 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29747&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Card - Slot 5 - 29749&quot; TerminationLabel=&quot;Fiber Card - Slot 5 - 29749 : 2&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29749&quot; TerminatingFNO=&quot;15900&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 23 - 29746&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 23 - 29746 : 19&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Front Port 1&quot; TerminatingFID=&quot;29746&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+                  &lt;TerminatingFeature FeatureName=&quot;Fiber Patch Panel - Position 11 - 29745&quot; TerminationLabel=&quot;Fiber Patch Panel - Position 11 - 29745 : 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; TerminatingPort=&quot;Back Port 1&quot; TerminatingFID=&quot;29745&quot; TerminatingFNO=&quot;12200&quot; TerminatingFPNO=&quot;1&quot; ClickRowEnabled=&quot;0&quot; OriginatingPortOrStrand=&quot;Fiber 3&quot; /&gt;
+              &lt;/Available&gt;
+              &lt;UnlitFiber Percent=&quot;60.00%&quot; SubTotal=&quot;6&quot; NumFibers=&quot;10&quot;&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 5&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 6&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 7&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 8&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 9&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+                  &lt;Strand OriginatingPortOrStrand=&quot;Fiber 10&quot; FeatureName=&quot;Fiber Cable - Position  - 29758&quot; ClickRowEnabled=&quot;0&quot; TerminatingFNO=&quot;7200&quot; TerminatingFID=&quot;29758&quot; /&gt;
+              &lt;/UnlitFiber&gt;
+              &lt;Note&gt;&lt;/Note&gt;
+          &lt;/FiberUsageReport&gt;
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

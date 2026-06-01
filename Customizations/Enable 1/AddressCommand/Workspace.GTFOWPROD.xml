@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <Section type="print">
+    <Template name="A4" username="A4">
+      <PageSize>210,297</PageSize>
+      <Margins>10</Margins>
+      <Borders>0.5</Borders>
+      <BorderColor>Black</BorderColor>
+      <Fields>
+        <Field>
+          <Name>notes</Name>
+          <Label>Remarks</Label>
+        </Field>
+        <Field>
+          <Name>printedby</Name>
+          <Label>Printed by</Label>
+        </Field>
+      </Fields>
+      <Tables>
+        <Table>
+          <Position>BottomRight</Position>
+          <Borders>0.5,0,0,0.5</Borders>
+          <BorderColor>Black</BorderColor>
+          <Rows>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Printed by</Content>
+                <Width>25</Width>
+                <Padding>2,0,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>fieldValue</Type>
+                <Content>printedby</Content>
+                <Width>50</Width>
+                <Padding>2,0,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>image</Type>
+                <Content>assets/images/hxgn-logo-color.png</Content>
+                <RowSpan>5</RowSpan>
+                <Width>50</Width>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Remarks</Content>
+                <RowSpan>2</RowSpan>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>fieldValue</Type>
+                <Content>notes</Content>
+                <RowSpan>2</RowSpan>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row></Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Scale</Content>
+                <Padding>2,2,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>autoValue</Type>
+                <Content>scale</Content>
+                <Padding>2,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Date</Content>
+                <Padding>2</Padding>
+              </Cell>
+              <Cell>
+                <Type>autoValue</Type>
+                <Content>date</Content>
+                <Format>dd/MM/yyyy H:mm</Format>
+                <Padding>2</Padding>
+              </Cell>
+            </Row>
+          </Rows>
+        </Table>
+      </Tables>
+    </Template>
+    <Template name="A4_" username="A4 (No header)">
+      <PageSize>210, 297</PageSize>
+    </Template>
+    <Template name="A3" username="A3">
+      <PageSize>297, 420</PageSize>
+      <Margins>10</Margins>
+      <Borders>0.5</Borders>
+      <BorderColor>Black</BorderColor>
+      <Fields>
+        <Field>
+          <Name>notes</Name>
+          <Label>Remarks</Label>
+        </Field>
+        <Field>
+          <Name>printedby</Name>
+          <Label>Printed by</Label>
+        </Field>
+      </Fields>
+      <Tables>
+        <Table>
+          <Position>BottomRight</Position>
+          <Borders>0.5,0,0,0.5</Borders>
+          <BorderColor>Black</BorderColor>
+          <Rows>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Printed by</Content>
+                <Width>25</Width>
+                <Padding>2,0,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>fieldValue</Type>
+                <Content>printedby</Content>
+                <Width>50</Width>
+                <Padding>2,0,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>image</Type>
+                <Content>assets/images/hxgn-logo-color.png</Content>
+                <RowSpan>5</RowSpan>
+                <Width>50</Width>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Remarks</Content>
+                <RowSpan>2</RowSpan>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>fieldValue</Type>
+                <Content>notes</Content>
+                <RowSpan>2</RowSpan>
+                <Padding>0,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row></Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Scale</Content>
+                <Padding>2,2,0,2</Padding>
+              </Cell>
+              <Cell>
+                <Type>autoValue</Type>
+                <Content>scale</Content>
+                <Padding>2,2,0,2</Padding>
+              </Cell>
+            </Row>
+            <Row>
+              <Cell>
+                <Type>label</Type>
+                <Content>Date</Content>
+                <Padding>2</Padding>
+              </Cell>
+              <Cell>
+                <Type>autoValue</Type>
+                <Content>date</Content>
+                <Format>dd/MM/yyyy H:mm</Format>
+                <Padding>2</Padding>
+              </Cell>
+            </Row>
+          </Rows>
+        </Table>
+      </Tables>
+    </Template>
+    <Template name="A3_" username="A3 (No header)">
+      <PageSize>297, 420</PageSize>
+    </Template>
+  </Section>
+  <Section type="mapsource">
+    <NetworksVectorSource name="vector0" username="vgl">
+      <Url>http://venbgt104pdc1.ingrnet.com/NwVectorService1905</Url>
+      <Lsno>1</Lsno>
+      <EditorName>networksEditor</EditorName>
+      <EnableTooltips>true</EnableTooltips>
+    </NetworksVectorSource>
+    <NetworksWMSSource name="wms1" username="EnableWMS">
+      <Url1>HTTP://VENBGT104PDC1.ingrnet.com/NwWms1905/wms</Url1>
+      <SingleTile>true</SingleTile>
+      <Exceptions>XML</Exceptions>
+      <EditorName>networksEditor</EditorName>
+    </NetworksWMSSource>
+  </Section>
+  <Section type="maplegend">
+    <Legend name="default" username="vgl">
+      <View>
+        <Projection>EPSG:2193</Projection>
+        <Center>1308377.558498005, 5528655.60216066</Center>
+        <Resolution>152.87</Resolution>
+      </View>
+      <Entries>
+        <SourceEntry>
+          <Name>vector0</Name>
+          <SourceName>vector0</SourceName>
+          <DrawingPriority>10</DrawingPriority>
+          <Queryable>true</Queryable>
+          <AllLayers>true</AllLayers>
+        </SourceEntry>
+        <SourceEntry>
+          <Name>wms1</Name>
+          <SourceName>wms1</SourceName>
+          <DrawingPriority>15</DrawingPriority>
+          <Queryable>true</Queryable>
+          <Entries>
+            <LayerEntry>
+              <Name>ENABLE_ADDRESS_(FSL)</Name>
+              <UserName>Enable Address (FSL)</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_BRANCH_ENCLOSURE</Name>
+              <UserName>Fibre Branch Enclosure</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_DUCT</Name>
+              <UserName>Fibre Duct</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_INNER_DUCT</Name>
+              <UserName>Fibre Inner Duct</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_COUPLER</Name>
+              <UserName>Fibre Coupler</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_CABLE</Name>
+              <UserName>Fibre Cable</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>FIBRE_INTERFACE</Name>
+              <UserName>Fibre Interface</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>CABINET_AREA</Name>
+              <UserName>Cabinet Area</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>ONU</Name>
+              <UserName>ONU</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>SERVICE_FIBRE</Name>
+              <UserName>Service Fibre</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>CHAMBER</Name>
+              <UserName>Chamber</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>INFRASTRUCTURE</Name>
+              <UserName>Infrastructure</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+            <LayerEntry>
+              <Name>LANDBASE</Name>
+              <UserName>Landbase</UserName>
+              <Visible>true</Visible>
+              <Queryable>true</Queryable>
+            </LayerEntry>
+          </Entries>
+        </SourceEntry>
+      </Entries>
+    </Legend>
+  </Section>
+  <Section type="editor" />
+  <Workspace name="default" username="Default">
+    <DatabaseAlias>ENPROD</DatabaseAlias>
+	<Section type="scripts">
+            <Script name="1">
+                <Url>..\actionbuttons\CaptureEvents.js</Url>
+            </Script>
+        </Section>
+    <GTechConfiguration>GTFOWPROD</GTechConfiguration>
+    <Services>
+      <ServicesBaseUrl>http://VENBGT104PDC1</ServicesBaseUrl>
+      <SolutionService>NetWorksSolutionService</SolutionService>
+      <CoordinateSystemsService>NetworksCoordinateSystemService</CoordinateSystemsService>
+    </Services>
+    <Section type="editor">
+      <GtdwsEditor name="networksEditor" username="NetWorks">
+        <DefaultType>Edit</DefaultType>
+        <UseDialogFilter>true</UseDialogFilter>
+      </GtdwsEditor>
+    </Section>
+    <RequiresAuth>false</RequiresAuth>
+    <Section type="maplegend">
+      <Legend name="default" />
+    </Section>
+    <Section type="print">
+      <Template name="A4" />
+      <Template name="A4_" />
+      <Template name="A3" />
+      <Template name="A3_" />
+    </Section>
+    <Section type="function">
+      <Function name="sidebar">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>legend</JValue>
+              <JValue>job</JValue>
+              <JValue>areas</JValue>
+              <JValue>features</JValue>
+              <JValue>search</JValue>
+              <JValue>cad</JValue>
+              <JValue>trace</JValue>
+              <JValue>redline</JValue>
+              <JValue>print</JValue>
+			  <JObject>
+		<JProperty name="xtype">
+		  <JValue>iframepanel</JValue>
+		</JProperty>
+		<JProperty name="title">
+		  <JValue>Address Command</JValue>
+		</JProperty>
+		<JProperty name="url">
+		  <JValue>/AddressCommand/index.html</JValue>
+		</JProperty>
+	  </JObject>
+	  <!-- added end -->	
+<JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/tag.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Show Selected</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>hiliteSelected</JValue>
+                </JProperty>
+              </JObject>
+			  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/refresh.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Refresh Job</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>refreshJob</JValue>
+                </JProperty>
+              </JObject>
+		  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/fitjob.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Fit Job Edit</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>fitJob</JValue>
+                </JProperty>
+              </JObject>
+		  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/discard.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Discard Job</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>discardJob</JValue>
+                </JProperty>
+              </JObject>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="toolbar">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>sidebarcollapse</JValue>
+              <JValue>mapselectmenu</JValue>
+              <JValue>maptooltip</JValue>
+              <JValue>mapzoomextent</JValue>
+              <JValue>maprotate</JValue>
+              <JValue>maplock</JValue>
+              <JValue>maphome</JValue>
+              <JValue>mapgeographic</JValue>
+              <JValue>query</JValue>
+              <JValue>detailssearch</JValue>
+			 <JObject>
+               <JProperty name="xtype">
+                 <JValue>actionbutton</JValue>
+               </JProperty>
+               <JProperty name="icon">
+                 <JValue>../actionbuttons/discard.svg</JValue>
+               </JProperty>
+		       <JProperty name="tooltip">
+                 <JValue>Address with Status 3</JValue>
+               </JProperty>
+                <JProperty name="actionName">
+                  <JValue>addressWithStatus3</JValue>
+                </JProperty>
+	         </JObject>
+			 <JObject>
+               <JProperty name="xtype">
+                 <JValue>actionbutton</JValue>
+               </JProperty>
+               <JProperty name="icon">
+                 <JValue>../actionbuttons/discard.svg</JValue>
+               </JProperty>
+		       <JProperty name="tooltip">
+                 <JValue>Address Attribute Update</JValue>
+               </JProperty>
+                <JProperty name="actionName">
+                  <JValue>addressAttributeUpdate</JValue>
+                </JProperty>
+	         </JObject>
+			 <JObject>
+               <JProperty name="xtype">
+                 <JValue>actionbutton</JValue>
+               </JProperty>
+               <JProperty name="icon">
+                 <JValue>../actionbuttons/discard.svg</JValue>
+               </JProperty>
+		       <JProperty name="tooltip">
+                 <JValue>Address to Network Association</JValue>
+               </JProperty>
+                <JProperty name="actionName">
+                  <JValue>form_AddrNetworkEntry</JValue>
+                </JProperty>
+	         </JObject>
+              <JValue>menu</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="zoomtoolbar">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>measureline</JValue>
+              <JValue>measurearea</JValue>
+              <JValue>clearmeasures</JValue>
+              <JValue>mapoverview</JValue>
+              <JValue>mapzoomin</JValue>
+              <JValue>mapzoomout</JValue>
+              <JValue>mapgps</JValue>
+              <JValue>mapattribution</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="coordinatestoolbar">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>coordinatescollapse</JValue>
+              <JValue>coordinatesfield</JValue>
+              <JValue>coordinatesystems</JValue>
+              <JValue>coordinatesformat</JValue>
+              <JValue>selectpoint</JValue>
+              <JValue>copytoclipboard</JValue>
+              <JValue>gotolocation</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="menu">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>resetclient</JValue>
+              <JValue>widget.menuseparator</JValue>
+              <JValue>showmobile</JValue>
+              <JValue>settings</JValue>
+              <JValue>showhelp</JValue>
+              <JValue>showabout</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="featurepanel">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>featureeditonclick</JValue>
+              <JValue>featurefitonclick</JValue>
+              <JValue>featureappendselection</JValue>
+              <JValue>featureshowselected</JValue>
+              <JValue>featureshowrelated</JValue>
+              <JValue>featuremeasure</JValue>
+              <JValue>widget.tbfill</JValue>
+              <JValue>removeall</JValue>
+            </JArray>
+          </JProperty>
+          <JProperty name="actioncolumns">
+            <JArray>
+              <JValue>detailsaction</JValue>
+              <JValue>editaction</JValue>
+              <JValue>fitaction</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+      <Function name="resultsgrid">
+        <Config>
+          <JProperty name="items">
+            <JArray>
+              <JValue>featureeditonclick</JValue>
+              <JValue>featurefitonclick</JValue>
+              <JValue>resultexportexcel</JValue>
+              <JValue>resultaddtolegend</JValue>
+              <JValue>widget.tbfill</JValue>
+              <JValue>removeall</JValue>
+            </JArray>
+          </JProperty>
+          <JProperty name="actioncolumns">
+            <JArray>
+              <JValue>detailsaction</JValue>
+              <JValue>editaction</JValue>
+              <JValue>fitaction</JValue>
+            </JArray>
+          </JProperty>
+        </Config>
+      </Function>
+    </Section>
+    <Section type="scripts">
+      <Script name="vectorfonts">
+        <Url>vectorfonts/fonts.css</Url>
+      </Script>
+    </Section>
+  </Workspace>
+</config>

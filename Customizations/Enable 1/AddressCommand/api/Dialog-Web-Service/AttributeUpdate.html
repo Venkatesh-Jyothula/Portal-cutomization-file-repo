@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>AttributeUpdate </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="AttributeUpdate ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="attributeupdate">AttributeUpdate</h1>
+
+<p>Inserts and updates the record for the selected attributes record.</p>
+<h2 id="put">PUT</h2>
+<p><strong>Request URL Template</strong></p>
+<p>/Feature/Attribute?pCONF={PCONF}&amp;pLCID={PLCID}&amp;pJOB={PJOB}&amp;apiVersion={apiVersion}[&amp;ActiveJob={job name}][&amp;skipfi={skipfi}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCONF</td>
+<td>Connected GTech configuration</td>
+</tr>
+<tr>
+<td>PLCID</td>
+<td>Locale language indentifier of client</td>
+</tr>
+<tr>
+<td>PJOB</td>
+<td>GTech job identifier</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>GTDWS service version. Supported versions are 2.2.0 and 2.3.0.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional. Edits from this request are added to the job's pending edits.</td>
+</tr>
+<tr>
+<td>skipfi</td>
+<td>Optional. 1 or true to bypass Functional Interface invocation. If not specified, parameter <code>skipfi</code> defined in <em>web.config</em> <em>appSettings</em> section is used. If not defined default, value 0 (false) is used.</td>
+</tr>
+</tbody>
+</table>
+<p>Picklist now supports Restricted and Unrestricted behavior on picklist attribute. We need to pass G3E_TANO and its value in post body from version 2.3.0.</p>
+<p>For restricted picklist, the service will validate the &quot;NEWVALUE&quot; across the picklist. If &quot;NEWVALUE&quot; doesn't exists service throws the exception.
+For Unrestricted picklist, the service will not validate the &quot;NEWVALUE&quot; across the picklist.</p>
+<p>When there is an error from package related to metadata, a generic error will be shown. The Oracle error along with the ORA error code will be logged in database.</p>
+<p><strong>Sample Request for 2.3.0</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/Feature/Attribute?apiVersion=2.3.0&amp;pLCID=0009</p>
+<p><strong>Sample Request Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;items&quot;: [{
+            &quot;TANO&quot;: 173010201,
+            &quot;FID&quot;: 231949887,
+            &quot;FNO&quot;: 17300,
+            &quot;CID&quot;: 1,
+            &quot;NEWVALUE&quot;: &quot;PROT_OUT_HALF&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Request</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/Feature/Attribute?apiVersion=2.2.0&amp;pLCID=0009</p>
+<p><strong>Sample Request Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;items&quot;: [{
+            &quot;ANO&quot;: 220106,
+            &quot;FID&quot;: 231962958,
+            &quot;FNO&quot;: 2200,
+            &quot;CID&quot;: 1,
+            &quot;NEWVALUE&quot;: &quot;ARMCO PIPE&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;items&quot;: [
+    {
+      &quot;FID&quot;: 231962958,
+      &quot;CID&quot;: 1
+    }
+  ]
+}
+</code></pre>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>/Feature/Attribute?pCONF={PCONF}&amp;pLCID={PLCID}&amp;pJOB={PJOB}&amp;version={VERSION}[&amp;ActiveJob={job name}][&amp;skipfi={skipfi}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCONF</td>
+<td>Connected GTech configuration</td>
+</tr>
+<tr>
+<td>PLCID</td>
+<td>Locale language indentifier of client</td>
+</tr>
+<tr>
+<td>PJOB</td>
+<td>GTech job identifier</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>GTDWS service version. Supported versions are 2.1.0, 2.2.0 and 2.3.0.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional. Edits from this request are added to the job's pending edits.</td>
+</tr>
+<tr>
+<td>skipfi</td>
+<td>Optional. 1 or true to bypass Functional Interface invocation. If not specified, parameter <code>skipfi</code> defined in <em>web.config</em> <em>appSettings</em> section is used. If not defined, default value 0 (false) is used.</td>
+</tr>
+</tbody>
+</table>
+<p>Picklist now supports Restricted and Unrestricted behavior on picklist attribute. We need to pass G3E_TANO and its value in post body from version 2.3.0.</p>
+<p>For restricted picklist, the service will validate the &quot;NEWVALUE&quot; across the picklist. If &quot;NEWVALUE&quot; doesn't exists service throws the exception. For Unrestricted picklist, the service will not validate the &quot;NEWVALUE&quot; across the picklist.</p>
+<p>When there is any error from package related to metadata, generic error will be shown and Oracle error will be logged in database.</p>
+<p>To validate hyperlinks, the called must pass &quot;ISHYPERLINK&quot; parameter and its value in post body. Passing 1 is for validating shared path and 2 is for validating web URL.</p>
+<p><strong>Sample Request for 2.3.0</strong></p>
+<p>http://{HostName}/{GTDWS ServiceName}/Feature/Attribute?apiVersion=2.3.0&amp;pLCID=0009</p>
+<p><strong>Sample Request Body</strong></p>
+<pre><code class="lang-js">{
+    &quot;items&quot;: [{
+            &quot;TANO&quot;: 173010201,
+            &quot;FID&quot;: 231949887,
+            &quot;FNO&quot;: 17300,
+            &quot;CID&quot;: 1,
+            &quot;NEWVALUE&quot;: &quot;PROT_OUT_HALF&quot;,
+            &quot;ISHYPERLINK&quot;: &quot;2&quot;
+        }
+    ]
+}
+
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;items&quot;: [
+    {
+      &quot;FID&quot;: 231962958,
+      &quot;CID&quot;: 1
+    }
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

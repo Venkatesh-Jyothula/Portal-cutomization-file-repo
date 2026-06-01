@@ -1,0 +1,11 @@
+﻿			  <JObject>
+                    <JProperty name="xtype">
+                        <JValue>iframepanel</JValue>
+                    </JProperty>
+                    <JProperty name="title">
+                        <JValue>Attach GIS Files</JValue>
+                    </JProperty>
+                    <JProperty name="url">
+                        <JValue>examples/Example7/attachgisfiles.html</JValue>
+                    </JProperty>
+                </JObject>

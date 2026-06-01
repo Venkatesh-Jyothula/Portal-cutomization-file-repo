@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Features By Filter </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Features By Filter ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-features-by-filter">Get Features By Filter</h1>
+
+<p>Returns the requested feature data for the specified feature type that matches the optional OData filter options and bounding box.</p>
+<p>If the feature type in the route is followed by &quot;/$count&quot;, then just the count of requested feature data that matches the OData filter option and bounding box is returned.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/data/{featureName}[/$count]?[{oDataOptions}] [&amp;BBOX={left,bottom,right,top}][&amp;FilterSet={filterSetId}] [&amp;MeasureFeatures={true|false}][&amp;MeasureOnCurvedEarth={true|false}] [&amp;Jobs={listOfJobNames} | ActiveJob={jobName}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureName</td>
+<td>Required</td>
+<td>Specifies the model feature type to retrieve data for.</td>
+</tr>
+<tr>
+<td>oDataOptions</td>
+<td>Optional</td>
+<td>See the OData Options section below.</td>
+</tr>
+<tr>
+<td>BBOX=left,bottom,right,top</td>
+<td>Optional</td>
+<td>Specifies a comma separated list of values (in the projection of the HxGN NetWorks Core configuration) that define a bounding box to use to spatially restrict the feature instances that will be included in the response.</td>
+</tr>
+<tr>
+<td>MeasureFeatures= true or false</td>
+<td>Optional</td>
+<td>Specifies that the feature components that have linear or area geometry be measured. If the BBOX parameter is specified then the percent of the feature that falls within the bounding box is also computed. For linear geometry feature components, there will be Length and Percent attributes added to the component. For area geometry components, there will be Area and Percent attributes added to the component.</td>
+</tr>
+<tr>
+<td>MeasureOnCurvedEarth= true or false</td>
+<td>Optional</td>
+<td>Specifies that the feature components that have linear or area geometry should be measured using the geographic reference space. If the parameter is false, then the measurement will use the projection reference space. If not specified, the measurement will be done using the geographic reference space.</td>
+</tr>
+<tr>
+<td>FilterSet=filterSetId</td>
+<td>Optional</td>
+<td>Specifies a previous trace or search result set to join against to restrict the feature instances that will be included in the response. The pending edits in a job can also serve as a filter set. The filterSetId must match one of the following: (1) Trace.{traceId} (2) Search.{searchId} (3) Job.{jobId} (4) {table}.{column}.{value}</td>
+</tr>
+<tr>
+<td>Jobs=listOfJobNames</td>
+<td>Optional</td>
+<td>Specifies a comma separated list of HxGN NetWorks Core jobs whose pending edits will participate in the query and response.</td>
+</tr>
+<tr>
+<td>ActiveJob=jobName</td>
+<td>Optional</td>
+<td>Specifies the active HxGN NetWorks Core job whose pending edits will participate in the query and response.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OData Options</strong></p>
+<p>The OData parameters are used to query for specific instances of the feature type; and to select which information about the feature type to return; and to control how much feature information is returned in each response via the pagination parameters.</p>
+<ul>
+<li><p><strong>$filter={oDataExpression}</strong> - the filter parameter selects which feature instances to return. The oDataExpression can consist of the following items:</p>
+<ul>
+<li><p>attribute - the value of the referenced attribute. For the simple attributes of the feature, just the attribute name is used (e.g. $filter=G3E_FID gt 15903 and G3E_FID lt 16000). For the attribute of a component or relationship, the qualified form {component/attribute} of the reference is used (e.g. $filter=SUBSTATION_RECORD/SUB_NUMBER eq 1145).</p>
+</li>
+<li><p>Logical operators -</p>
+<ul>
+<li><strong>and</strong> - returns true if both the left and right operands evaluate to true, otherwise it returns false. The null value is treated as unknown, so if one operand evaluates to null and the other operand to false, the and operator returns false. All other combinations with null return null.</li>
+<li><strong>or</strong> - returns false if both the left and right operands both evaluate to false, otherwise it returns true. The null value is treated as unknown, so if one operand evaluates to null and the other operand to true, the or operator returns true. All other combinations with null return null.</li>
+<li><strong>not</strong> - returns true if the operand returns false, otherwise it returns false. The null value is treated as unknown, so not null returns null.</li>
+<li><strong>eq</strong> - returns true if the left operand is equal to the right operand, otherwise it returns false. When applied to operands of entity types, the eq operator returns true if both operands represent the same entity, or both operands represent null. Each of the special values null, -INF, and INF is equal to itself, and only to itself. The special value NaN is not equal to anything, even to itself.</li>
+<li><strong>ne</strong> - returns true if the left operand is not equal to the right operand, otherwise it returns false. When applied to operands of entity types, the ne operator returns true if the two operands do not represent the same entity. Each of the special values null, -INF, and INF is equal to itself, and only to itself. The special value NaN is not equal to anything, even to itself.</li>
+<li><strong>gt</strong> - returns true if the left operand is greater than the right operand, otherwise it returns false. The special value INF is greater than any number, and any number is greater than -INF. The Boolean value true is greater than false. If any operand is null, the operator returns false.</li>
+<li><strong>lt</strong> - returns true if the left operand is less than the right operand, otherwise it returns false. The special value -INF is less than any number, and any number is less than INF. The Boolean value false is less than true. If any operand is null, the operator returns false.</li>
+<li><strong>ge</strong> - returns true if the left operand is greater than or equal to the right operand, otherwise it returns false. See rules for gt and eq for details.</li>
+<li><strong>le</strong> - returns true if the left operand is less than or equal to the right operand, otherwise it returns false. See rules for lt and eq for details.</li>
+</ul>
+</li>
+<li><p>Arithmetic operators - require operands that evaluate to numeric types. If an operand of an arithmetic operator is null, the result is null.</p>
+<ul>
+<li><strong>&quot;-&quot;</strong> - negation operator, represented by a minus (-) sign, changes the sign of its numeric operand.</li>
+<li><strong>add</strong> - adds the left and right numeric operands.</li>
+<li><strong>sub</strong> - subtracts the right numeric operand from the left numeric operand.</li>
+<li><strong>mul</strong> - multiplies the left and right numeric operands.</li>
+<li><strong>div</strong> - divide the left numeric operand by the right numeric operand.</li>
+<li><strong>mod</strong> - returns the remainder when the left numeric operand is divided by the right numeric operand. The sign of the result is the same as the sign of the left operand. If the right operand is zero, the request fails.</li>
+<li><strong>( )</strong> - The Grouping operator (open and close parenthesis) controls the evaluation order of an expression.</li>
+</ul>
+</li>
+<li><p>String built-in functions -</p>
+<ul>
+<li><strong>string concat( string, string )</strong> - returns a string that appends the second parameter string value to the first.</li>
+<li><strong>boolean contains( string, string )</strong> - returns true if the second string is a substring of the first string, otherwise it returns false. String comparison is case-sensitive, case-insensitive comparison can be achieved in combination with tolower or toupper.</li>
+<li><strong>boolean endswith( string, string )</strong> - returns true if the first string ends with the second string, otherwise it returns false. String comparison is case-sensitive.</li>
+<li><strong>int32 indexof( string, string )</strong> - returns the zero-based character position of the first occurrence of the second string in the first string, or -1 if the first string does not contain the second string. String comparison is case-sensitive.</li>
+<li><strong>int32 length( string )</strong> - returns the number of characters in the string.</li>
+<li><strong>boolean startswith( string, string )</strong> - returns true if the first string begins with the second string, otherwise it returns false. String comparison is case-sensitive.</li>
+<li><strong>string substring( string, int32 )</strong> - returns the substring that begins with the Nth character (the integer second argument) and goes to the end of the string.</li>
+<li><strong>string substring( string, int32, int32 )</strong> - returns a substring of the first parameter string value identified by selecting up to M characters starting at the Nth character (where N is the second parameter integer value and M is the third parameter integer value).</li>
+<li><strong>string tolower( string )</strong> - returns the input parameter string value with all uppercase characters converted to lowercase according to Unicode rules.</li>
+<li><strong>string toupper( string )</strong> - returns the input parameter string value with all lowercase characters converted to uppercase according to Unicode rules.</li>
+<li><strong>string trim( string )</strong> - returns the input parameter string value with all leading and trailing whitespace characters, according to Unicode rules, removed.</li>
+</ul>
+</li>
+<li><p>Arithmetic built-in functions -</p>
+<ul>
+<li><strong>double ceiling( double )</strong> - rounds the input numeric parameter up to the nearest numeric value with no decimal component.</li>
+<li><strong>double floor( double)</strong> - rounds the input numeric parameter down to the nearest numeric value with no decimal component.</li>
+<li><strong>double round( double )</strong> -rounds the input numeric parameter to the nearest numeric value with no decimal component. The mid-point between two integers is rounded away from zero, i.e. 0.5 is rounded to 1 and ‑0.5 is rounded to -1.</li>
+</ul>
+</li>
+<li><p>Date / Time built-in functions - these function operate on three types: dateTimeOffset, date, and timeOfDay. A dateTimeOffset represents a date and time and time zone offset value. Literal operands are specified as YYYY &quot;-&quot; MM &quot;-&quot; DD &quot;T&quot; HH &quot;:&quot; mm [ &quot;:&quot; ss [ &quot;.&quot; fractionalSeconds ] ] ( &quot;Z&quot; / SIGN HH &quot;:&quot; mm ) where HH is 24 hour value. The date type is specified as YYYY &quot;-&quot; MM &quot;-&quot; DD. The timeOfDay is specified as HH &quot;:&quot; mm [ &quot;:&quot; ss [ &quot;.&quot; fractionalSeconds ] ].</p>
+<ul>
+<li><strong>date date( dateTimeOffset )</strong> - returns the date part of the DateTimeOffset parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>int32 day( date | dateTimeOffset )</strong> - returns the day component Date or DateTimeOffset parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>int32 hour( timeOfDay | dateTimeOffset )</strong> - returns the hour component (0 to 23) of the DateTimeOffset or TimeOfDay parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>int32 minute( timeOfDay | dateTimeOffset )</strong> - returns the minute component (0 to 59) of the DateTimeOffset or TimeOfDay parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>int32 month( date | dateTimeOffset )</strong> - returns the month component of the Date or DateTimeOffset parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>dateTimeOffset now( )</strong> - returns the current point in time (date and time with time zone) as a DateTimeOffset value.</li>
+<li><strong>int32 second( timeOfDay | dateTimeOffset )</strong> - returns the second component (0 to 59 for regular seconds, and 60 for leap seconds, without the fractional part) of the DateTimeOffset or TimeOfDay parameter value.</li>
+<li><strong>timeOfDay time( dateTimeOffset )</strong> - rreturns the time part of the DateTimeOffset parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+<li><strong>int32 year( date | dateTimeOffset )</strong> - returns the year component of the Date or DateTimeOffset parameter value, evaluated in the time zone of the DateTimeOffset parameter value.</li>
+</ul>
+</li>
+<li><p>Collection built-in functions - the &quot;any&quot; and &quot;all&quot; lamda expressions are used to filter features based on instances of repeating components and relationships.</p>
+<ul>
+<li><strong>boolean {componentName}/any( var : var/{attribute} gt 0 )</strong> - The any operator applies a Boolean expression to each instance of a repeating component or relationship and returns true if and only if the expression is true for any instance, otherwise it returns false. This implies that the any operator always returns false for an empty collection. The any operator can be used without an argument expression. This short form returns false if and only if the collection is empty. Example: $filter=Hyperlink_Record/any( q: contains(q/filePath, &quot;schematic&quot;) will return true for any feature that has at least one Hyperlink_Record with a FilePath attribute that contains &quot;schematic&quot; as a substring.</li>
+<li><strong>boolean {componentName}/all( var : var/{attribute} gt 0 )</strong> - The all operator applies a Boolean expression to each instance of a repeating component or relationship and returns true if and only if the expression is true for every instance, otherwise it returns false. This implies that the all operator always returns true for an empty collection.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>$expand={featureComponentsRelationships}</strong> - a comma separated list of components and relationships of the feature instances to include in the response.</p>
+</li>
+<li><p><strong>$select={attributes}</strong> - a comma separated list of the feature attributes to return in the response. Usually, the $select clause is nested in the componentList of the $expand option (e.g. &quot;$expand=Substation_Record($select=Sub_Name,Sub_Type)&quot; where Sub_Name and Sub_Type are attributes of the Substation_Record component).</p>
+</li>
+<li><p><strong>$count=true</strong> - include a count of the feature instances in the response. The $count, $skip, $top and $orderBy parameters are used together to paginate the results when a large number of feature instances are expected in the response. For example, suppose the client wants to process the features in chunks of 1000 until all feature instances that match the filter criteria are processed. The first call the client makes includes $count=true&amp;$top=1000&amp;$orderBy={attribute}. If the odata.Count property in the response is less than 1000, the client knows that it has processed all of the results; otherwise, the client continues calling with $count=true&amp;$skip={1000 * number of previous calls}&amp;$top=1000&amp;$orderBy={attribute} until the odata.Count value is less than 1000. Note that it is important to use an $orderBy attribute that will produce a deterministic order to the feature results.</p>
+</li>
+<li><p><strong>$skip={numberToSkip}</strong> - specifies the number of feature instances from the query to skip over before forming the response.</p>
+</li>
+<li><p><strong>$top={numberToReturn}</strong> - specifies the number of feature instances from the query to return in the response.</p>
+</li>
+<li><p><strong>$orderBy={attributes}</strong> - specifies a comma separated list of component or relationship attributes used to order feature instances from the query before forming the response.</p>
+</li>
+</ul>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetWorksFeatureModelService/data/SubStation?$expand=substation_record,substation_ar,hyperlink_record($select=G3E_CID,FILEPATH),common_record&amp;$filter=Substation_Record/Sub_Number eq 1119&amp;ActiveJob=16205</p>
+<p><strong>Sample Response</strong></p>
+<p>A JSON response is returned. The content is constrained by applying the $expand and $select parameters to the feature query results obtained after applying the $filter, BBOX, and / or FilterSet query parameters.</p>
+<p>If a geographic component is included in the response, its G3E_GEOMETRY attribute will be formatted as GeoJson. Every geographic component will also include Longitude and Latitude properties. Only the first point in the component geometry is selected and converted to a geographic coordinate in decimal degrees. The primary use of this geographic longitude / latitude point is to allow OData clients (such as Excel and Power BI) that have simple map visualizers to display the feature’s location on a map. The Longitude and Latitude properties are directly bound to input fields of the map visualizers.</p>
+<pre><code>{
+    &quot;@odata.context&quot;:  &quot;http://localhost/NetWorksFeatureModelService/data/$metadata#Substation(SUBSTATION_RECORD(),SUBSTATION_AR(),HYPERLINK_RECORD(G3E_CID,FILEPATH),COMMON_RECORD())&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;G3E_FID&quot;: 7693135,
+            &quot;G3E_FNO&quot;: 326,
+            &quot;SUBSTATION_RECORD&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 32601,
+                &quot;SUB_NAME&quot;: &quot;ROYSTER ANNEX 2&quot;,
+                &quot;SUB_NUMBER&quot;: 1119,
+                &quot;SUB_TYPE&quot;: &quot;DSTSN&quot;,
+                &quot;DESCRIPTION&quot;: &quot;Add Royster Annex 2 in FeatureModelService demo feature&quot;
+            },
+            &quot;SUBSTATION_AR&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 32602,
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;type&quot;: &quot;Polygon&quot;,
+                    &quot;coordinates&quot;: [
+                        [
+                            [
+                                -9943077.3388928939,
+                                5324849.7329307273
+                            ],
+                            [
+                                -9943074.8816774543,
+                                5324776.0503994068
+                            ],
+                            [
+                                -9943003.00058843,
+                                5324779.1384734185
+                            ],
+                            [
+                                -9943005.1047456339,
+                                5324852.5057640215
+                            ],
+                            [
+                                -9943077.3388928939,
+                                5324849.7329307273
+                            ]
+                        ]
+                    ],
+                    &quot;crs&quot;: {
+                        &quot;type&quot;: &quot;name&quot;,
+                        &quot;properties&quot;: {
+                            &quot;name&quot;: &quot;EPSG:3857&quot;
+                        }
+                    }
+                }
+            },
+            &quot;HYPERLINK_RECORD&quot;: [
+                {
+                    &quot;G3E_CID&quot;: 1,
+                    &quot;FILEPATH&quot;: &quot;Schematic.txt&quot;
+                },
+                {
+                    &quot;G3E_CID&quot;: 2,
+                    &quot;FILEPATH&quot;: &quot;InstallInstructions.txt&quot;
+                }
+            ],
+            &quot;COMMON_RECORD&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 31,
+                &quot;JOB_PLACE_NAME&quot;: &quot;16205&quot;,
+                &quot;JOB_PLACE_DATE&quot;: &quot;2020-02-16T14:10:23-06:00&quot;,
+                &quot;INSTALL_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+                &quot;ABANDON_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+                &quot;JOB_MODIFY_NAME&quot;: &quot;16205&quot;,
+                &quot;JOB_MODIFY_DATE&quot;: &quot;2020-03-19T08:16:31-05:00&quot;,
+                &quot;GPS_X_COORD&quot;: 0,
+                &quot;GPS_Y_COORD&quot;: 0,
+                &quot;LOCATION&quot;: null,
+                &quot;OWNER1_ID&quot;: 0,
+                &quot;OWNER2_ID&quot;: 0,
+                &quot;STATE&quot;: &quot;Proposed&quot;,
+                &quot;ASSEMBLYOWNER_ID&quot;: 0,
+                &quot;OWNER_RECT_ID&quot;: 0,
+                &quot;OWNER_ID&quot;: 0,
+                &quot;OWNER_CASING_ID&quot;: 0,
+                &quot;SMARTFE_OWNER_ID&quot;: 0,
+                &quot;FACILITY_OWNER&quot;: null,
+                &quot;TAX_DISTRICT&quot;: null
+            }
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetWorksFeatureModelService/data/SubStation/$count?ActiveJob=16205</p>
+<p><strong>Sample Response</strong></p>
+<p>The count of all substation features is returned.</p>
+<pre><code>17
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

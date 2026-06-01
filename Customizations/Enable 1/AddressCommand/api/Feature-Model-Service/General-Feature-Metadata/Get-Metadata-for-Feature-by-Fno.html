@@ -1,0 +1,1536 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Metadata for Feature by Fno </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Metadata for Feature by Fno ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-metadata-for-feature-by-fno">Get Metadata for Feature by Fno</h1>
+
+<p>Returns metadata about the specific HxGN NetWorks Core feature type.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/metadata/feature/{fno}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fno</td>
+<td>Required</td>
+<td>Specifies the G3E_FNO value of a specific feature.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFeatureModelService/metadata/feature/326</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;Fno&quot;: 326,
+    &quot;Username&quot;: &quot;Substation&quot;,
+    &quot;Name&quot;: &quot;Substation&quot;,
+    &quot;PrimaryGeographicCno&quot;: 32602,
+    &quot;PrimaryAttributeCno&quot;: 32601,
+    &quot;PrimaryDetailCno&quot;: 32604,
+    &quot;Components&quot;: [
+        {
+            &quot;Cno&quot;: 32601,
+            &quot;Username&quot;: &quot;Substation Attributes&quot;,
+            &quot;Name&quot;: &quot;SUBSTATION_RECORD&quot;,
+            &quot;Type&quot;: &quot;NonGraphic&quot;,
+            &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 5326,
+                    &quot;Username&quot;: &quot;G3E_FID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 326010001,
+                    &quot;Username&quot;: &quot;Name&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;SUB_NAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 326010002,
+                    &quot;Username&quot;: &quot;SUB_NUMBER&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;SUB_NUMBER&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 326010003,
+                    &quot;Username&quot;: &quot;Type&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;SUB_TYPE&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: true
+                },
+                {
+                    &quot;Ano&quot;: 326010004,
+                    &quot;Username&quot;: &quot;Description&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;DESCRIPTION&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 326090001,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535284,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535285,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535286,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 32602,
+            &quot;Username&quot;: &quot;Substation&quot;,
+            &quot;Name&quot;: &quot;SUBSTATION_AR&quot;,
+            &quot;Type&quot;: &quot;SpatialArea&quot;,
+            &quot;GeometryType&quot;: &quot;PolygonGeometry&quot;,
+            &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 326090002,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532940,
+                    &quot;Username&quot;: &quot;G3E_FID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535287,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535288,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535289,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535290,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 32603,
+            &quot;Username&quot;: &quot;Substation Label&quot;,
+            &quot;Name&quot;: &quot;SUBSTATION_LABEL&quot;,
+            &quot;Type&quot;: &quot;GraphicText&quot;,
+            &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+            &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 326090003,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535291,
+                    &quot;Username&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Byte&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535292,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535293,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535294,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535295,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535296,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 32606,
+            &quot;Username&quot;: &quot;Substation Point&quot;,
+            &quot;Name&quot;: &quot;SUBSTATION_POINT&quot;,
+            &quot;Type&quot;: &quot;SpatialPoint&quot;,
+            &quot;GeometryType&quot;: &quot;OrientedPointGeometry&quot;,
+            &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 326090006,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535312,
+                    &quot;Username&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Byte&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535313,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535314,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535315,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535316,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535317,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATION_PT&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 40,
+            &quot;Username&quot;: &quot;Miscellaneous Label&quot;,
+            &quot;Name&quot;: &quot;MISC_LABEL&quot;,
+            &quot;Type&quot;: &quot;GraphicText&quot;,
+            &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+            &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 400001,
+                    &quot;Username&quot;: &quot;Miscellaneous Label&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_TEXTSTRING&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400003,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400004,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400005,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400006,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400007,
+                    &quot;Username&quot;: &quot;Alignment&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400008,
+                    &quot;Username&quot;: &quot;Identifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 400009,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;MISCLAB_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 41,
+            &quot;Username&quot;: &quot;Leader Line&quot;,
+            &quot;Name&quot;: &quot;LEADER_LINE&quot;,
+            &quot;Type&quot;: &quot;SpatialLine&quot;,
+            &quot;GeometryType&quot;: &quot;PolylineGeometry&quot;,
+            &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 410001,
+                    &quot;Username&quot;: &quot;Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 410002,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 410003,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 410004,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 410005,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 410006,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;LDRLIN_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 31,
+            &quot;Username&quot;: &quot;Common Attributes&quot;,
+            &quot;Name&quot;: &quot;COMMON_RECORD&quot;,
+            &quot;Type&quot;: &quot;NonGraphic&quot;,
+            &quot;Table&quot;: &quot;COMMON_N&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 310001,
+                    &quot;Username&quot;: &quot;Job Placement Name&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;JOB_PLACE_NAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310002,
+                    &quot;Username&quot;: &quot;Job Placement Date&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;JOB_PLACE_DATE&quot;,
+                    &quot;DataType&quot;: &quot;Date&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310003,
+                    &quot;Username&quot;: &quot;Installation Date&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;INSTALL_DATE&quot;,
+                    &quot;DataType&quot;: &quot;Date&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310004,
+                    &quot;Username&quot;: &quot;Abandon Date&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;ABANDON_DATE&quot;,
+                    &quot;DataType&quot;: &quot;Date&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310005,
+                    &quot;Username&quot;: &quot;Job Modify Name&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;JOB_MODIFY_NAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310006,
+                    &quot;Username&quot;: &quot;Job Modify Date&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;JOB_MODIFY_DATE&quot;,
+                    &quot;DataType&quot;: &quot;Date&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310007,
+                    &quot;Username&quot;: &quot;GPS X Coordinate&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;GPS_X_COORD&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310008,
+                    &quot;Username&quot;: &quot;GPS Y Coordinate&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;GPS_Y_COORD&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310009,
+                    &quot;Username&quot;: &quot;Location&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;LOCATION&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310010,
+                    &quot;Username&quot;: &quot;Owner 1 ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;OWNER1_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310011,
+                    &quot;Username&quot;: &quot;Owner 2 ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;OWNER2_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310012,
+                    &quot;Username&quot;: &quot;State&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;STATE&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: true
+                },
+                {
+                    &quot;Ano&quot;: 310013,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310014,
+                    &quot;Username&quot;: &quot;Assembly Owner ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;ASSEMBLYOWNER_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310015,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310016,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310017,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310018,
+                    &quot;Username&quot;: &quot;OWNER_RECT_ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;OWNER_RECT_ID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310019,
+                    &quot;Username&quot;: &quot;OWNER ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;OWNER_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310020,
+                    &quot;Username&quot;: &quot;OWNER_CASING_ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;OWNER_CASING_ID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310021,
+                    &quot;Username&quot;: &quot;SMARTFE_OWNER_ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;SMARTFE_OWNER_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 310901,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327533062,
+                    &quot;Username&quot;: &quot;FACILITY_OWNER&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;FACILITY_OWNER&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327533063,
+                    &quot;Username&quot;: &quot;Tax District&quot;,
+                    &quot;Table&quot;: &quot;COMMON_N&quot;,
+                    &quot;Field&quot;: &quot;TAX_DISTRICT&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 53,
+            &quot;Username&quot;: &quot;Detail Indicator&quot;,
+            &quot;Name&quot;: &quot;DETAIL_IND_LABEL&quot;,
+            &quot;Type&quot;: &quot;GraphicText&quot;,
+            &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+            &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 530001,
+                    &quot;Username&quot;: &quot;Detail Identifier&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530002,
+                    &quot;Username&quot;: &quot;Detail Username&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_USERNAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530003,
+                    &quot;Username&quot;: &quot;Detail Legend Number&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_LEGENDNUMBER&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530004,
+                    &quot;Username&quot;: &quot;Detail MBR X Low&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRXLO&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530005,
+                    &quot;Username&quot;: &quot;Detail MBR Y Low&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRYLO&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530006,
+                    &quot;Username&quot;: &quot;Detail MBR X High&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRXHIGH&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530007,
+                    &quot;Username&quot;: &quot;Detail MBR Y High&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRYHIGH&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530008,
+                    &quot;Username&quot;: &quot;Detail Default X Offset&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRXOFFSET&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530009,
+                    &quot;Username&quot;: &quot;Detail Default Y Offset&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DETAIL_MBRYOFFSET&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530016,
+                    &quot;Username&quot;: &quot;Alignment&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 530901,
+                    &quot;Username&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532654,
+                    &quot;Username&quot;: &quot;G3E_CNO&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532655,
+                    &quot;Username&quot;: &quot;G3E_FID&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532656,
+                    &quot;Username&quot;: &quot;G3E_CID&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532657,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327532658,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535397,
+                    &quot;Username&quot;: &quot;Schematic detail type&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILTYPE&quot;,
+                    &quot;DataType&quot;: &quot;Byte&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545681,
+                    &quot;Username&quot;: &quot;Schematic name&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;SCHEMATIC_NAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545682,
+                    &quot;Username&quot;: &quot;Schematic type&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;SCHEMATIC_TYPE&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545683,
+                    &quot;Username&quot;: &quot;Schematic format&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;SCHEMATIC_FORMAT&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545684,
+                    &quot;Username&quot;: &quot;Schematic paper scale&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;PAPERSCALE&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545685,
+                    &quot;Username&quot;: &quot;Schematic minimum whitespace&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;MINWHITESPACE&quot;,
+                    &quot;DataType&quot;: &quot;Single&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545686,
+                    &quot;Username&quot;: &quot;Schematic definition&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;DEFINITION&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545687,
+                    &quot;Username&quot;: &quot;Schematic aspect ratio&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;ASPECTRATIO&quot;,
+                    &quot;DataType&quot;: &quot;Single&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545688,
+                    &quot;Username&quot;: &quot;Schematic notes&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;NOTES&quot;,
+                    &quot;DataType&quot;: &quot;Memo&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545689,
+                    &quot;Username&quot;: &quot;Schematic simplification&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;SIMPLIFIED&quot;,
+                    &quot;DataType&quot;: &quot;Byte&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545690,
+                    &quot;Username&quot;: &quot;Schematic network definition&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;NETWORKDEF&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545691,
+                    &quot;Username&quot;: &quot;Schematic trace identifier&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545692,
+                    &quot;Username&quot;: &quot;Schematic trace name&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_NAME&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545693,
+                    &quot;Username&quot;: &quot;Schematic trace seed FID&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_SEEDFID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545694,
+                    &quot;Username&quot;: &quot;Schematic trace stop criteria&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_STOPCRITERIA&quot;,
+                    &quot;DataType&quot;: &quot;Memo&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545695,
+                    &quot;Username&quot;: &quot;Schematic trace filter criteria&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_FILTERCRITERIA&quot;,
+                    &quot;DataType&quot;: &quot;Memo&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545696,
+                    &quot;Username&quot;: &quot;Schematic trace path cost&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_PATHCOST&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545697,
+                    &quot;Username&quot;: &quot;Schematic trace seed CID values&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_SEEDCIDVALUES&quot;,
+                    &quot;DataType&quot;: &quot;Memo&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545698,
+                    &quot;Username&quot;: &quot;Schematic trace hint&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_HINT&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545699,
+                    &quot;Username&quot;: &quot;Schematic trace hint CID values&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_HINTCIDVALUES&quot;,
+                    &quot;DataType&quot;: &quot;Memo&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545700,
+                    &quot;Username&quot;: &quot;Schematic trace goal FID&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_GOALFID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327545701,
+                    &quot;Username&quot;: &quot;Schematic trace goal FNO&quot;,
+                    &quot;Table&quot;: &quot;DETAIL_IND_LB&quot;,
+                    &quot;Field&quot;: &quot;TRACE_GOALFNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 32604,
+            &quot;Username&quot;: &quot;Substation Detail&quot;,
+            &quot;Name&quot;: &quot;SUBSTATIONDET_AR&quot;,
+            &quot;Type&quot;: &quot;SpatialArea&quot;,
+            &quot;GeometryType&quot;: &quot;PolygonGeometry&quot;,
+            &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+            &quot;IsDetail&quot;: true,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 326090004,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535297,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535298,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535299,
+                    &quot;Username&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535300,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535301,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535302,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535303,
+                    &quot;Username&quot;: &quot;GDO_GID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_AR&quot;,
+                    &quot;Field&quot;: &quot;GDO_GID&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 32605,
+            &quot;Username&quot;: &quot;Substation Detail Label&quot;,
+            &quot;Name&quot;: &quot;SUBSTATIONDET_LB&quot;,
+            &quot;Type&quot;: &quot;GraphicText&quot;,
+            &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+            &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+            &quot;IsDetail&quot;: true,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: false,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 326090005,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535304,
+                    &quot;Username&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535305,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535306,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535307,
+                    &quot;Username&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535308,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535309,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535310,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 327535311,
+                    &quot;Username&quot;: &quot;GDO_GID&quot;,
+                    &quot;Table&quot;: &quot;SUBSTATIONDET_LB&quot;,
+                    &quot;Field&quot;: &quot;GDO_GID&quot;,
+                    &quot;DataType&quot;: &quot;Double&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 45,
+            &quot;Username&quot;: &quot;Detail Miscellaneous Label&quot;,
+            &quot;Name&quot;: &quot;MISCLABDET_ML&quot;,
+            &quot;Type&quot;: &quot;GraphicText&quot;,
+            &quot;GeometryType&quot;: &quot;TextPointGeometry&quot;,
+            &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+            &quot;IsDetail&quot;: true,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 400002,
+                    &quot;Username&quot;: &quot;Detail Miscellaneous Label&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_TEXTSTRING&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450002,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450003,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450004,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450005,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450006,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450007,
+                    &quot;Username&quot;: &quot;GDO_GID&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;GDO_GID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450008,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450009,
+                    &quot;Username&quot;: &quot;Alignment&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_ALIGNMENT&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450010,
+                    &quot;Username&quot;: &quot;Detail Indentifier&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 450011,
+                    &quot;Username&quot;: &quot;ATTR_450010&quot;,
+                    &quot;Table&quot;: &quot;MISCLABDET_ML&quot;,
+                    &quot;Field&quot;: &quot;ATTR_450010&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 44,
+            &quot;Username&quot;: &quot;Detail Leader Line&quot;,
+            &quot;Name&quot;: &quot;LDRLINDET_LL&quot;,
+            &quot;Type&quot;: &quot;SpatialLine&quot;,
+            &quot;GeometryType&quot;: &quot;PolylineGeometry&quot;,
+            &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+            &quot;IsDetail&quot;: true,
+            &quot;GeometryField&quot;: &quot;G3E_GEOMETRY&quot;,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 440001,
+                    &quot;Username&quot;: &quot;G3E_ID&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440002,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440003,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440004,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440005,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440006,
+                    &quot;Username&quot;: &quot;GDO_GID&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;GDO_GID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440007,
+                    &quot;Username&quot;: &quot;Geometry&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;DataType&quot;: &quot;Spatial&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440008,
+                    &quot;Username&quot;: &quot;Detail Identifier&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;G3E_DETAILID&quot;,
+                    &quot;DataType&quot;: &quot;Long&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 440009,
+                    &quot;Username&quot;: &quot;ATTR_440008&quot;,
+                    &quot;Table&quot;: &quot;LDRLINDET_LL&quot;,
+                    &quot;Field&quot;: &quot;ATTR_440008&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        },
+        {
+            &quot;Cno&quot;: 33,
+            &quot;Username&quot;: &quot;Hyperlink Attributes&quot;,
+            &quot;Name&quot;: &quot;HYPERLINK_RECORD&quot;,
+            &quot;Type&quot;: &quot;NonGraphic&quot;,
+            &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+            &quot;IsDetail&quot;: false,
+            &quot;IsLTT&quot;: true,
+            &quot;IsRepeating&quot;: true,
+            &quot;Attributes&quot;: [
+                {
+                    &quot;Ano&quot;: 330001,
+                    &quot;Username&quot;: &quot;Absolute File Name&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;FILEPATH&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330002,
+                    &quot;Username&quot;: &quot;Description&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;HYPER_DESCRIPTION&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330003,
+                    &quot;Username&quot;: &quot;Type&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;HYPER_TYPE&quot;,
+                    &quot;DataType&quot;: &quot;Text&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330004,
+                    &quot;Username&quot;: &quot;Identifier&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_ID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330005,
+                    &quot;Username&quot;: &quot;Feature Number&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330006,
+                    &quot;Username&quot;: &quot;Feature Identifier&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_FID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330007,
+                    &quot;Username&quot;: &quot;Component Number&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CNO&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                },
+                {
+                    &quot;Ano&quot;: 330008,
+                    &quot;Username&quot;: &quot;Component Identifier&quot;,
+                    &quot;Table&quot;: &quot;HYPERLINK_N&quot;,
+                    &quot;Field&quot;: &quot;G3E_CID&quot;,
+                    &quot;DataType&quot;: &quot;Integer&quot;,
+                    &quot;IsPicklist&quot;: false
+                }
+            ]
+        }
+    ],
+    &quot;Relationships&quot;: [
+        {
+            &quot;Rno&quot;: 3,
+            &quot;Username&quot;: &quot;Parent to Child Ownership&quot;,
+            &quot;Type&quot;: &quot;Ownership&quot;,
+            &quot;IsSubordinate&quot;: false
+        },
+        {
+            &quot;Rno&quot;: 5,
+            &quot;Username&quot;: &quot;Detail Area&quot;,
+            &quot;Type&quot;: &quot;Detail&quot;,
+            &quot;IsSubordinate&quot;: true
+        },
+        {
+            &quot;Rno&quot;: 7,
+            &quot;Username&quot;: &quot;References a Detail&quot;,
+            &quot;Type&quot;: &quot;Detail&quot;,
+            &quot;IsSubordinate&quot;: false
+        }
+    ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

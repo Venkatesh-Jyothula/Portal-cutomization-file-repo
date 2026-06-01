@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Feature By Fid </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Feature By Fid ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-feature-by-fid">Get Feature By Fid</h1>
+
+<p>Returns the requested feature data for the feature instance that matches the specified G3E_FID value.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/data/{featureName}/{fid}?[{oDataOptions}][&amp;Jobs={listOfJobNames} | ActiveJob={jobName}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureName</td>
+<td>Required</td>
+<td>Specifies the model feature type to retrieve data for.</td>
+</tr>
+<tr>
+<td>fid</td>
+<td>Required</td>
+<td>Specifies the G3E_FID value for the model feature to retrieve data for.</td>
+</tr>
+<tr>
+<td>oDataOptions</td>
+<td>Optional</td>
+<td>See the OData Options section below.</td>
+</tr>
+<tr>
+<td>listOfJobNames</td>
+<td>Optional</td>
+<td>Specifies a comma separated list of HxGN NetWorks Core jobs whose pending edits will participate in the query and response.</td>
+</tr>
+<tr>
+<td>jobName</td>
+<td>Optional</td>
+<td>Specifies the active HxGN NetWorks Core job whose pending edits will participate in the query and response.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OData Options</strong></p>
+<p>Since a specific instance of the feature type has been selected, the only OData parameters that apply are the $expand and $select parameters.</p>
+<ul>
+<li><strong>$expand={featureComponentsRelationships}</strong> - a comma separated list of components and relationships of the feature instance to include in the response.</li>
+<li><strong>$select={attributes}</strong> - a comma separated list of the feature attributes to return in the response. Usually, the $select clause is nested in the componentList of the $expand option (e.g. &quot;$expand=Substation_Record($select=Sub_Name,Sub_Type)&quot; where Sub_Name and Sub_Type are attributes of the Substation_Record component).</li>
+</ul>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetWorksFeatureModelService/data/SubStation/7693135?$expand=substation_record,substation_ar,hyperlink_record($select=G3E_CID,FILEPATH),common_record&amp;ActiveJob=16205</p>
+<p><strong>Sample Response</strong></p>
+<p>A JSON response is returned. If the G3E_GEOMETRY attribute is included, it will be formatted as GeoJson.</p>
+<pre><code>{
+    &quot;@odata.context&quot;:  &quot;http://localhost/NetWorksFeatureModelService/data/$metadata#Substation(SUBSTATION_RECORD(),SUBSTATION_AR(),HYPERLINK_RECORD(G3E_CID,FILEPATH),COMMON_RECORD())&quot;,
+    &quot;value&quot;: [
+        {
+            &quot;G3E_FID&quot;: 7693135,
+            &quot;G3E_FNO&quot;: 326,
+            &quot;SUBSTATION_RECORD&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 32601,
+                &quot;SUB_NAME&quot;: &quot;ROYSTER ANNEX 2&quot;,
+                &quot;SUB_NUMBER&quot;: 1119,
+                &quot;SUB_TYPE&quot;: &quot;DSTSN&quot;,
+                &quot;DESCRIPTION&quot;: &quot;Add Royster Annex 2 in FeatureModelService demo feature&quot;
+            },
+            &quot;SUBSTATION_AR&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 32602,
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;type&quot;: &quot;Polygon&quot;,
+                    &quot;coordinates&quot;: [
+                        [
+                            [
+                                -9943077.3388928939,
+                                5324849.7329307273
+                            ],
+                            [
+                                -9943074.8816774543,
+                                5324776.0503994068
+                            ],
+                            [
+                                -9943003.00058843,
+                                5324779.1384734185
+                            ],
+                            [
+                                -9943005.1047456339,
+                                5324852.5057640215
+                            ],
+                            [
+                                -9943077.3388928939,
+                                5324849.7329307273
+                            ]
+                        ]
+                    ],
+                    &quot;crs&quot;: {
+                        &quot;type&quot;: &quot;name&quot;,
+                        &quot;properties&quot;: {
+                            &quot;name&quot;: &quot;EPSG:3857&quot;
+                        }
+                    }
+                }
+            },
+            &quot;HYPERLINK_RECORD&quot;: [
+                {
+                    &quot;G3E_CID&quot;: 1,
+                    &quot;FILEPATH&quot;: &quot;Schematic.txt&quot;
+                },
+                {
+                    &quot;G3E_CID&quot;: 2,
+                    &quot;FILEPATH&quot;: &quot;InstallInstructions.txt&quot;
+                }
+            ],
+            &quot;COMMON_RECORD&quot;: {
+                &quot;G3E_CID&quot;: 1,
+                &quot;G3E_CNO&quot;: 31,
+                &quot;JOB_PLACE_NAME&quot;: &quot;16205&quot;,
+                &quot;JOB_PLACE_DATE&quot;: &quot;2020-02-16T14:10:23-06:00&quot;,
+                &quot;INSTALL_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+                &quot;ABANDON_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+                &quot;JOB_MODIFY_NAME&quot;: &quot;16205&quot;,
+                &quot;JOB_MODIFY_DATE&quot;: &quot;2020-03-19T08:16:31-05:00&quot;,
+                &quot;GPS_X_COORD&quot;: 0,
+                &quot;GPS_Y_COORD&quot;: 0,
+                &quot;LOCATION&quot;: null,
+                &quot;OWNER1_ID&quot;: 0,
+                &quot;OWNER2_ID&quot;: 0,
+                &quot;STATE&quot;: &quot;Proposed&quot;,
+                &quot;ASSEMBLYOWNER_ID&quot;: 0,
+                &quot;OWNER_RECT_ID&quot;: 0,
+                &quot;OWNER_ID&quot;: 0,
+                &quot;OWNER_CASING_ID&quot;: 0,
+                &quot;SMARTFE_OWNER_ID&quot;: 0,
+                &quot;FACILITY_OWNER&quot;: null,
+                &quot;TAX_DISTRICT&quot;: null
+            }
+        }
+    ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

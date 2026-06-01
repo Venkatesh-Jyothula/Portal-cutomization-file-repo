@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Geometry serialization </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Geometry serialization ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="geometry-serialization">Geometry serialization</h1>
+
+<p>Multiple geometry formats are supported in the interfaces:</p>
+<ul>
+<li><p><a href="Geometry-serialization/NetWorks-JSON-geometry-format.html">NetWorks geometry format</a>
+JSON based serialization of the IGTGeometry-like format, which supports all types of geometry.</p>
+</li>
+<li><p><a href="Geometry-serialization/WKT.html">WKT</a>
+String-based format.</p>
+</li>
+<li><p>GeoJSON
+JSON-based serialization format, limited to basic types Point, LineString and Polygon. This format does not support features like Arc and CompositePolyline/Polygon geometries.</p>
+</li>
+</ul>
+<p>In JSON, geometries are always serialized as JSON objects. The type of the enclosed geometry is determined from the property name of the object:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>networksjson</td>
+<td>NetWorks geometry format</td>
+</tr>
+<tr>
+<td>wkt</td>
+<td>WKT</td>
+</tr>
+<tr>
+<td>geojson</td>
+<td>GeoJSON</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples</strong></p>
+<p>NetWorks JSON geometry format</p>
+<pre><code class="lang-js">{
+  &quot;networksjson&quot;: {
+    &quot;type&quot;: &quot;OrientedPoint&quot;,
+    &quot;origin&quot;: [1, 2, 3],
+    &quot;orientation&quot;: [1, 1, 0]
+  }
+}
+</code></pre>
+<p>WKT</p>
+<pre><code class="lang-js">{
+    &quot;wkt&quot;: &quot;LINESTRING(4502788 5925546, 4502798 5925546)&quot;
+}
+</code></pre>
+<p>GeoJSON</p>
+<pre><code class="lang-js">{
+  &quot;geojson&quot;: {
+    &quot;type&quot;: &quot;Point&quot;,
+    &quot;coordinates&quot;: [1, 2, 3]
+  }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Addres Common Attributes</title>
+    <style>
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            border: 1px solid #ccc; /* Grey lines */
+            padding: 8px;
+            text-align: center;
+            color: #335ca5; /* Text color */
+            font-family: "Times New Roman", Times, serif; /* Font family */
+			font-size: 16px;
+        }
+
+        .table th {
+            background-color: #f2f2f2; /* Light grey background */
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light grey background for even rows */
+        }
+		
+		<!-- /* Hide the second and third columns */ -->
+				<!-- .table td:nth-child(1), -->
+				<!-- .table th:nth-child(2), -->
+				<!-- .table td:nth-child(3), -->
+				<!-- .table th:nth-child(3) { -->
+					<!-- display: none; -->
+				<!-- } -->
+        /* Button styles */
+        .button-container {
+            width: 100%; /* Ensure the container takes the full width */
+			text-align: right; /* Align text (and buttons) to the right */
+			margin-top: 20px; 
+        }
+		.form-container {
+            display: flex;
+            flex-direction: column;
+            width: 450px; /* Set a fixed width for the form */
+            margin: 0 auto;
+        }
+
+        .button {
+            background-color: #335ca5; /* Blue color */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d3b73; /* Darker blue color on hover */
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+    <!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="./Datatable.css">
+    <!-- jQuery library (required for DataTables) -->
+	<!-- <script src="./jquery-3.5.0.js"></script>  -->
+    <script src="./jquery-3.6.0.min.js"></script>    
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" src="./Datatable.js"></script>
+</head>
+<body>
+    <div class="form-container">
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+						<th>G3E_TANO</th>
+                        <th>G3E_ANO</th>
+                        <th>G3E_FIELD</th>
+                        <th>Attributes</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+						  <div class="loading" id="loading">
+							<img src="./Images/loading.gif" alt="Loading...">
+						  </div>
+                </tbody>
+            </table>
+		<div class="button-container">
+			<button class="button btnUpdate">Update</button>
+			<button class="button btnExit">Exit</button>
+		</div>
+        </div>
+    </div>
+
+    <script>
+	async function PopulateData() {
+    var GTDialogWebService = null;
+    var vG3E_DTNO = null;
+    const AttributesUsername = [];
+	const AttributesFieldname = [];
+	const AttributesAno = [];
+	const AttributesTabAno = [];
+    const valuesToBePassed = JSON.parse(localStorage.getItem('formCheckedFidsValues'));
+    
+    if (Array.isArray(valuesToBePassed) && valuesToBePassed.length > 0) {
+        // Get the first value from the array
+        const firstValue = parseInt(valuesToBePassed[0], 10);
+        console.log(firstValue); // This will log the first value
+        
+        GTDialogWebService = await getServiceUrl('GTDWS');
+        console.log("Dialog web service: " + GTDialogWebService);
+        
+        const urlDialog = `${GTDialogWebService}/Dialog/112/${firstValue}?&pTYPE=Edit`;
+        const response = await fetch(urlDialog);
+        const Dialogdata = await response.json();
+        console.log(Dialogdata);
+        
+        if (Dialogdata.items.length > 0) {
+            vG3E_DTNO = Dialogdata.items[0].G3E_DTNO;
+            const responseDialogTab = await fetch(`${GTDialogWebService}/DialogTab/${vG3E_DTNO}`);
+            console.log(`${GTDialogWebService}/DialogTab/${vG3E_DTNO}`);
+            const DialogTabdata = await responseDialogTab.json();
+            console.log(DialogTabdata);
+            if (DialogTabdata.items.length > 0) {
+			// Iterate through the nested items
+			// Check if DialogTabdata.items is an array
+			const validFieldNames = ['ARCHIVED', 'CAB_ID', 'CLASS', 'CONTRIBUTION_REQ', 'DEPLOY_STATUS', 'GRN_FIELD', 'PROACTIVE', 'ROFWAY', 'SERVICE', 'SERVICE_DUCT', 'STRUCTURE'];
+			if (Array.isArray(DialogTabdata.items)) {
+				DialogTabdata.items.forEach(outerItem => {
+					if (outerItem.items && Array.isArray(outerItem.items)) {
+						outerItem.items.forEach(innerItem => {
+							if (innerItem.G3E_READONLY === 0 &&  validFieldNames.includes(innerItem.G3E_FIELD)) {
+								AttributesUsername.push(innerItem.G3E_USERNAME);
+								AttributesFieldname.push(innerItem.G3E_FIELD);
+								AttributesAno.push(innerItem.G3E_ANO);
+								AttributesTabAno.push(innerItem.G3E_TANO);
+							}
+						});
+					}
+				});
+			}
+
+                
+                 // Populate DataTable with AttributesAno, AttributesFieldname, and AttributesUsername
+                        const table = $('#result-table').DataTable();
+                        table.clear().draw();
+
+                        AttributesAno.forEach((ano, index) => {
+                            table.row.add([
+								AttributesTabAno[index],
+                                ano,
+                                AttributesFieldname[index],
+                                AttributesUsername[index],
+                                `<input type="text" value="" style="width: 100%;">`
+                            ]).draw(false);
+                        });
+					 $('#loading').remove();
+            } else {
+                console.log('No items found in Dialogdata');
+            }
+        } else {
+            console.log('No items found in Dialogdata');
+        }
+    } else {
+        parent.$NWP.msg.showInfo("No checked rows in the Parent Form");
+    }
+}
+
+	
+	async function fetchNetworkSolutionData() {
+				try {
+					// Get the mapsource section
+					var mapsource = parent.$NWP.workspace.getSection("mapsource");
+
+					// Initialize variables
+					var vectorServiceURL;
+
+					// Loop through mapsource items to find the NetworksVector type
+					for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+						if (mapsource.items[i].type === 'NetworksVector') {
+							vectorServiceURL = mapsource.items[i].url;
+							urlSolution = vectorServiceURL.substring(0, vectorServiceURL.lastIndexOf('/')) + '/NetWorksSolutionService';
+							break;
+						}
+					}
+
+					// Check if urlSolution was found
+					if (!urlSolution) {
+						throw new Error("NetworksVector type not found in mapsource items.");
+					}
+					
+					//Retrieve the DB Alias for the Solution Service
+					var dbAlias=await parent.$NWP.fetchJson({ url: urlSolution });
+
+					// Fetch data from the selected option endpoint
+					const response = await fetch(`${urlSolution}/${dbAlias}/`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+
+					// Check if the response is ok
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+
+					// Parse the response data as JSON
+					const urlSolutiondata = await response.json();
+
+					// Check if urlSolutiondata is null
+					if (urlSolutiondata === null) {
+						throw new Error("Received null data from the network solution service.");
+					}
+
+					// Return the parsed data
+					return urlSolutiondata;
+
+				} catch (error) {
+					// Handle errors
+					console.error('Error fetching network solution data:', error);
+					throw error;  // Re-throw the error after logging it
+				}
+			}
+		function findServiceUrl(urlSolutiondata, serviceType) {
+			for (const service of urlSolutiondata) {
+				if (service.Type === serviceType) {
+					return service.Url;
+				}
+			}
+			throw new Error(`${serviceType} not found in network solution data.`);
+		}
+
+		async function getServiceUrl(serviceType) {
+			try {
+				// Fetch network solution data
+				const urlSolutiondata = await fetchNetworkSolutionData();
+
+				// Find and return the service URL for the specified service type
+				const serviceUrl = findServiceUrl(urlSolutiondata, serviceType);
+				return serviceUrl;
+			} catch (error) {
+				console.error('Error:', error);
+				throw error;
+			}
+		}
+		
+		
+		
+        $(document).ready(function() {
+		
+			 
+			 const valuesToBePassed = JSON.parse(localStorage.getItem('formCheckedFidsValues'));			            
+            // Initialize DataTable
+            var table = $('#result-table').DataTable({
+				"paging": false,
+				"searching": false,
+				"info": false,
+				"columns": [
+					{ "visible": false }, // G3E_TANO
+					{ "visible": false }, // G3E_ANO
+					{ "visible": false }, // G3E_FIELD
+					null,
+					null
+				],
+                dom: '<"button-left"f>rtip'
+            });
+            enableShiftClickSelection();
+
+            // Event listener for the "Update" button
+            $('.btnUpdate').on('click', function() {                            
+                parent.$NWP.msg.showInfo("Update button clicked");
+            });
+
+            // Event listener for the "Exit" button
+            $('.btnExit').on('click', function() { 
+				var ValuePassed = [];
+				ValuePassed.push('Yes');
+				localStorage.setItem('CloseEditCommonAttribute', JSON.stringify(ValuePassed));
+                parent.$NWP.msg.showInfo("Exit button clicked");
+				
+            });
+
+
+        });
+
+        var lastChecked = null;
+
+        function enableShiftClickSelection() {
+            const checkboxes = $('#result-table tbody input[type="checkbox"]');
+
+            checkboxes.on('click', function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    const start = checkboxes.index(this);
+                    const end = checkboxes.index(lastChecked);
+
+                    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        }
+
+        function displayErrorMessage(message) {
+            alert(message); // Display error message in a pop-up
+        }
+		document.addEventListener('DOMContentLoaded', function() {
+            PopulateData();
+        });
+    </script>
+</body>
+</html>

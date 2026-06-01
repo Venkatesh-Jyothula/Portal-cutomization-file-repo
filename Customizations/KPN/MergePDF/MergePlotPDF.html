@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merge Plot PDF</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Segoe UI, Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            padding: 32px 36px;
+            width: 420px;
+            max-width: 95vw;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: #1a1a2e;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #c8c8c8;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #1a1a1a;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0,120,212,0.15);
+        }
+
+        .status {
+            min-height: 20px;
+            margin-top: 10px;
+            font-size: 0.83rem;
+        }
+
+        .status.error   { color: #c0392b; }
+        .status.success { color: #1e7e34; }
+        .status.info    { color: #0078d4; }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        #btnDownload {
+            background: #0078d4;
+            color: #fff;
+        }
+
+        #btnDownload:hover:not(:disabled) { background: #005fa3; }
+
+        #btnClose {
+            background: #e8e8e8;
+            color: #333;
+        }
+
+        #btnClose:hover:not(:disabled) { background: #d0d0d0; }
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <label for="txtRequestId">Plot Request ID</label>
+        <input
+            type="text"
+            id="txtRequestId"
+            placeholder="Enter request / plot ID"
+            autocomplete="off"
+        />
+
+        <div id="status" class="status" aria-live="polite"></div>
+
+        <div class="actions">
+            <button id="btnDownload">
+                <span class="spinner" id="spinner"></span>
+                Download
+            </button>
+            <button id="btnClose">Close</button>
+        </div>
+    </div>
+    <script src="mergePlotPDF.js"></script>
+    <script>
+        const txtRequestId  = document.getElementById('txtRequestId');
+        const btnDownload   = document.getElementById('btnDownload');
+        const btnClose      = document.getElementById('btnClose');
+        const statusEl      = document.getElementById('status');
+        const spinner       = document.getElementById('spinner');
+
+        function setStatus(msg, type) {
+            statusEl.textContent = msg;
+            statusEl.className = 'status ' + (type || '');
+        }
+
+        function setLoading(loading) {
+            btnDownload.disabled = loading;
+            btnClose.disabled    = loading;
+            spinner.style.display = loading ? 'inline-block' : 'none';
+        }
+
+        btnDownload.addEventListener('click', async () => {
+            const requestId = txtRequestId.value.trim();
+            if (!requestId) {
+                setStatus('Please enter a Plot Request ID.', 'error');
+                txtRequestId.focus();
+                return;
+            }
+
+            setStatus('Fetching PDF URLs…', 'info');
+            setLoading(true);
+
+            try {
+                await window.generateMergedPlotPdf(requestId);
+                setStatus('Merged PDF downloaded successfully.', 'success');
+            } catch (err) {
+                setStatus('Error: ' + err.message, 'error');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        btnClose.addEventListener('click', () => {
+            if (window.parent.currentNewWindow) {
+				window.parent.currentNewWindow.destroy();
+			}
+        });
+
+        txtRequestId.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') btnDownload.click();
+        });
+    </script>
+</body>
+</html>

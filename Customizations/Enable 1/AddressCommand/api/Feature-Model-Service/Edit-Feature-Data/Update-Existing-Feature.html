@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Update Existing Feature </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Update Existing Feature ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="update-existing-feature">Update Existing Feature</h1>
+
+<p>Updates the feature instance that matches the specified G3E_FID value and returns the requested feature information.</p>
+<p>This method is invoked via an Http Put request because it implements a full replace operation on the input components - not a partial update of attributes. The smallest object that can be updated is a single feature component - not a single attribute. Hence, the normal workflow is for the client to first fetch the feature components that have attributes that need to be updated, then update those attributes, then call this method to replace the component in the feature.</p>
+<p>This method can also be used to insert a new instance of a repeating component in the feature by providing the component object without a G3E_CID value or setting the G3E_CID value to zero.</p>
+<h2 id="put">PUT</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/data/{featureName}/{fid}?[{oDataExpandSelectOptions}][&amp;ActiveJob={jobName}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>featureName</td>
+<td>Required</td>
+<td>Specifies the model feature type that is being edited.</td>
+</tr>
+<tr>
+<td>fid</td>
+<td>Required</td>
+<td>Specifies the G3E_FID value for the model feature instance that is being edited.</td>
+</tr>
+<tr>
+<td>oDataExpandSelectOptions</td>
+<td>Optional</td>
+<td>The $expand={componentList} and $select={attributeList} OData query parameters can be used to control how much information about the newly updated feature to return in the response. Usually, the $ select clause is nested in the componentList (e.g. &quot;$ expand=Substation_Record($ select=Sub_Name,Sub_Type)&quot; where Sub_Name and Sub_Type are attributes of the Substation_Record component).</td>
+</tr>
+<tr>
+<td>jobName</td>
+<td>Optional</td>
+<td>Specifies the active HxGN NetWorks Core job that will hold the edits.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request Put Body</strong>
+The Http Put body of the request specifies a Json object that defines the new values for the feature. See examples below.</p>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetWorksFeatureModelService/data/SubStation/7688101?$expand=Substation_Record,Hyperlink_record,Substation_AR,Common_Record&amp;ActiveJob=16205</p>
+<p><strong>Sample Post Body</strong>
+In this example, the Http Put body updates values for several attributes of the SUBSTATION_RECORD and COMMON_RECORD components, defines one new instance of the HYPERLINK_RECORD repeating component, and updates the geometry for the SUBSTATION_AR primary geographic component. Note that G3E_GEOMETRY attributes are populated using standard GeoJson syntax. Note also that the new instance of the HYPERLINK_RECORD repeating component omitted the G3E_CID value (which indicates an insert instead of an update of an existing component).</p>
+<pre><code>{
+    &quot;@odata.context&quot;: &quot;http://localhost/NetWorksFeatureModelService/data/$metadata#Substation(SUBSTATION_RECORD(),HYPERLINK_RECORD(),SUBSTATION_AR(),COMMON_RECORD())/$entity&quot;,
+    &quot;G3E_FID&quot;: 7688101,
+    &quot;G3E_FNO&quot;: 326,
+    &quot;SUBSTATION_RECORD&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 32601,
+        &quot;SUB_NAME&quot;: &quot;ROYSTER ANNEX 2&quot;,
+        &quot;SUB_NUMBER&quot;: 1119,
+        &quot;SUB_TYPE&quot;: &quot;DSTSN&quot;,
+        &quot;DESCRIPTION&quot;: &quot;Add Royster Annex 2 in FeatureModelService demo feature&quot;
+    },
+    &quot;HYPERLINK_RECORD&quot;: [
+        {
+            &quot;G3E_CNO&quot;: 33,
+            &quot;FILEPATH&quot;: &quot;InstallInstructions.txt&quot;,
+            &quot;HYPER_DESCRIPTION&quot;: null,
+            &quot;HYPER_TYPE&quot;: null
+        }
+    ],
+    &quot;SUBSTATION_AR&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 32602,
+        &quot;G3E_GEOMETRY&quot;: {
+            &quot;type&quot;: &quot;Polygon&quot;,
+            &quot;coordinates&quot;: [
+                [
+                    [
+                        -9943077.338843137,
+                        5324849.7329261312
+                    ],
+                    [
+                        -9943074.8816277,
+                        5324776.0503948024
+                    ],
+                    [
+                        -9943003.00053869,
+                        5324779.13846882
+                    ],
+                    [
+                        -9943005.1046958938,
+                        5324852.5057594227
+                    ],
+                    [
+                        -9943077.338843137,
+                        5324849.7329261312
+                    ]
+                ]
+            ],
+            &quot;crs&quot;: {
+                &quot;type&quot;: &quot;name&quot;,
+                &quot;properties&quot;: {
+                    &quot;name&quot;: &quot;EPSG:3857&quot;
+                }
+            }
+        }
+    },
+    &quot;COMMON_RECORD&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 31,
+        &quot;JOB_PLACE_NAME&quot;: &quot;16205&quot;,
+        &quot;JOB_PLACE_DATE&quot;: &quot;2020-02-16T14:10:23-06:00&quot;,
+        &quot;INSTALL_DATE&quot;: null,
+        &quot;ABANDON_DATE&quot;: null,
+        &quot;JOB_MODIFY_NAME&quot;: &quot;16205&quot;,
+        &quot;JOB_MODIFY_DATE&quot;: &quot;2020-02-18T14:10:24-06:00&quot;,
+        &quot;GPS_X_COORD&quot;: null,
+        &quot;GPS_Y_COORD&quot;: null,
+        &quot;LOCATION&quot;: null,
+        &quot;OWNER1_ID&quot;: null,
+        &quot;OWNER2_ID&quot;: null,
+        &quot;STATE&quot;: &quot;Proposed&quot;,
+        &quot;ASSEMBLYOWNER_ID&quot;: null,
+        &quot;OWNER_RECT_ID&quot;: null,
+        &quot;OWNER_ID&quot;: null,
+        &quot;OWNER_CASING_ID&quot;: null,
+        &quot;SMARTFE_OWNER_ID&quot;: null,
+        &quot;FACILITY_OWNER&quot;: null,
+        &quot;TAX_DISTRICT&quot;: null
+    }
+}
+</code></pre>
+<p><strong>Sample Response</strong>
+Notice that the repeating component, HYPERLINK_RECORD, shows the existing and the newly inserted component in the response.</p>
+<pre><code>{
+    &quot;@odata.context&quot;: &quot;http://localhost/NetWorksFeatureModelService/data/$metadata#Substation(SUBSTATION_RECORD(),HYPERLINK_RECORD(),SUBSTATION_AR(),COMMON_RECORD())/$entity&quot;,
+    &quot;G3E_FID&quot;: 7693116,
+    &quot;G3E_FNO&quot;: 326,
+    &quot;SUBSTATION_RECORD&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 32601,
+        &quot;SUB_NAME&quot;: &quot;ROYSTER ANNEX 2&quot;,
+        &quot;SUB_NUMBER&quot;: 1119,
+        &quot;SUB_TYPE&quot;: &quot;DSTSN&quot;,
+        &quot;DESCRIPTION&quot;: &quot;Add Royster Annex 2 in FeatureModelService demo feature&quot;
+    },
+    &quot;HYPERLINK_RECORD&quot;: [
+        {
+            &quot;G3E_CID&quot;: 1,
+            &quot;G3E_CNO&quot;: 33,
+            &quot;FILEPATH&quot;: &quot;Schematic.txt&quot;,
+            &quot;HYPER_DESCRIPTION&quot;: null,
+            &quot;HYPER_TYPE&quot;: null
+        },
+        {
+            &quot;G3E_CID&quot;: 2,
+            &quot;G3E_CNO&quot;: 33,
+            &quot;FILEPATH&quot;: &quot;InstallInstructions.txt&quot;,
+            &quot;HYPER_DESCRIPTION&quot;: null,
+            &quot;HYPER_TYPE&quot;: null
+        }
+    ],
+    &quot;SUBSTATION_AR&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 32602,
+        &quot;G3E_GEOMETRY&quot;: {
+            &quot;type&quot;: &quot;Polygon&quot;,
+            &quot;coordinates&quot;: [
+                [
+                    [
+                        -9943077.3388928939,
+                        5324849.7329307273
+                    ],
+                    [
+                        -9943074.8816774543,
+                        5324776.0503994068
+                    ],
+                    [
+                        -9943003.00058843,
+                        5324779.1384734185
+                    ],
+                    [
+                        -9943005.1047456339,
+                        5324852.5057640215
+                    ],
+                    [
+                        -9943077.3388928939,
+                        5324849.7329307273
+                    ]
+                ]
+            ],
+            &quot;crs&quot;: {
+                &quot;type&quot;: &quot;name&quot;,
+                &quot;properties&quot;: {
+                    &quot;name&quot;: &quot;EPSG:3857&quot;
+                }
+            }
+        }
+    },
+    &quot;COMMON_RECORD&quot;: {
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 31,
+        &quot;JOB_PLACE_NAME&quot;: &quot;16205&quot;,
+        &quot;JOB_PLACE_DATE&quot;: &quot;2020-02-16T14:10:23-06:00&quot;,
+        &quot;INSTALL_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+        &quot;ABANDON_DATE&quot;: &quot;1899-12-30T00:00:00-06:00&quot;,
+        &quot;JOB_MODIFY_NAME&quot;: &quot;16205&quot;,
+        &quot;JOB_MODIFY_DATE&quot;: &quot;2020-03-16T14:44:48-05:00&quot;,
+        &quot;GPS_X_COORD&quot;: 0,
+        &quot;GPS_Y_COORD&quot;: 0,
+        &quot;LOCATION&quot;: null,
+        &quot;OWNER1_ID&quot;: 0,
+        &quot;OWNER2_ID&quot;: 0,
+        &quot;STATE&quot;: &quot;Proposed&quot;,
+        &quot;ASSEMBLYOWNER_ID&quot;: 0,
+        &quot;OWNER_RECT_ID&quot;: 0,
+        &quot;OWNER_ID&quot;: 0,
+        &quot;OWNER_CASING_ID&quot;: 0,
+        &quot;SMARTFE_OWNER_ID&quot;: 0,
+        &quot;FACILITY_OWNER&quot;: null,
+        &quot;TAX_DISTRICT&quot;: null
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

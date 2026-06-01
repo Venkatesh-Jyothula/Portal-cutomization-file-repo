@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Measure</title>
+	
+	<script>
+	var source;
+	var vector;
+	var map;
+	var currentMeasure;
+//Currently drawn feature. @type {import("../src/ol/Feature.js").default}
+	var sketch;
+ //The help tooltip element.  @type {HTMLElement}
+	var helpTooltipElement;
+ //Overlay to show the help messages. @type {Overlay}
+	var helpTooltip;
+ //The measure tooltip element. @type {HTMLElement}
+	var measureTooltipElement;
+ //Overlay to show the measurement. @type {Overlay}
+	var measureTooltip;
+//Message to show when the user is drawing a polygon.  @type {string}
+	var continuePolygonMsg = 'Click to continue drawing the polygon';
+//Message to show when the user is drawing a line. @type {string}
+	var continueLineMsg = 'Click to continue drawing the line';
+//Message to get point coordinate
+	var getXYMsg='Click to get the point coordinates';
+ //Handle pointer move. @param {import("../src/ol/MapBrowserEvent").default} evt The event.
+	var pointerMoveHandler;
+	var draw; // global so we can remove it later
+	var formatLength;
+	var formatArea;
+	var helpMsg;
+	var curLength;
+	var coordX;
+	var coordy;
+	var coordLon;
+	var coordLat;
+	var checkSV;
+	var measureOverlay;
+	var winSV;
+	var pushState;
+
+	function computeCurrLength(geom)
+	{
+		var coordinates=geom.getCoordinates();
+		var n=coordinates.length;
+		if(n>2)
+			n--;
+		var newC=[];
+		for(i=0;i<n;i++){
+			newC[i]=coordinates[i];
+		}
+		var newLine=new ol.geom.LineString(newC);
+		var length = ol.Sphere.getLength(newLine);
+		curLength.value=Math.round(length*100)/100;
+		newLine=null;
+		newC=null;
+	}
+	
+	function defineVectorLayers()
+	{
+		source=null;
+		source = new ol.source.Vector(); //VectorSource();
+
+		vector = new ol.layer.Vector({
+			source: source,
+			style: new ol.style.Style({
+				fill: new ol.style.Fill({
+				color: 'rgba(100, 100, 100, 0.2)'
+				}),
+				stroke: new ol.style.Stroke({
+					color: '#ffcc33',
+					width: 2
+				}),
+				image: new ol.style.Circle({
+					radius: 7,
+					fill: new ol.style.Fill({
+						color: '#ffcc33'
+					})
+				})
+			})
+		});
+		map.addLayer(vector);
+	}
+	
+//Initailization of the main events
+	function InitMeasurement()
+	{
+		helpTooltipElement=null;
+		helpMsg='';
+		const me = this;
+				
+		defineVectorLayers();
+
+		pointerMoveHandler = function(evt) {
+			if (evt.dragging) {
+				return;
+			}
+			
+			if(currentMeasure!='XY'){
+				helpMsg = 'Click to start drawing'; //attached to the mouse
+			}
+			else{
+				helpMsg=getXYMsg;
+			}
+
+			if (sketch) {
+				var geom = sketch.getGeometry();
+				coordX.value=Math.round(evt.coordinate[0]*100)/100;
+				coordY.value=Math.round(evt.coordinate[1]*100)/100;
+				var point=ol.proj.transform(evt.coordinate,$NWP.request('mapviewstate')[0].projection,'EPSG:4326');
+//console.log(evt.coordinate);
+//console.log(point);
+				coordLon.value=Math.round(point[0]*100000000)/100000000;
+				coordLat.value=Math.round(point[1]*100000000)/100000000;
+				
+				if (geom instanceof ol.geom.Polygon) {
+					helpMsg = continuePolygonMsg;
+				} else if (geom instanceof ol.geom.LineString) {
+					helpMsg = continueLineMsg;
+					computeCurrLength(geom);
+					//console.log(geom);
+				}		
+			}
+
+			if(helpTooltipElement){
+				helpTooltipElement.innerHTML = helpMsg;
+				helpTooltip.setPosition(evt.coordinate);
+//				helpTooltipElement.classList.remove('hidden');
+			}
+		};
+
+		formatLength = function(line) {
+			var length = ol.Sphere.getLength(line);
+			var output;
+			if (length > 500) {
+				output = (Math.round(length / 1000 * 100) / 100) +
+					' ' + 'km';
+			} else {
+				output = (Math.round(length * 100) / 100) +
+					' ' + 'm';
+			}
+			return output;
+		};
+			
+		formatArea = function(polygon) {
+			var area = ol.Sphere.getArea(polygon);
+			var output;
+			if (area > 50000) {
+				output = (Math.round(area / 1000000 * 100) / 100) +
+					' ' + 'km<sup>2</sup>';
+			} else {
+				output = (Math.round(area * 100) / 100) +
+					' ' + 'm<sup>2</sup>';
+			}
+				return output;
+		};
+			
+		map.on('pointermove', pointerMoveHandler);
+
+		curLength = document.getElementById('curLength');
+		coordX = document.getElementById('coordX');
+		coordY = document.getElementById('coordY');
+		coordLon = document.getElementById('coordLon');
+		coordLat = document.getElementById('coordLat');
+		checkSV = document.getElementById('checkSV');
+		winSV=null;
+		pushState=null;
+	}
+		
+	function createHelpTooltipStyle(element)
+	{
+		element.style.position='relative';
+		element.style.background='darkblue';
+		element.style.borderRadius='4px';
+		element.style.color='white';
+		element.style.padding='4px 8px';
+		element.style.opacity='0.7';
+		element.style.whiteSpace='nowrap';
+		element.style.fontSize='12px';
+		element.style.fontWeight='bold';
+	}
+//Creates a new help tooltip
+	function createHelpTooltip()
+	{
+		if (helpTooltipElement) {
+			helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+		}
+		helpTooltipElement = parent.document.createElement('div');
+		createHelpTooltipStyle(helpTooltipElement);
+		
+		helpTooltip = new ol.Overlay({
+			element: helpTooltipElement,
+			offset: [15, 0],
+			positioning: 'center-left'
+		});
+		map.addOverlay(helpTooltip);
+	}
+
+	function createTooltipStyle(element)
+	{
+		element.style.position='relative';
+		element.style.background='darkblue';
+		element.style.borderRadius='4px';
+		element.style.color='white';
+		element.style.padding='4px 8px';
+		element.style.opacity='0.7';
+		element.style.whiteSpace='nowrap';
+		element.style.fontSize='12px';
+		element.style.fontWeight='bold';
+	}
+//Creates a new measure tooltip
+	function createMeasureTooltip()
+	{
+		if (measureTooltipElement) {
+			measureTooltipElement.parentNode.removeChild(measureTooltipElement);
+		}
+		measureTooltipElement = document.createElement('div');
+		createTooltipStyle(measureTooltipElement);
+		
+		
+		measureTooltip = new ol.Overlay({
+			element: measureTooltipElement,
+			offset: [0, -15],
+			positioning: 'bottom-center'
+		});
+		map.addOverlay(measureTooltip);
+	}
+
+	function openInNewTab(url) {
+		var w=Math.round(window.innerWidth*2*1.3);
+		var h=Math.round(1.3*window.innerHeight/2);
+		//console.log(window.innerWidth+','+window.innerHeight+','+w+','+h);
+		winSV = window.open(url, 'Google Street View','width='+w+',height='+h+',menubar=no,toolbar=no,location=no');
+/*
+		winSV.addEventListener('hashchange', function(e){console.log('hash changed')});
+		winSV.addEventListener('popstate', function(e){console.log('url changed')});
+		if(pushState==null){
+			pushState = winSV.history.pushState;
+			console.log('ici');
+			winSV.history.pushState = function () {
+				console.log("URL changed");
+				pushState.apply(winSV.history, arguments);
+				fireEvents('pushState', arguments);  // Some event-handling function
+			};
+		}
+*/
+		winSV.focus();
+//		console.log(winSV.location.href);
+	}
+	
+	function openStreetView(x,y)
+	{
+	// http://www.google.com/maps?layer=c&cbll=31.335198,-89.287204
+	//  http://www.google.com/maps?layer=c&cbll=31.335198,-89.287204&cbp=,30,,,20 with rotation 30 and pitch 20.
+			
+		var point=ol.proj.transform([x,y],$NWP.request('mapviewstate')[0].projection,'EPSG:4326');
+		var url='http://www.google.com/maps?layer=c&cbll='+point[1]+','+point[0];
+		openInNewTab(url);
+	}
+
+//Compute the middle point of a linestring - ATTENTION!!! not tested in geographic coordinates!!!
+	function getMiddlePoint(linestring)
+	{
+		var length=ol.Sphere.getLength(linestring)/2; //the half of length of the linestring
+		var points=linestring.getCoordinates(); //all the points of the linestring
+		
+		var cumul=0.0;
+		var midPoint=[];
+		midPoint[0]=points[points.length-1][0];//initialize to the last point
+		midPoint[1]=points[points.length-1][1];
+		
+		for (i=1;i<points.length;i++)
+		{
+			var startPoint=points[i-1];
+			var endPoint=points[i];
+			var newC=[];
+			newC[0]=startPoint;
+			newC[1]=endPoint;
+		
+			var newLine=new ol.geom.LineString(newC);
+			var dist = ol.Sphere.getLength(newLine); //To get the length in all coordinate systems
+			//var dist=Math.sqrt((endPoint[0]-startPoint[0])*(endPoint[0]-startPoint[0])+(endPoint[1]-startPoint[1])*(endPoint[1]-startPoint[1])); //length of the vector
+			if(cumul+dist>=length) //if the current vertice contains the mid point
+			{
+				var remaining=length-cumul;
+				var ratio=remaining/dist;
+				midPoint[0]=startPoint[0]+ratio*(endPoint[0]-startPoint[0]);
+				midPoint[1]=startPoint[1]+ratio*(endPoint[1]-startPoint[1]);
+				break;
+			}
+			cumul=cumul+dist;
+		}
+		return midPoint;
+	}
+	
+//Event to stop display the text when exiting the window
+	function handlerMouseOut()
+	{
+		helpTooltipElement.classList.add('hidden');
+	}
+	
+//Create and add the new interaction
+	function addInteraction()
+	{
+		var type;
+		if(currentMeasure == 'Area'){
+			type='Polygon';
+		}
+		else if(currentMeasure=='Line'){
+			type='LineString';
+		}
+		else{
+			type='Point';
+		}
+			
+		draw = new ol.interaction.Draw({
+			source: source,
+			type: type,
+			style: new ol.style.Style({
+				fill: new ol.style.Fill({
+					color: 'rgba(255, 255, 255, 0.2)'
+				}),
+				stroke: new ol.style.Stroke({
+					color: 'rgba(0, 0, 0, 0.5)',
+					lineDash: [10, 10],
+					width: 2
+				}),
+				image: new ol.style.Circle({
+					radius: 5,
+					stroke: new ol.style.Stroke({
+						color: 'rgba(0, 0, 0, 0.7)'
+					}),
+					fill: new ol.style.Fill({
+						color: 'rgba(255, 255, 255, 0.2)'
+					})
+				})
+			})
+		});
+
+		var interactions=map.getInteractions();
+		interactions.insertAt(interactions.getArray().length,draw); //inserting the interaction on last position to be sure it tkaes the hughest piority (not working...)
+		//map.addInteraction(draw);
+
+		createMeasureTooltip();
+		createHelpTooltip();
+			
+		helpTooltipElement.classList.remove('hidden');
+		
+		map.getViewport().addEventListener('mouseout', handlerMouseOut);
+
+//Manage the drawstart event
+		var listener;
+		draw.on('drawstart',
+			function(evt) {
+				// set sketch
+				sketch = evt.feature;
+				//@type {import("../src/ol/coordinate.js").Coordinate|undefined}
+				var tooltipCoord = evt.coordinate;
+				listener = sketch.getGeometry().on('change', function(evt) {
+					var geom = evt.target;
+					var output;
+						
+					if (geom instanceof ol.geom.Polygon) {
+						output = formatArea(geom);
+						tooltipCoord = geom.getInteriorPoint().getCoordinates();
+					} else if (geom instanceof ol.geom.LineString) {
+						output = formatLength(geom);
+						tooltipCoord = geom.getLastCoordinate();
+					}
+							
+					measureTooltipElement.innerHTML = output;
+					measureTooltip.setPosition(tooltipCoord);
+				});
+			}
+		);
+
+//manage the drawen event.  Remove all the tooltips and stop sketching
+		draw.on('drawend',
+			function(evt) {	
+				//map.removeOverlay(measureTooltip);
+				var geom=evt.feature.getGeometry();
+				measureTooltipElement.className = 'tooltip tooltip-static';
+				if(currentMeasure=='Line'){
+					var tooltipCoord = getMiddlePoint(geom);
+					measureTooltip.setPosition(tooltipCoord);
+				}
+				//measureTooltip.setOffset([0, -7]);
+				// unset sketch
+				sketch = null;
+				// unset tooltip so that a new one can be created
+				measureTooltipElement = null;
+				createMeasureTooltip();
+				curLength.value='';
+				if(currentMeasure=='XY'){
+					var coordinates=geom.getCoordinates();
+					coordX.value=Math.round(coordinates[0]*100)/100;
+					coordY.value=Math.round(coordinates[1]*100)/100;
+					var point=ol.proj.transform(coordinates,$NWP.request('mapviewstate')[0].projection,'EPSG:4326');
+					coordLon.value=Math.round(point[0]*100000000)/100000000;
+					coordLat.value=Math.round(point[1]*100000000)/100000000;
+
+//console.log(checkSV.checked);
+					if(checkSV.checked==true){
+						openStreetView(coordinates[0],coordinates[1]);
+					}
+				}
+				
+				ol.Observable.unByKey(listener);
+				evt.stopPropagation(); //Don't work...
+			}
+		);
+	}
+		
+	function measureLine()
+	{
+		var img = document.getElementById('area');
+		img.src='MeasureAreaOff.png';
+		var img = document.getElementById('XY');
+		img.src='GetXYOff.png';
+		currentMeasure='Line';
+		var img = document.getElementById('line');
+		img.src='MeasureLineOn.png';
+		
+		executeMeasure();
+	}
+
+	function measureArea()
+	{
+		var img = document.getElementById('line');
+		img.src='MeasureLineOff.png';
+		var img = document.getElementById('XY');
+		img.src='GetXYOff.png';
+		currentMeasure='Area';
+		var img = document.getElementById('area');
+		img.src='MeasureAreaOn.png';
+		executeMeasure();
+	}
+
+	function getXY()
+	{
+		var img = document.getElementById('line');
+		img.src='MeasureLineOff.png';
+		var img = document.getElementById('XY');
+		img.src='GetXYOn.png';
+		currentMeasure='Area';
+		var img = document.getElementById('area');
+		img.src='MeasureAreaOff.png';
+		currentMeasure='XY';
+		coordX.value='';
+		coordY.value='';
+		coordLon.value='';
+		coordLat.value='';
+		executeMeasure();
+	}
+	
+//Start measure.  Adds the interaction and start listing the pointermove event
+	function executeMeasure()
+	{		
+		if(draw!=null){
+			map.removeInteraction(draw);
+			draw=null;
+		}
+		
+		parent.$NWP.on("sidebarpanelupdated", focusin, "");
+		parent.$NWP.on("sidebarpanelupdating", focusout, "");
+		parent.$NWP.map.setModeToDefault();
+
+		addInteraction();
+		map.on('pointermove', pointerMoveHandler);
+	}
+
+	function cleanupMap()
+	{
+		var img = document.getElementById('line');
+		img.src='MeasureLineOff.png';
+		img = document.getElementById('area');
+		img.src='MeasureAreaOff.png';
+		img = document.getElementById('XY');
+		img.src='GetXYOff.png';
+
+		map.removeLayer(vector);
+		vector=null;
+		
+		defineVectorLayers();		
+		
+		if(draw!=null){
+			map.removeInteraction(draw);
+			draw.on('drawstart',null);
+			draw.on('drawend',null);
+			draw=null;
+		}
+
+		var overlays=map.getOverlays();
+		var entries=overlays.getArray();
+		var n=entries.length;
+		for(i=0;i<n;i++)
+		{
+			map.removeOverlay(entries[0]);
+		}
+		measureTooltip=null;
+		measureTooltipElement=null;
+		helpTooltip=null;
+		helpTooltipElement=null;
+		
+	}
+
+//Stop measure - remove all tooltips, overlays, interaction, listener.  Reset the other interactions to active
+	function stopMeasure()
+	{
+		cleanupMap();
+		
+		currentMeasure='';
+		var interactions=map.getInteractions();
+		var entries=interactions.getArray();
+/*		
+		for(i=0;i<entries.length;i++)
+		{
+			var interaction=entries[i];
+			interaction.setActive(true);
+		}
+*/
+		map.un('pointermove', pointerMoveHandler);
+		map.getViewport().removeEventListener('mouseout', handlerMouseOut,);
+	}
+	
+	function centerXY()
+	{
+		var viewProj = $NWP.request('mapviewstate')[0].projection;
+		var geojsonObject = {
+			'type': 'FeatureCollection',
+			'crs': {
+				'type': 'name',
+				'properties': {
+					'name': viewProj
+				}
+			},
+			'features': [{
+				'type': 'Feature',
+				'geometry': {
+					'type': 'Point',
+					'coordinates': [coordX.value, coordY.value]
+				}
+			}]
+		};
+
+		var feature = geojsonObject.features[0];
+//Fir on the point
+		$NWP.request('featurehighlight', {features: [feature], fit:true});
+	}
+
+	function centerLonLat()
+	{
+	//Getting the current coordinate system	
+		var viewProj = $NWP.request('mapviewstate')[0].projection;
+//Converting from WGS84 to the current coordinate system
+		var point=ol.proj.transform([coordLon.value, coordLat.value],'EPSG:4326',viewProj);
+
+		//var point=ol.proj.fromLonLat([coordLon.value, coordLat.value], viewProj);
+		var geojsonObject = {
+			'type': 'FeatureCollection',
+			'crs': {
+				'type': 'name',
+				'properties': {
+					'name': viewProj
+				}
+			},
+			'features': [{
+				'type': 'Feature',
+				'geometry': {
+					'type': 'Point',
+					'coordinates': [point[0], point[1]]
+				}
+			}]
+		};
+
+		var feature = geojsonObject.features[0];
+//Fir on the point
+		$NWP.request('featurehighlight', {features: [feature], fit:true});
+	}
+	
+	function convertToXY()
+	{
+		var viewProj = $NWP.request('mapviewstate')[0].projection;
+//Converting from WGS84 to the current coordinate system
+		var point=ol.proj.transform([coordLon.value, coordLat.value],'EPSG:4326',viewProj);
+		coordX.value=Math.round(point[0]*100)/100;
+		coordY.value=Math.round(point[1]*100)/100;
+	}
+	
+	function convertToLonLat()
+	{
+		var viewProj = $NWP.request('mapviewstate')[0].projection;
+//Converting from the current coordinate system to WGS84
+		var point=ol.proj.transform([coordX.value, coordY.value],viewProj,'EPSG:4326');
+		coordLon.value=Math.round(point[0]*100000000)/100000000;
+		coordLat.value=Math.round(point[1]*100000000)/100000000;
+	}
+	
+	function focusin(args)
+	{
+		parent.$NWP.map.setModeToDefault();
+		
+	}
+	
+	function focusout(args)
+	{
+		//window.alert("ici");
+		parent.$NWP.map.resetMode();
+		
+		if(draw!=null){
+			map.removeInteraction(draw);
+			draw.on('drawstart',null);
+			draw.on('drawend',null);
+			draw=null;
+		}
+
+		
+		var overlays=map.getOverlays();
+		var entries=overlays.getArray();
+		var n=entries.length;
+		for(i=0;i<n;i++)
+		{
+			map.removeOverlay(entries[0]);
+		}
+		parent.$NWP.on("sidebarpanelupdating", null, "");
+
+	}
+
+
+//Fired at the OnLoad event
+	function main() {
+		//Retrieving the openlayer and Networks Portal references
+		window.ol = parent.ol;
+		window.proj4 = parent.proj4;
+		window.$NWP = parent.$NWP;
+		window.myParent=parent;
+		map=parent.Ext.ComponentQuery.query('hxgn-map')[0].getOlObject();
+		window.map=map;
+		
+		currentMeasure='';
+		var interactions=map.getInteractions();
+		var entries=interactions.getArray();
+
+		//console.log(map.getKeys());
+		//map.removeEventListener('click');
+		//map.on('click',null);
+		
+		//$NWP.request('mapsetmodetodefault');
+		
+		parent.$NWP.on("sidebarpanelupdated", focusin, "");
+		parent.$NWP.on("sidebarpanelupdating", focusout, "");
+		parent.$NWP.map.setModeToDefault();
+
+		InitMeasurement();
+	}
+	</script>
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <!-- <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script> -->
+    <style type="text/css">
+        .auto-style2 {
+            width: 34%;
+            height: 381px;
+        }
+        .auto-style3 {
+            height: 371px;
+            width: 36px;
+        }
+        .auto-style4 {
+            height: 368px;
+            width: 314px;
+            margin-left: 0px;
+        }
+        .auto-style5 {
+            width: 6px;
+        }
+		.auto-style6 {
+            width: 82px;
+        }
+		/* The switch - the box around the slider */
+		.switch {
+		  position: relative;
+		  display: inline-block;
+		  width: 46px;
+		  height: 20px;
+		}
+
+		/* Hide default HTML checkbox */
+		.switch input {
+		  opacity: 0;
+		  width: 0;
+		  height: 0;
+		}
+
+		/* The slider */
+		.slider {
+		  position: absolute;
+		  cursor: pointer;
+		  top: 0;
+		  left: 0;
+		  right: 0;
+		  bottom: 0;
+		  background-color: #ccc;
+		  -webkit-transition: .4s;
+		  transition: .4s;
+		}
+
+		.slider:before {
+		  position: absolute;
+		  content: "";
+		  height: 12px;
+		  width: 12px;
+		  left: 4px;
+		  bottom: 4px;
+		  background-color: white;
+		  -webkit-transition: .4s;
+		  transition: .4s;
+		}
+
+		input:checked + .slider {
+		  background-color: #2196F3;
+		}
+
+		input:focus + .slider {
+		  box-shadow: 0 0 1px #2196F3;
+		}
+
+		input:checked + .slider:before {
+		  -webkit-transform: translateX(26px);
+		  -ms-transform: translateX(26px);
+		  transform: translateX(26px);
+		}
+
+		/* Rounded sliders */
+		.slider.round {
+		  border-radius: 20px;
+		}
+
+		.slider.round:before {
+		  border-radius: 50%;
+		}
+    </style>
+  </head>
+  <body onload="main()"> <!-- onfocusout="stopMeasure()"> -->
+  <table class="auto-style2">
+        <tr>
+            <td class="auto-style5">
+                <div class="auto-style3">
+                    <img id="line" title="Measure linear length" alt="" src="MeasureLineOff.png" style="position: relative; top: 0px" onclick="measureLine()" /><br />
+                    <br />
+                    <img id="area" title="Measure Area" alt="" src="MeasureAreaOff.png" onclick="measureArea()"/><br />
+                    <br />
+                    <img id="XY" alt="" title="Get position on Map" src="GetXYOff.png" onclick="getXY()"/><br />
+                    <br />
+                    <img alt="" title="Cleanup map" src="CleanUp.png" onclick="stopMeasure()"/></div>
+            </td>
+            <td>
+                <div class="auto-style4">
+                    <input id="curLength" class="auto-style6" type="text" /> m<br />
+                    <br />
+					<img alt="" title="Center map" src="gps.png" width="13px" height="13px" onclick="centerXY()"/>
+                    <input id="coordX" class="auto-style6" type="text" />
+                    <input id="coordY" class="auto-style6" type="text" /><br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img alt="" title="to WGS84" src="bottom.png" onclick="convertToLonLat()"/>&nbsp;
+                    <img alt="" title="from WGS84" src="top.png" onclick="convertToXY()"/><br />
+                    <br />
+					<img alt="" title="Center map" src="gps.png" width="13px" height="13px" onclick="centerLonLat()"/>
+                    <input id="coordLon" class="auto-style6" type="text" />
+                    <input id="coordLat" class="auto-style6" type="text" /><br /><br />
+&nbsp;&nbsp;
+					<label class="switch">
+					<input id="checkSV" type="checkbox"/>
+					<span class="slider round"></span>
+					</label> Google Street View
+                </div>
+            </td>
+        </tr>
+    </table>
+  </body>
+</html>

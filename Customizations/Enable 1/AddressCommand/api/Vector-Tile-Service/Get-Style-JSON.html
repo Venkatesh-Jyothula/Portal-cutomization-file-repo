@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Style JSON </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Style JSON ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-style-json">Get Style JSON</h1>
+
+<p>Returns the MapBox JSON style specification document. A Mapbox style specification is a document that defines the visual appearance of a map: what data to draw, the order to draw it in, and how to style the data when drawing it.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Style.json</p>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksVectorTileService/Style.json</p>
+<p><strong>Sample Response</strong></p>
+<p>A Json response is returned.</p>
+<pre><code>{
+  &quot;name&quot;: &quot;GTVectorStyles&quot;,
+  &quot;version&quot;: 8,
+  &quot;glyphs&quot;: &quot;http://hostname/NetworksVectorTileService/glyphs/{fontstack}/{range}.pbf&quot;,
+  &quot;sources&quot;: {
+    &quot;60SBuYwRk6BHVZezAVw&quot;: {
+      &quot;type&quot;: &quot;vector&quot;,
+      &quot;url&quot;: &quot;http://hostname/NetworksVectorTileService/Tiles.json&quot;
+    }
+  },
+  &quot;layers&quot;: [
+    {
+      &quot;id&quot;: &quot;Administrative_VT V_WORKAREA_LL_VT Leader Line 230411 Style 1375_315415486&quot;,
+      &quot;source&quot;: &quot;60SBuYwRk6BHVZezAVw&quot;,
+      &quot;source-layer&quot;: &quot;Administrative&quot;,
+      &quot;type&quot;: &quot;line&quot;,
+      &quot;filter&quot;: [&quot;==&quot;, [&quot;get&quot;, &quot;_ViewName&quot;], &quot;V_WORKAREA_LL&quot;],
+      &quot;minzoom&quot;: 16,
+      &quot;maxzoom&quot;: 23,
+      &quot;layout&quot;: { &quot;visibility&quot;: &quot;visible&quot; },
+      &quot;paint&quot;: {
+        &quot;line-color&quot;: &quot;rgb(0,0,0)&quot;,
+        &quot;line-width&quot;: 0.587963,
+        &quot;line-opacity&quot;: 1.0
+      }
+    },
+    {
+      &quot;id&quot;: &quot;Administrative_VT V_WORKAREA_ML_VT Miscellaneous Label 230401 Style 1374_315415491_315061318&quot;,
+      &quot;source&quot;: &quot;60SBuYwRk6BHVZezAVw&quot;,
+      &quot;source-layer&quot;: &quot;Administrative&quot;,
+      &quot;type&quot;: &quot;symbol&quot;,
+      &quot;filter&quot;: [&quot;==&quot;, [&quot;get&quot;, &quot;_ViewName&quot;], &quot;V_WORKAREA_ML&quot;],
+      &quot;minzoom&quot;: 16,
+      &quot;maxzoom&quot;: 23,
+      &quot;layout&quot;: {
+        &quot;text-field&quot;: [&quot;get&quot;, &quot;G3E_TEXTSTRING&quot;],
+        &quot;text-justify&quot;: &quot;left&quot;,
+        &quot;text-rotation-alignment&quot;: &quot;map&quot;,
+        &quot;text-ignore-placement&quot;: true,
+        &quot;text-allow-overlap&quot;: true,
+        &quot;symbol-placement&quot;: &quot;point&quot;,
+        &quot;text-anchor&quot;: [
+          &quot;case&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 0],
+          &quot;center&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 1],
+          &quot;left&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 2],
+          &quot;right&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 3],
+          &quot;center&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 4],
+          &quot;top&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 5],
+          &quot;top-left&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 6],
+          &quot;top-right&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 7],
+          &quot;center&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 8],
+          &quot;bottom&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 9],
+          &quot;bottom-left&quot;,
+          [&quot;==&quot;, [&quot;get&quot;, &quot;G3E_ALIGNMENT&quot;], 10],
+          &quot;bottom-right&quot;,
+          &quot;center&quot;
+        ],
+        &quot;text-font&quot;: [&quot;Arial&quot;],
+        &quot;text-rotate&quot;: [&quot;*&quot;, -1, [&quot;get&quot;, &quot;_Rotation&quot;]],
+        &quot;text-size&quot;: [
+          &quot;interpolate&quot;,
+          [&quot;exponential&quot;, 2],
+          [&quot;zoom&quot;],
+          16,
+          11.176321620767576,
+          23,
+          255
+        ],
+        &quot;visibility&quot;: &quot;visible&quot;
+      },
+      &quot;paint&quot;: { &quot;text-color&quot;: &quot;rgb(0,0,0)&quot;, &quot;text-opacity&quot;: 1.0 }
+    },
+    {
+      &quot;id&quot;: &quot;Boundary_VT V_MISCBNDY_AR_VT Miscellaneous Boundary-Default_315416049&quot;,
+      &quot;source&quot;: &quot;60SBuYwRk6BHVZezAVw&quot;,
+      &quot;source-layer&quot;: &quot;Boundary&quot;,
+      &quot;type&quot;: &quot;fill&quot;,
+      &quot;filter&quot;: [&quot;==&quot;, [&quot;get&quot;, &quot;_ViewName&quot;], &quot;V_MISCBNDY_AR&quot;],
+      &quot;minzoom&quot;: 9,
+      &quot;maxzoom&quot;: 23,
+      &quot;layout&quot;: { &quot;visibility&quot;: &quot;visible&quot; },
+      &quot;paint&quot;: { &quot;fill-opacity&quot;: 0.0 }
+    },
+    ... truncated for brevity
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

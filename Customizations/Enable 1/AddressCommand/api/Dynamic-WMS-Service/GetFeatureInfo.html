@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetFeatureInfo </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetFeatureInfo ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getfeatureinfo">GetFeatureInfo</h1>
+
+<p>Get info on features located on map coordinates.</p>
+<h2 id="workflow">Workflow</h2>
+<p>If not yet in cache:</p>
+<ul>
+<li>Find source folder under <code>Storage.Root</code> by provided <code>sid</code>.</li>
+<li>Open DDC file.</li>
+</ul>
+<p>Render the map as bitmap using Locate method and find features.
+Return the list of feature identifiers and their attributes.</p>
+<p>Allowed values for <code>INFO_FORMAT</code> are:</p>
+<ul>
+<li><code>text/xml</code>, <code>application/vnd.ogc.gml</code>, <code>application/xml</code>: Output is a <code>wfs:FeatureCollection</code> with geometries encoded as GML 3.2.1.</li>
+</ul>
+<h2 id="request">Request</h2>
+<h3 id="uri">URI</h3>
+<p><strong>GET</strong> /wms/<strong>{sid}</strong>?service=WMS&amp;request=GetFeatureInfo&amp;version=1.3.0&amp;BBOX={BBOX}&amp;LAYERS={LAYERS}&amp;CRS={CRS}&amp;I={I}&amp;J={J}&amp;WIDTH={WIDTH}&amp;HEIGHT={HEIGHT}</p>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sid</td>
+<td>String</td>
+<td>Y</td>
+<td>Identifier of the data source. Refers to location of the DDC file to be rendered.</td>
+</tr>
+<tr>
+<td>service</td>
+<td>String</td>
+<td>Y</td>
+<td>Fixed: <code>WMS</code></td>
+</tr>
+<tr>
+<td>request</td>
+<td>String</td>
+<td>Y</td>
+<td>Fixed: <code>GetMap</code></td>
+</tr>
+<tr>
+<td>version</td>
+<td>String</td>
+<td>Y</td>
+<td>WMS version. Allowed values: <code>1.3.0</code></td>
+</tr>
+<tr>
+<td>layers</td>
+<td>String</td>
+<td>Y</td>
+<td>Layers to display on map. Comma-separated list of layer names.</td>
+</tr>
+<tr>
+<td>bbox</td>
+<td>String</td>
+<td>Y</td>
+<td>Bounding box for map extent. Value is minx,miny,maxx,maxy in units of the CRS.</td>
+</tr>
+<tr>
+<td>crs</td>
+<td>String</td>
+<td>Y</td>
+<td>Spatial Reference System for map output. Valid values are in the capabilities document.</td>
+</tr>
+<tr>
+<td>height</td>
+<td>Integer</td>
+<td>Y</td>
+<td>Height of map output in pixels.</td>
+</tr>
+<tr>
+<td>width</td>
+<td>Integer</td>
+<td>Y</td>
+<td>Width of map output in pixels.</td>
+</tr>
+<tr>
+<td>format</td>
+<td>String</td>
+<td>Y</td>
+<td>Format for the map image output. Valid values are in the capabilities document.</td>
+</tr>
+<tr>
+<td>info_format</td>
+<td>String</td>
+<td>Y</td>
+<td>Possible values are given in the capabilities document.</td>
+</tr>
+<tr>
+<td>styles</td>
+<td>String</td>
+<td></td>
+<td>Styles in which layers are to be rendered. Ignored.</td>
+</tr>
+<tr>
+<td>transparent</td>
+<td>Boolean</td>
+<td></td>
+<td>Whether the map background should be transparent. Values are <code>true</code> or <code>false</code>. Default is <code>true</code>.</td>
+</tr>
+<tr>
+<td>bgcolor</td>
+<td>String</td>
+<td></td>
+<td>Background color for the map image. Value is in the form RRGGBB. Default is <code>FFFFFF</code> (white).</td>
+</tr>
+<tr>
+<td>exceptions</td>
+<td>String</td>
+<td></td>
+<td>Format in which to report exceptions. Default value is <code>application/vnd.ogc.se_xml</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-body">Request body</h3>
+<p>N/A</p>
+<h2 id="response">Response</h2>
+<p>GetFeatureInfo response, with <code>application/vnd.ogc.gml</code> formatting.</p>
+<h3 id="normal-response-200">Normal response (200)</h3>
+<pre><code class="lang-xml">&lt;wfs:FeatureCollection xmlns:wfs=&quot;http://www.opengis.net/wfs&quot; xmlns=&quot;http://www.intergraph.com/infrastructure/gml&quot; xmlns:gml=&quot;http://www.opengis.net/gml&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xmlns:ucgml=&quot;http://www.intergraph.com/infrastructure/gml&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; numberOfFeatures=&quot;1&quot;&gt;
+    &lt;gml:boundedBy&gt;
+        &lt;gml:Envelope srsName=&quot;EPSG:3857&quot;&gt;
+            &lt;gml:lowerCorner srsDimension=&quot;2&quot;&gt;1339162.7652991253 7068983.035019946&lt;/gml:lowerCorner&gt;
+            &lt;gml:upperCorner srsDimension=&quot;2&quot;&gt;1339227.0077796485 7069063.437440753&lt;/gml:upperCorner&gt;
+        &lt;/gml:Envelope&gt;
+    &lt;/gml:boundedBy&gt;
+    &lt;gml:featureMember ucgml:g3eType=&quot;BoundaryGeometry&quot;&gt;
+        &lt;ucgml:Feature gml:id=&quot;1.242266.1.1.GIS_OSM_BUILDINGS_A_FREE_1&quot;&gt;
+            &lt;ucgml:G3E_FID&gt;242266&lt;/ucgml:G3E_FID&gt;
+            &lt;ucgml:G3E_FNO&gt;1&lt;/ucgml:G3E_FNO&gt;
+            &lt;ucgml:G3E_CID&gt;1&lt;/ucgml:G3E_CID&gt;
+            &lt;ucgml:G3E_CNO&gt;1&lt;/ucgml:G3E_CNO&gt;
+            &lt;ucgml:G3E_ID&gt;242266&lt;/ucgml:G3E_ID&gt;
+            &lt;ucgml:GEOMETRYTYPE&gt;8&lt;/ucgml:GEOMETRYTYPE&gt;
+            &lt;ucgml:osm_id&gt;201113691&lt;/ucgml:osm_id&gt;
+            &lt;ucgml:code&gt;1500&lt;/ucgml:code&gt;
+            &lt;ucgml:fclass&gt;building&lt;/ucgml:fclass&gt;
+            &lt;ucgml:name&gt;Amt Eldenburg Lübz - Bürgerbüro&lt;/ucgml:name&gt;
+            &lt;ucgml:type&gt;government&lt;/ucgml:type&gt;
+            &lt;ucgml:ToolTip&gt;GIS_OSM_BUILDINGS_A_FREE_1 242266&lt;/ucgml:ToolTip&gt;
+            &lt;ucgml:Label&gt;GIS_OSM_BUILDINGS_A_FREE_1 242266&lt;/ucgml:Label&gt;
+            &lt;ucgml:IsPrimaryGraphic&gt;1&lt;/ucgml:IsPrimaryGraphic&gt;
+            &lt;ucgml:UserName&gt;GIS_OSM_BUILDINGS_A_FREE_1&lt;/ucgml:UserName&gt;
+            &lt;ucgml:ServiceType&gt;WMS&lt;/ucgml:ServiceType&gt;
+            &lt;ucgml:G3E_GEOMETRY&gt;
+                &lt;gml:Polygon srsName=&quot;EPSG:3857&quot;&gt;
+                    &lt;gml:exterior&gt;
+                        &lt;gml:Polygon&gt;
+                            &lt;gml:exterior&gt;
+                                &lt;gml:LinearRing&gt;
+                                    &lt;gml:posList srsDimension=&quot;2&quot;&gt;1339162.76532862 7068992.5897597205 1339165.7041620996 7069010.727049231 1339168.1865308485&lt;/gml:posList&gt;
+                                &lt;/gml:LinearRing&gt;
+                            &lt;/gml:exterior&gt;
+                        &lt;/gml:Polygon&gt;
+                    &lt;/gml:exterior&gt;
+                &lt;/gml:Polygon&gt;
+            &lt;/ucgml:G3E_GEOMETRY&gt;
+        &lt;/ucgml:Feature&gt;
+    &lt;/gml:featureMember&gt;
+&lt;/wfs:FeatureCollection&gt;
+</code></pre>
+<h3 id="authentication-failure-401">Authentication failure (401)</h3>
+<p>Returned when authorization token is missing or invalid.</p>
+<h3 id="server-error-500">Server error (500)</h3>
+<p>Returned when internal processing in the service fails.</p>
+<p>For XML schema, see <a href="http://schemas.opengis.net/wms/1.3.0/">exceptions_1_3_0.xsd</a></p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

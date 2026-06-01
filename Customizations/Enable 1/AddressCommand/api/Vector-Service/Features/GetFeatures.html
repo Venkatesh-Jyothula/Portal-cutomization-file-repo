@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetFeatures </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetFeatures ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getfeatures">GetFeatures</h1>
+
+<p>Get feature data for selected legend settings with geometries in GeoJSON format.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>POST</p>
+<p><strong>URL Template</strong></p>
+<p>/data[?tt={tt}]</p>
+<p><strong>Query parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tt</td>
+<td>int</td>
+<td></td>
+<td>When set to <code>1</code>, component view tooltips are returned with each geometry in property <code>TT</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Body</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lsno</td>
+<td>Integer</td>
+<td>Y</td>
+<td>G3E_LSNO</td>
+</tr>
+<tr>
+<td>bbox</td>
+<td>Double[]</td>
+<td>Y</td>
+<td>Bounding box in CS coordinates, formatted as [XMIN, YMIN, XMAX, YMAX].</td>
+</tr>
+<tr>
+<td>resolution</td>
+<td>Double</td>
+<td>Y*</td>
+<td>Client resolution, CS ground unit per pixel (e.g. meters per pixel). Mandatory if scale not specified.</td>
+</tr>
+<tr>
+<td>scale</td>
+<td>Double</td>
+<td>Y*</td>
+<td>Display scale. Use 500 for 1:500, etc. Mandatory only if resolution is not specified. If scale is specified, it has priority over resolution.</td>
+</tr>
+<tr>
+<td>detailId</td>
+<td>Integer</td>
+<td>N</td>
+<td>G3E_DETAILID. If specified, the results are filtered for given detail. Applicable only to detail legends.</td>
+</tr>
+<tr>
+<td>entries</td>
+<td>LegendEntry[]</td>
+<td>Y</td>
+<td>List of legend entries to retrieve. Order of entries in the list is not important.</td>
+</tr>
+<tr>
+<td>filters</td>
+<td>Object</td>
+<td>N</td>
+<td>Property map with filtering conditions. The conditions are referenced by <code>f</code> property of <code>LegendEntry</code> type.</td>
+</tr>
+<tr>
+<td>features</td>
+<td>Integer[]</td>
+<td>N</td>
+<td>List of feature identifiers to use as a filter when outputting data. The array should be formatted as G3E_FNO1,G3E_FID1,G3E_FNO2,G3E_FNO2,...</td>
+</tr>
+</tbody>
+</table>
+<p>Type <strong>LegendEntry</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>l</td>
+<td>Integer</td>
+<td>Y</td>
+<td>G3E_LENO. When &quot;features&quot; are specified, a special value of <code>-3</code> can be used to automatically include all legend entries related to FNOs in the &quot;features&quot; list.</td>
+</tr>
+<tr>
+<td>s</td>
+<td>Integer</td>
+<td>N</td>
+<td>When 1, return legend entry without scale dependency.</td>
+</tr>
+<tr>
+<td>f</td>
+<td>String</td>
+<td>N</td>
+<td>Ad-hoc filter defined for the legend entry. The value is a reference to a property on the <code>filters</code> object in main request.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>Returns a GeoJSON FeatureCollection.</p>
+<p>Each feature has the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>String</td>
+<td>Y</td>
+<td>ID of the component view instance, formatted as <code>{G3E_FID},{G3E_FNO},{G3E_CID},{G3E_CNO},{G3E_LENO}</code></td>
+</tr>
+<tr>
+<td>SNO</td>
+<td>String</td>
+<td>Y</td>
+<td>G3E_SNO</td>
+</tr>
+<tr>
+<td>LBL</td>
+<td>String</td>
+<td>N</td>
+<td>Label (for TextGeometry)</td>
+</tr>
+<tr>
+<td>ALN</td>
+<td>Number</td>
+<td>N</td>
+<td>G3E_ALIGNMENT (for TextGeometry)</td>
+</tr>
+<tr>
+<td>ROT</td>
+<td>Number</td>
+<td>N</td>
+<td>Rotation in radians (for TextGeometry and OrientedPointGeometry)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sample">Sample</h2>
+<p><strong>Sample Request</strong></p>
+<p>http://machinename/NetworksVectorService/data</p>
+<pre><code class="lang-js">{
+    &quot;lsno&quot;: 7,
+    &quot;bbox&quot;: [1338540.407641353, 7068952.277151424, 1338960.51271478, 7069218.015257571],
+    &quot;resolution&quot;: 0.29858214173896974,
+    &quot;entries&quot;: [{
+            &quot;l&quot;: 3060000
+        }, {
+            &quot;l&quot;: 3060700
+        }, {
+            &quot;l&quot;: 3060300
+        }, {
+            &quot;l&quot;: 3060500
+        }, {
+            &quot;l&quot;: 3060200,
+            &quot;f&quot;: &quot;0&quot;
+        }, {
+            &quot;l&quot;: 306000,
+            &quot;f&quot;: &quot;0&quot;
+        }, {
+            &quot;l&quot;: 306400,
+            &quot;f&quot;: &quot;1&quot;
+        }
+    ],
+    &quot;filters&quot;: {
+    	&quot;0&quot;: &quot;STATE = '3'&quot;,
+    	&quot;1&quot;: &quot;CATEGORY = '1' AND HEIGHT &gt; 100&quot;,
+    }
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;type&quot;: &quot;FeatureCollection&quot;,
+    &quot;features&quot;: [
+        {
+            &quot;type&quot;: &quot;Feature&quot;,
+            &quot;geometry&quot;: {
+                &quot;type&quot;: &quot;LineString&quot;,
+                &quot;coordinates&quot;: [[1338750.22, 7069436.964], [1338750.364, 7069436.17], [1338752.576, 7069434.972], [1338751.842, 7069433.611], [1338738.708, 7069409.277]]
+            },
+            &quot;properties&quot;: {
+                &quot;ID&quot;: &quot;1030714,306,1,5643,3060000&quot;,
+                &quot;SNO&quot;: &quot;306000030&quot;
+            }
+        }, 
+        {
+            &quot;type&quot;: &quot;Feature&quot;,
+            &quot;geometry&quot;: {
+                &quot;type&quot;: &quot;LineString&quot;,
+                &quot;coordinates&quot;: [[1338769.94, 7069428.729], [1338763.533, 7069414.469], [1338759.012, 7069406.039], [1338754.856, 7069398.334], [1338745.668, 7069380.628], [1338744.476, 7069378.329]]
+            },
+            &quot;properties&quot;: {
+                &quot;ID&quot;: &quot;1030715,306,1,5643,3060000&quot;,
+                &quot;SNO&quot;: &quot;306000030&quot;
+            }
+        }
+    ]
+}
+</code></pre>
+<h3 id="using-feature-list">Using feature list</h3>
+<p>This request returns looks for features specified in <code>features</code> parameter in the bbox and returns all legend entries in legend settings = 7 related to these FNOs.</p>
+<p><strong>Sample Request</strong></p>
+<p>http://machinename/NetworksVectorService/data</p>
+<pre><code class="lang-js">{
+    &quot;lsno&quot;: 7,
+    &quot;bbox&quot;: [1338540.407641353, 7068952.277151424, 1338960.51271478, 7069218.015257571],
+    &quot;resolution&quot;: 0.29858214173896974,
+    &quot;entries&quot;: [{
+            &quot;l&quot;: -3
+    }],
+    &quot;features&quot;: [306,1028719,306,1030520,306,1030598]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

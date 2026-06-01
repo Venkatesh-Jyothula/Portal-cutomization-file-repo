@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetDialogTab </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetDialogTab ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getdialogtab">GetDialogTab</h1>
+
+<p>Return dialog tab content (tab attributes with their values translated by picklists) from the database.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>GET</p>
+<p><strong>URL Template</strong></p>
+<p><code>/dialog/tab/{dtno}/{fno}/{fid}[&amp;attributes={attributes}]</code></p>
+<p><strong>Path variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{dtno}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_DTNO</td>
+</tr>
+<tr>
+<td>{fno}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+<tr>
+<td>{fid}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FID</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Query params</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{attributes}</td>
+<td>Int</td>
+<td></td>
+<td>Flag: 1=include dialog tab attribute metadata in response. Other values: attributes are not included. Default is 1.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>Dialog tab data, optionally with dialog tab attribute metadata. For dialog tabs with repeating components, each row has property <code>cid</code> with G3E_CID of the repeating component instance.</p>
+<p>Each row contains a map with G3E_TANO as key. Values are returned as objects with properties: <code>c</code> (string), <code>n</code> (number), <code>d</code> (date-time). Attributes with picklists have additional property <code>t</code> with display value for the picklist key.</p>
+<h2 id="example">Example</h2>
+<p><strong>Example Request</strong></p>
+<p>http://machinename/fds/tabs/323/1002458?type=Edit</p>
+<p><strong>Example Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;attributes&quot;: [
+    {
+      &quot;tano&quot;: 323010000,
+      &quot;ano&quot;: 59330000,
+      &quot;ordinal&quot;: 10,
+      &quot;field&quot;: &quot;ID&quot;,
+      &quot;username&quot;: &quot;Identifier&quot;,
+      &quot;datatype&quot;: 10,
+      &quot;readonly&quot;: false,
+      &quot;required&quot;: false,
+      &quot;hypertext&quot;: 0
+    },
+    {
+      &quot;tano&quot;: 323010001,
+      &quot;ano&quot;: 59330001,
+      &quot;ordinal&quot;: 20,
+      &quot;field&quot;: &quot;NUM&quot;,
+      &quot;username&quot;: &quot;Station Number&quot;,
+      &quot;datatype&quot;: 10,
+      &quot;readonly&quot;: false,
+      &quot;required&quot;: false,
+      &quot;hypertext&quot;: 0
+    },
+    {
+      &quot;tano&quot;: 323010003,
+      &quot;ano&quot;: 59330060,
+      &quot;ordinal&quot;: 40,
+      &quot;field&quot;: &quot;SUBUNIT&quot;,
+      &quot;username&quot;: &quot;Group&quot;,
+      &quot;datatype&quot;: 10,
+      &quot;pno&quot;: 3012,
+      &quot;pnotable&quot;: &quot;B_NETWORK_SUBUNIT_VL&quot;,
+      &quot;keyfield&quot;: &quot;VID&quot;,
+      &quot;valuefield&quot;: &quot;SUBUNIT_CLASS_0009&quot;,
+      &quot;validation&quot;: &quot;G3ERestricted&quot;,
+      &quot;filter&quot;: &quot;UNUSED='0' AND UNIT='3'&quot;,
+      &quot;additionalfields&quot;: &quot;UNIT&quot;,
+      &quot;orderbykey&quot;: &quot;ORDINAL&quot;,
+      &quot;filterattributes&quot;: [
+        59330003
+      ],
+      &quot;readonly&quot;: false,
+      &quot;required&quot;: true,
+      &quot;hypertext&quot;: 0
+    }
+  ],
+  &quot;rows&quot;: [
+    {
+      &quot;ordinal&quot;: 0,
+      &quot;values&quot;: {
+        &quot;323010000&quot;: {
+          &quot;c&quot;: &quot;Hinter der Wohrte&quot;
+        },
+        &quot;323010001&quot;: {
+          &quot;c&quot;: &quot;155&quot;
+        },
+        &quot;323010003&quot;: {
+          &quot;c&quot;: &quot;300&quot;,
+          &quot;t&quot;: &quot;Electric (General)&quot;
+        },
+        &quot;323010004&quot;: {
+          &quot;c&quot;: &quot;3&quot;,
+          &quot;t&quot;: &quot;Transformer Station&quot;
+        },
+        &quot;323010005&quot;: {
+          &quot;n&quot;: 11,
+          &quot;t&quot;: &quot;11&quot;
+        },
+        &quot;323010019&quot;: {
+          &quot;c&quot;: &quot;0&quot;,
+          &quot;t&quot;: &quot;Unknown&quot;
+        },
+        &quot;323010041&quot;: {
+          &quot;n&quot;: 1981
+        },
+        &quot;323010099&quot;: {
+          &quot;n&quot;: 3891
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

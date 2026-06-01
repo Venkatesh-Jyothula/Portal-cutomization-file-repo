@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetPendingEdits </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetPendingEdits ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getpendingedits">GetPendingEdits</h1>
+
+<p>Gets the list of pending edits for the specified jobs.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{JobServiceName}/pendingedits/{jobIdList}?v={version}&amp;pageNo={pageNo}&amp;pageSize={pageSize}</p>
+<p><strong>Request Parameters</strong></p>
+<p>A list of information about pending edits (feature name, feature keys and job name) is returned for each of the specified jobs.
+Parameter 'v' (version) is used to distinguish old (legacy) and current response format. If omitted, v defaults to 0 and therefore legacy format is used. Using version parameter without value causes use of current response format.
+PageNo and pageSize are used for paging the result.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobIdList</td>
+<td>A comma separated list of job identifiers. The job identifiers must be an exact match to the job id in the job table.</td>
+</tr>
+<tr>
+<td>v</td>
+<td>Version of response format. 0 - legacy, 1 - current. Default is 0. If used without value, then 1.</td>
+</tr>
+<tr>
+<td>pageNo</td>
+<td>Number of the page for paged result.</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>Size of one page for paged result.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetworksJobService/pendingedits/job1,job2?v</p>
+<p><strong>Sample Response</strong></p>
+<p>The list of features that have been edited in job 'job1' followed by the list of features edited in job 'job2' will be returned.</p>
+<pre><code class="lang-json">[
+    {
+        &quot;FeatureName&quot;: &quot;Str-Verbinder-NS&quot;,
+        &quot;FeatureKey&quot;: {
+            &quot;Fno&quot;: 309,
+            &quot;Cno&quot;: 300,
+            &quot;Fid&quot;: 1053890,
+            &quot;Cid&quot;: 1
+        },
+        &quot;JobName&quot;: &quot;job1&quot;
+    },
+    {
+        &quot;FeatureName&quot;: &quot;Str-Verbinder-NS&quot;,
+        &quot;FeatureKey&quot;: {
+            &quot;Fno&quot;: 309,
+            &quot;Cno&quot;: 302,
+            &quot;Fid&quot;: 1053890,
+            &quot;Cid&quot;: 9
+        },
+        &quot;JobName&quot;: &quot;job2&quot;
+    },
+    {
+        &quot;FeatureName&quot;: &quot;Str-Verbinder-NS&quot;,
+        &quot;FeatureKey&quot;: {
+            &quot;Fno&quot;: 309,
+            &quot;Cno&quot;: 302,
+            &quot;Fid&quot;: 1053890,
+            &quot;Cid&quot;: 10
+        },
+        &quot;JobName&quot;: &quot;job2&quot;
+    }
+]
+</code></pre>
+<p><strong>Remarks</strong>
+This method supports pagination. It returns the job information in pages honoring the page size, when pagination parameters are specified. The response header will contain paging attributes to help the clients keep track of what page they are on. For example, when pagination parameters are passed on the request, the response header will contain extra attributes like the following:</p>
+<p>X-Paging-PageCount: 8</p>
+<p>X-Paging-PageNo: 3</p>
+<p>X-Paging-PageSize: 10</p>
+<p>X-Paging-TotalRecordCount: 72</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

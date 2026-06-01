@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetDialogTabs </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetDialogTabs ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getdialogtabs">GetDialogTabs</h1>
+
+<p>Return list of dialog tabs for given feature and dialog type (G3E_TYPE). Dialog filtering is applied.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>GET</p>
+<p><strong>URL Template</strong></p>
+<p><code>/dialog/tabs/{fno}/{fid}?type={type}[&amp;attributes={attributes}]</code></p>
+<p><strong>Path variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{fno}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+<tr>
+<td>{fid}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FID</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Query params</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{type}</td>
+<td>String</td>
+<td>Y</td>
+<td>G3E_TYPE of the dialog</td>
+</tr>
+<tr>
+<td>{attributes}</td>
+<td>Int</td>
+<td></td>
+<td>Flag: 1=include dialog tab attribute metadata in response. Other values: attributes are not included. Default is 1.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>List of dialog tabs for given feature and type, optionally with attribute metadata.</p>
+<h2 id="example">Example</h2>
+<p><strong>Example Request</strong></p>
+<p>http://machinename/fds/tabs/323/1002458?type=Edit</p>
+<p><strong>Example Response</strong></p>
+<pre><code class="lang-json">{
+  &quot;tabs&quot;: [
+    {
+      &quot;dno&quot;: 32301,
+      &quot;dtno&quot;: 3230100,
+      &quot;fno&quot;: 323,
+      &quot;ordinal&quot;: 10,
+      &quot;orientation&quot;: &quot;V&quot;,
+      &quot;username&quot;: &quot;Station&quot;,
+      &quot;attributes&quot;: [
+        {
+          &quot;tano&quot;: 323010000,
+          &quot;ordinal&quot;: 10,
+          &quot;readonly&quot;: false,
+          &quot;ano&quot;: 59330000,
+          &quot;field&quot;: &quot;ID&quot;,
+          &quot;username&quot;: &quot;Identifier&quot;,
+          &quot;datatype&quot;: 10,
+          &quot;datatypecode&quot;: &quot;C&quot;,
+          &quot;maxlength&quot;: 50
+        },
+        {
+          &quot;tano&quot;: 323010001,
+          &quot;ordinal&quot;: 20,
+          &quot;readonly&quot;: false,
+          &quot;ano&quot;: 59330001,
+          &quot;field&quot;: &quot;NUM&quot;,
+          &quot;username&quot;: &quot;Station Number&quot;,
+          &quot;datatype&quot;: 10,
+          &quot;datatypecode&quot;: &quot;C&quot;,
+          &quot;maxlength&quot;: 50
+        }
+      ]
+    },
+    {
+      &quot;dno&quot;: 32301,
+      &quot;dtno&quot;: 3191,
+      &quot;fno&quot;: 323,
+      &quot;ordinal&quot;: 11,
+      &quot;orientation&quot;: &quot;V&quot;,
+      &quot;username&quot;: &quot;Customer Specific&quot;,
+      &quot;attributes&quot;: [
+        {
+          &quot;tano&quot;: 319101,
+          &quot;ordinal&quot;: 10,
+          &quot;readonly&quot;: false,
+          &quot;ano&quot;: 3190001,
+          &quot;field&quot;: &quot;ATTRIBUTE_001&quot;,
+          &quot;username&quot;: &quot;Attribute 1&quot;,
+          &quot;datatype&quot;: 10,
+          &quot;datatypecode&quot;: &quot;C&quot;,
+          &quot;maxlength&quot;: 100,
+          &quot;pno&quot;: 3799,
+          &quot;picklisttable&quot;: &quot;E_CUSTOM_ATTRIBUTE_1_VL&quot;,
+          &quot;keyfield&quot;: &quot;VID&quot;,
+          &quot;valuefield&quot;: &quot;VALUE_0009&quot;,
+          &quot;validation&quot;: &quot;G3ERestricted&quot;,
+          &quot;filter&quot;: &quot;UNUSED='0'&quot;,
+          &quot;orderbykey&quot;: &quot;ORDINAL&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

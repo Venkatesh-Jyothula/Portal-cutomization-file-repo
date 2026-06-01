@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Publish </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Publish ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="publish">Publish</h1>
+
+<p>Initiates a task to bulk publish vector tiles and HxGN NetWorks Core data and metadata for given filter polygons.</p>
+<p>The Id from the returned payload can be used to check status of the publish task or to fetch data once the publish is complete.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/publish/start</p>
+<p><strong>Post Body Templates</strong></p>
+<pre><code>{
+    &quot;RefreshCache&quot;: true,
+    &quot;PublishMaxZoomLevel&quot;: 19,
+    &quot;PublishData&quot;: true,
+    &quot;PublishTiles&quot;: true,
+    &quot;PublishDetails&quot;: true,
+    &quot;IncludeStyles&quot;: false,
+    &quot;IncludeGlyphs&quot;: false,
+    &quot;PackageFormat&quot;: &quot;gpkg&quot;,
+    &quot;Polygons&quot;: [
+        {
+            &quot;type&quot;: &quot;Polygon&quot;,
+            &quot;coordinates&quot;: [
+                ...
+            ]
+        }
+    ]
+}
+</code></pre>
+<p><strong>Post Body Parameters</strong></p>
+<p>A list of validation errors is returned for the specified job.
+Job has to have pending edits.
+PageNo and pageSize are used for paging the result.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RefreshCache</td>
+<td>Optional</td>
+<td>A boolean value to recreate and overwrite the existing vector tiles regardless of the expiry. Default value is false.</td>
+</tr>
+<tr>
+<td>PublishMaxZoomLevel</td>
+<td>Optional</td>
+<td>Specifies the maximum zoom level to publish vector tiles for. Value should be less than or equal to configured maximum zoom level. Default value is the maximum zoom level configured when deploying the service.</td>
+</tr>
+<tr>
+<td>PublishData</td>
+<td>Optional</td>
+<td>A boolean value that indicates whether to publish attribute data and metadata. Default value is true. Details data (i.e., attributes, traces, searches, dialogs metadata, and its corresponding data) published if the PublishDetails value is true.</td>
+</tr>
+<tr>
+<td>PublishTiles</td>
+<td>Optional</td>
+<td>A boolean value that indicates whether to publish vector tiles. Default value is true.</td>
+</tr>
+<tr>
+<td>PublishDetails</td>
+<td>Optional</td>
+<td>A boolean value that indicates whether to publish details. Default value is false.</td>
+</tr>
+<tr>
+<td>IncludeStyles</td>
+<td>Optional</td>
+<td>A boolean value that indicates whether to include styles. Default value is false. Details styles are included if the PublishDetails value is true.</td>
+</tr>
+<tr>
+<td>IncludeGlyphs</td>
+<td>Optional</td>
+<td>A boolean value that indicates whether to include glyphs. Default value is false.</td>
+</tr>
+<tr>
+<td>PackageFormat</td>
+<td>Optional</td>
+<td>Specifies the package format either 'gpkg' or 'file'. If the PackageFormat is not defined, the tiles and details are published into disk only but do not fetch them and put it in either geopackage or file.</td>
+</tr>
+<tr>
+<td>Polygons</td>
+<td>Required</td>
+<td>Polygons are used as spatial filters when publishing vector tiles and attribute data.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetWorksMobileDataService/publish/start</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code>{
+    &quot;RefreshCache&quot;: true,
+    &quot;PublishMaxZoomLevel&quot;: 19,
+    &quot;PublishData&quot;: true,
+    &quot;PublishTiles&quot;: true,
+    &quot;PublishDetails&quot;: true,
+    &quot;IncludeStyles&quot;: false,
+    &quot;IncludeGlyphs&quot;: false,
+    &quot;PackageFormat&quot;: &quot;gpkg&quot;,
+    &quot;Polygons&quot;: [
+        {
+            &quot;type&quot;: &quot;Polygon&quot;,
+            &quot;coordinates&quot;: [
+                [
+                    [
+                        -8959172.43504343,
+                        5393143.1109897075
+                    ],
+                    [
+                        -8959668.743908595,
+                        5394105.732456211
+                    ],
+                    [
+                        -8960316.09987446,
+                        5394023.313255787
+                    ],
+                    [
+                        -8961733.695365734,
+                        5394187.442375599
+                    ],
+                    [
+                        -8961741.27487681,
+                        5394042.9939445425
+                    ],
+                    [
+                        -8961875.334572688,
+                        5393843.307152777
+                    ],
+                    [
+                        -8959172.43504343,
+                        5393143.1109897075
+                    ]
+                ]
+            ]
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+    &quot;Id&quot;: &quot;9605c293-0ecf-402f-928f-55de00c6ea99&quot;,
+    &quot;Status&quot;: &quot;InProgress&quot;,
+    &quot;Message&quot;: &quot;Publish data message: Fetching the filter polygons in progress. &quot;,
+    &quot;Error&quot;: &quot;&quot;,
+    &quot;DataPublishStatus&quot;: &quot;InProgress&quot;,
+    &quot;TilePublishStatus&quot;: &quot;None&quot;,
+    &quot;DetailsPublishStatus&quot;: &quot;InProgress&quot;,
+    &quot;CurrentLevel&quot;: 0
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

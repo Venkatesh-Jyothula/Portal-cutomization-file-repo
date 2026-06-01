@@ -1,0 +1,2006 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>SpliceConnections </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="SpliceConnections ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="spliceconnections">SpliceConnections</h1>
+
+<p>Returns splice connections for a given splice bearing fiber feature along with the details of the connected or owned fiber features.</p>
+<ul>
+<li>The splice connections returned includes the splice connection attributes.</li>
+<li>The device ports or conductor strands returned indicates the following status:</li>
+<li>Connected or Disconnected.</li>
+<li>Groove Assigned or Unassigned.</li>
+<li>Only the containers connected to the splice bearing feature are returned for a given conductor.</li>
+</ul>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Fiber/SpliceConnections/{Fno}/{Fid}?Jobs={list of job names}&amp;ActiveJob={job name}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fno</td>
+<td>Required</td>
+<td>Feature number of the splice bearing fiber feature.</td>
+</tr>
+<tr>
+<td>Fid</td>
+<td>Required</td>
+<td>Feature identifier of the splice bearing fiber feature.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional</td>
+<td>Job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional</td>
+<td>Comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/SpliceConnections/11800/7251</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{  
+             InfrastructureType:&quot;Node&quot;,
+             SpliceConnections:[  
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:1,
+                   To:1,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:2,
+                   To:2,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:3,
+                   To:3,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:4,
+                   To:4,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:5,
+                   To:5,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:6,
+                   To:6,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:1,
+                   To:1,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:2,
+                   To:2,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:3,
+                   To:3,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:4,
+                   To:4,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:5,
+                   To:5,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:6,
+                   To:6,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                }
+             ],
+             SuperType:&quot;Enclosure&quot;,
+             Fno:11800,
+             Fid:7251,
+             IsDefective:false,
+             HasGraphics:true,
+             Location:&quot;ABCYONXT&quot;,
+             From:[  
+                {  
+                   ConnectionType:&quot;StraightThrough&quot;,
+                   TotalLength:32,
+                   Bundles:[  
+                      {  
+                         IsVisible:false,
+                         Strands:[  
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:1,
+                               Ordinal:1,
+                               PrimaryColor:&quot;#0000FF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 1&quot;,
+                               Description:&quot;Fiber 1&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:2,
+                               Ordinal:2,
+                               PrimaryColor:&quot;#FFA500&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 2&quot;,
+                               Description:&quot;Fiber 2&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:3,
+                               Ordinal:3,
+                               PrimaryColor:&quot;#008000&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 3&quot;,
+                               Description:&quot;Fiber 3&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:4,
+                               Ordinal:4,
+                               PrimaryColor:&quot;#A52A2A&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 4&quot;,
+                               Description:&quot;Fiber 4&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:5,
+                               Ordinal:5,
+                               PrimaryColor:&quot;#708090&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 5&quot;,
+                               Description:&quot;Fiber 5&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:6,
+                               Ordinal:6,
+                               PrimaryColor:&quot;#FFFFFF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 6&quot;,
+                               Description:&quot;Fiber 6&quot;
+                            }
+                         ],
+                         Ordinal:1,
+                         Type:&quot;Bundle&quot;,
+                         Username:&quot;-&quot;,
+                         Description:&quot;-&quot;
+                      }
+                   ],
+                   SuperType:&quot;Conductor&quot;,
+                   Fno:7200,
+                   Fid:7261,
+                   IsDefective:false,
+                   HasGraphics:false,
+                   Location:&quot;ABCYONXT&quot;,
+                   ContainedBy:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;StraightThrough&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:7249,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ContainedBy:[  
+                            {  
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4000,
+                               Fid:7248,
+                               IsDefective:false,
+                               HasGraphics:true,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Duct&quot;,
+                               Username:&quot;Fiber Duct&quot;,
+                               Description:&quot;Fiber Duct 7248&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 7249&quot;
+                      }
+                   ],
+                   Type:&quot;Cable&quot;,
+                   Username:&quot;Fiber Cable&quot;,
+                   Description:&quot;Fiber Cable - Position - 7261&quot;
+                },
+                {  
+                   ConnectionType:&quot;StraightThrough&quot;,
+                   TotalLength:32,
+                   Bundles:[  
+                      {  
+                         IsVisible:false,
+                         Strands:[  
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:1,
+                               Ordinal:1,
+                               PrimaryColor:&quot;#0000FF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 1&quot;,
+                               Description:&quot;Fiber 1&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:2,
+                               Ordinal:2,
+                               PrimaryColor:&quot;#FFA500&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 2&quot;,
+                               Description:&quot;Fiber 2&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:3,
+                               Ordinal:3,
+                               PrimaryColor:&quot;#008000&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 3&quot;,
+                               Description:&quot;Fiber 3&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:4,
+                               Ordinal:4,
+                               PrimaryColor:&quot;#A52A2A&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 4&quot;,
+                               Description:&quot;Fiber 4&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:5,
+                               Ordinal:5,
+                               PrimaryColor:&quot;#708090&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 5&quot;,
+                               Description:&quot;Fiber 5&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:6,
+                               Ordinal:6,
+                               PrimaryColor:&quot;#FFFFFF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 6&quot;,
+                               Description:&quot;Fiber 6&quot;
+                            }
+                         ],
+                         Ordinal:1,
+                         Type:&quot;Bundle&quot;,
+                         Username:&quot;-&quot;,
+                         Description:&quot;-&quot;
+                      }
+                   ],
+                   SuperType:&quot;Conductor&quot;,
+                   Fno:7200,
+                   Fid:7262,
+                   IsDefective:false,
+                   HasGraphics:false,
+                   Location:&quot;ABCYONXT&quot;,
+                   ContainedBy:[  
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;StraightThrough&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:7250,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ContainedBy:[  
+                            {  
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4000,
+                               Fid:7248,
+                               IsDefective:false,
+                               HasGraphics:true,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Duct&quot;,
+                               Username:&quot;Fiber Duct&quot;,
+                               Description:&quot;Fiber Duct 7248&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 7250&quot;
+                      }
+                   ],
+                   Type:&quot;Cable&quot;,
+                   Username:&quot;Fiber Cable&quot;,
+                   Description:&quot;Fiber Cable - Position - 7262&quot;
+                }
+             ],
+             To:[  
+                {  
+                   ConnectionType:&quot;StraightThrough&quot;,
+                   TotalLength:35,
+                   Bundles:[  
+                      {  
+                         IsVisible:false,
+                         Strands:[  
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:1,
+                               Ordinal:1,
+                               PrimaryColor:&quot;#0000FF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 1&quot;,
+                               Description:&quot;Fiber 1&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:2,
+                               Ordinal:2,
+                               PrimaryColor:&quot;#FFA500&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 2&quot;,
+                               Description:&quot;Fiber 2&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:3,
+                               Ordinal:3,
+                               PrimaryColor:&quot;#008000&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 3&quot;,
+                               Description:&quot;Fiber 3&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:4,
+                               Ordinal:4,
+                               PrimaryColor:&quot;#A52A2A&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 4&quot;,
+                               Description:&quot;Fiber 4&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:5,
+                               Ordinal:5,
+                               PrimaryColor:&quot;#708090&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 5&quot;,
+                               Description:&quot;Fiber 5&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:6,
+                               Ordinal:6,
+                               PrimaryColor:&quot;#FFFFFF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 6&quot;,
+                               Description:&quot;Fiber 6&quot;
+                            }
+                         ],
+                         Ordinal:1,
+                         Type:&quot;Bundle&quot;,
+                         Username:&quot;-&quot;,
+                         Description:&quot;-&quot;
+                      }
+                   ],
+                   SuperType:&quot;Conductor&quot;,
+                   Fno:7200,
+                   Fid:7263,
+                   IsDefective:false,
+                   HasGraphics:false,
+                   Location:&quot;ABCYONXT&quot;,
+                   ContainedBy:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;StraightThrough&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:7253,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ContainedBy:[  
+                            {  
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4000,
+                               Fid:7252,
+                               IsDefective:false,
+                               HasGraphics:true,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Duct&quot;,
+                               Username:&quot;Fiber Duct&quot;,
+                               Description:&quot;Fiber Duct 7252&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 7253&quot;
+                      }
+                   ],
+                   Type:&quot;Cable&quot;,
+                   Username:&quot;Fiber Cable&quot;,
+                   Description:&quot;Fiber Cable - Position - 7263&quot;
+                },
+                {  
+                   ConnectionType:&quot;StraightThrough&quot;,
+                   TotalLength:35,
+                   Bundles:[  
+                      {  
+                         IsVisible:false,
+                         Strands:[  
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:1,
+                               Ordinal:1,
+                               PrimaryColor:&quot;#0000FF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 1&quot;,
+                               Description:&quot;Fiber 1&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:2,
+                               Ordinal:2,
+                               PrimaryColor:&quot;#FFA500&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 2&quot;,
+                               Description:&quot;Fiber 2&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:3,
+                               Ordinal:3,
+                               PrimaryColor:&quot;#008000&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 3&quot;,
+                               Description:&quot;Fiber 3&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:4,
+                               Ordinal:4,
+                               PrimaryColor:&quot;#A52A2A&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 4&quot;,
+                               Description:&quot;Fiber 4&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:5,
+                               Ordinal:5,
+                               PrimaryColor:&quot;#708090&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 5&quot;,
+                               Description:&quot;Fiber 5&quot;
+                            },
+                            {  
+                               IsGrooved:false,
+                               IsConnected:true,
+                               ConductorOrdinal:6,
+                               Ordinal:6,
+                               PrimaryColor:&quot;#FFFFFF&quot;,
+                               Type:&quot;Strand&quot;,
+                               Username:&quot;Fiber 6&quot;,
+                               Description:&quot;Fiber 6&quot;
+                            }
+                         ],
+                         Ordinal:1,
+                         Type:&quot;Bundle&quot;,
+                         Username:&quot;-&quot;,
+                         Description:&quot;-&quot;
+                      }
+                   ],
+                   SuperType:&quot;Conductor&quot;,
+                   Fno:7200,
+                   Fid:7264,
+                   IsDefective:false,
+                   HasGraphics:false,
+                   Location:&quot;ABCYONXT&quot;,
+                   ContainedBy:[  
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;StraightThrough&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:7254,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ContainedBy:[  
+                            {  
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4000,
+                               Fid:7252,
+                               IsDefective:false,
+                               HasGraphics:true,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Duct&quot;,
+                               Username:&quot;Fiber Duct&quot;,
+                               Description:&quot;Fiber Duct 7252&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 7254&quot;
+                      }
+                   ],
+                   Type:&quot;Cable&quot;,
+                   Username:&quot;Fiber Cable&quot;,
+                   Description:&quot;Fiber Cable - Position - 7264&quot;
+                }
+             ],
+             Type:&quot;Splice Enclosure&quot;,
+             Username:&quot;Fiber Splice Enclosure&quot;,
+             Description:&quot;Fiber Splice Enclosure 7251&quot;
+          }
+</code></pre>
+<h2 id="optional-parameter">Optional Parameter</h2>
+<p>An optional filter parameter will filter the results thereby reducing the returned payload.
+Use comma delimited string as the filter value (example: &quot;connections,from&quot;) when applying more than one filter type.</p>
+<ul>
+<li>Connections - Returns splice connections data excluding all relationship data.</li>
+<li>Children - Returns child relationship data excluding all other relationship and splice connections data.</li>
+<li>From - Returns the From fiber feature data in a node-ordered connectivity relationship excluding all other relationship and splice connections data.</li>
+<li>To - Returns the To fiber feature data in a node-ordered connectivity relationship excluding all other relationship and splice connections data.</li>
+<li>ExcludeAttributes - Excludes all attribute data associated with splice connections, bundles, strands, port groups and ports.</li>
+</ul>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/SpliceConnections/11800/7251/Connections</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{  
+             InfrastructureType:&quot;Node&quot;,
+             SpliceConnections:[  
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:1,
+                   To:1,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:2,
+                   To:2,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:3,
+                   To:3,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:4,
+                   To:4,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:5,
+                   To:5,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7261,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7264,
+                      Cid:0
+                   },
+                   From:6,
+                   To:6,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:1,
+                   To:1,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:2,
+                   To:2,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:3,
+                   To:3,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:4,
+                   To:4,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:5,
+                   To:5,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                },
+                {  
+                   Ordinal:1,
+                   FromFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7262,
+                      Cid:0
+                   },
+                   ToFeature:{  
+                      Fno:7200,
+                      Cno:0,
+                      Fid:7263,
+                      Cid:0
+                   },
+                   From:6,
+                   To:6,
+                   Type:&quot;Splice Connection&quot;,
+                   Attributes:[  
+                      {  
+                         Name:&quot;CONNECTION_TYPE&quot;,
+                         Username:&quot;Type&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_TYPICAL&quot;,
+                         Username:&quot;Loss Typical&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;LOSS_MEASURED&quot;,
+                         Username:&quot;Loss Measured&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;BANDWIDTH&quot;,
+                         Username:&quot;Bandwidth&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;CHANNELS&quot;,
+                         Username:&quot;Channels&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      },
+                      {  
+                         Name:&quot;FIBER_ANNOTATION&quot;,
+                         Username:&quot;Fiber Annotation&quot;,
+                         DataType:&quot;System.DBNull, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;,
+                         Value:null
+                      }
+                   ]
+                }
+             ],
+             SuperType:&quot;Enclosure&quot;,
+             Fno:11800,
+             Fid:7251,
+             IsDefective:false,
+             HasGraphics:true,
+             Location:&quot;ABCYONXT&quot;,
+             Type:&quot;Splice Enclosure&quot;,
+             Username:&quot;Fiber Splice Enclosure&quot;,
+             Description:&quot;Fiber Splice Enclosure 7251&quot;
+          }
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

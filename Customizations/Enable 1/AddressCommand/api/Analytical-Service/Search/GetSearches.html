@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetSearches </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetSearches ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getsearches">GetSearches</h1>
+
+<p>Gets the list of all search definitions, excluding quicksearch definitions.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{AnalyticalServiceName}/search/searches[?application={application} | apiVersion={apiVersion}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>application</td>
+<td>Bit mask for G3E_ANALYSIMAPPING_OPTABLE.G3E_APPLICATION. When not specified, a value of 8 (NetWorks) is used.</td>
+</tr>
+<tr>
+<td>apiVersion</td>
+<td>Analytical service version. Supported versions are 2.0.2012 and above.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>Array of <code>SearchMetadataType</code> instances.</p>
+<h3 id="searchmetadatatype">SearchMetadataType</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G3E_AMNO</td>
+<td>number</td>
+<td>Analysis mapping number</td>
+</tr>
+<tr>
+<td>UserName</td>
+<td>string</td>
+<td>Analysis mapping name</td>
+</tr>
+<tr>
+<td>G3E_ACNO</td>
+<td>number</td>
+<td>Analysis category number</td>
+</tr>
+<tr>
+<td>CategoryName</td>
+<td>string</td>
+<td>Analysis category name</td>
+</tr>
+<tr>
+<td>Parameters</td>
+<td>[SearchParameterType]</td>
+<td>Array of parameters of the query</td>
+</tr>
+<tr>
+<td>IsAoiRequired</td>
+<td>bool</td>
+<td>Flag: Is active AOI required?</td>
+</tr>
+<tr>
+<td>IsAoiLiRequired</td>
+<td>bool</td>
+<td>Flag: Is AOI LI required?</td>
+</tr>
+</tbody>
+</table>
+<h3 id="searchparametertype">SearchParameterType</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G3E_ANO</td>
+<td>number</td>
+<td>Attribute number</td>
+</tr>
+<tr>
+<td>ParameterId</td>
+<td>number</td>
+<td>Ordinal of the parameter in query. G3E_ORDINAL.</td>
+</tr>
+<tr>
+<td>ReferenceOrdinal</td>
+<td>number</td>
+<td>Reference ordinal for repeated G3E_ANO values. G3E_REFERENCEORDINAL.</td>
+</tr>
+<tr>
+<td>G3E_USERNAME</td>
+<td>string</td>
+<td>User name of the search parameter</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>string</td>
+<td>Data type of the value. Allowed values: <code>Text</code>, <code>PickList</code>, <code>DateTime</code>.</td>
+</tr>
+<tr>
+<td>G3E_PNO</td>
+<td>number</td>
+<td>Picklist number.</td>
+</tr>
+<tr>
+<td>FieldValueFilterAttributes</td>
+<td>[number]</td>
+<td>If a field value filter is defined, contains an array of G3E_ANO values required for field value filter. Otherwise <code>null</code> which means that field value filter is not defined.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Remarks</strong>
+If the search definition has IsAoiLiRequired set to true, then the last parameter is a placeholder for the area of interest location identifier's string value. The Post body that is passed to the search/execute/{amno} method must contain an Aoi object definition and its AOILIID property must be non-null.</p>
+<p>If the search definition has IsAoiRequired set to true, then the Post body that is passed to the search/execute/{amno} method must contain an Aoi object definition in the JSON (see execute method).</p>
+<p>If the search definition has apiVersion parameter set to 2.0.2012 or later, the response attribute parameters will support long and double parameter values.</p>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">[
+  {
+    &quot;G3E_AMNO&quot;: 27,
+    &quot;UserName&quot;: &quot;(QR) Equipment Configuration&quot;,
+    &quot;G3E_ACNO&quot;: 4,
+    &quot;CategoryName&quot;: &quot;Quick Find&quot;,
+    &quot;Parameters&quot;: [
+      {
+        &quot;G3E_ANO&quot;: 7106,
+        &quot;ParameterId&quot;: 1,
+        &quot;G3E_USERNAME&quot;: &quot;Equipment Type&quot;,
+        &quot;Type&quot;: &quot;PickList&quot;,
+        &quot;G3E_PNO&quot;: 3,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: &quot;'TRUE'='TRUE'/*G3E1*/&amp;#7107=CONFIGURATION_NAME_ENG/*G3E1*//*G3E2*/&amp;#7106=EQUIPMENT_TYPE_ENG/*G3E2*/&quot;,
+        &quot;FieldValueFilterAnos&quot;: [
+          {
+            &quot;Ano&quot;: &quot;7107&quot;,
+            &quot;IsOptional&quot;: true
+          },
+          {
+            &quot;Ano&quot;: &quot;7106&quot;,
+            &quot;IsOptional&quot;: true
+          }
+        ]
+      },
+      {
+        &quot;G3E_ANO&quot;: 7107,
+        &quot;ParameterId&quot;: 3,
+        &quot;G3E_USERNAME&quot;: &quot;Equip. Config. Name&quot;,
+        &quot;Type&quot;: &quot;PickList&quot;,
+        &quot;G3E_PNO&quot;: 4
+      },
+      {
+        &quot;G3E_ANO&quot;: -1,
+        &quot;ParameterId&quot;: 5,
+        &quot;G3E_USERNAME&quot;: null,
+        &quot;Type&quot;: &quot;Text&quot;,
+        &quot;G3E_PNO&quot;: null,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: &quot;'TRUE'='TRUE'/*G3E1*/&amp;#7107=CONFIGURATION_NAME_ENG/*G3E1*//*G3E2*/&amp;#7106=EQUIPMENT_TYPE_ENG/*G3E2*/&quot;,
+        &quot;FieldValueFilterAnos&quot;: [
+          {
+            &quot;Ano&quot;: &quot;7107&quot;,
+            &quot;IsOptional&quot;: true
+          },
+          {
+            &quot;Ano&quot;: &quot;7106&quot;,
+            &quot;IsOptional&quot;: true
+          }
+        ]
+      }
+    ],
+    &quot;IsAoiRequired&quot;: false,
+    &quot;IsAoiLiRequired&quot;: true
+  },
+  {
+    &quot;G3E_AMNO&quot;: 48,
+    &quot;UserName&quot;: &quot;(SQ) Equipment Configuration&quot;,
+    &quot;G3E_ACNO&quot;: 5,
+    &quot;CategoryName&quot;: &quot;Simple Query&quot;,
+    &quot;Parameters&quot;: [
+      {
+        &quot;G3E_ANO&quot;: 7106,
+        &quot;ParameterId&quot;: 1,
+        &quot;G3E_USERNAME&quot;: &quot;Equipment Type&quot;,
+        &quot;Type&quot;: &quot;PickList&quot;,
+        &quot;G3E_PNO&quot;: 3,
+        &quot;IsOptional&quot;: true,
+         &quot;FieldValueFilter&quot;: &quot;'TRUE'='TRUE'/*G3E1*/&amp;#7107=CONFIGURATION_NAME_ENG/*G3E1*//*G3E2*/&amp;#7106=EQUIPMENT_TYPE_ENG/*G3E2*/&quot;,
+        &quot;FieldValueFilterAnos&quot;: [
+          {
+            &quot;Ano&quot;: &quot;7107&quot;,
+            &quot;IsOptional&quot;: true
+          },
+          {
+            &quot;Ano&quot;: &quot;7106&quot;,
+            &quot;IsOptional&quot;: true
+          }
+        ]
+      },
+      {
+        &quot;G3E_ANO&quot;: 7107,
+        &quot;ParameterId&quot;: 3,
+        &quot;G3E_USERNAME&quot;: &quot;Equip. Config. Name&quot;,
+        &quot;Type&quot;: &quot;PickList&quot;,
+        &quot;G3E_PNO&quot;: 4,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: &quot;'TRUE'='TRUE'/*G3E1*/&amp;#7107=CONFIGURATION_NAME_ENG/*G3E1*//*G3E2*/&amp;#7106=EQUIPMENT_TYPE_ENG/*G3E2*/&quot;,
+        &quot;FieldValueFilterAnos&quot;: [
+          {
+            &quot;Ano&quot;: &quot;7107&quot;,
+            &quot;IsOptional&quot;: true
+          },
+          {
+            &quot;Ano&quot;: &quot;7106&quot;,
+            &quot;IsOptional&quot;: true
+          }
+        ]
+      },
+      {
+        &quot;G3E_ANO&quot;: 7113,
+        &quot;ParameterId&quot;: 5,
+        &quot;G3E_USERNAME&quot;: &quot;Remote Equip. CLLI&quot;,
+        &quot;Type&quot;: &quot;Text&quot;,
+        &quot;G3E_PNO&quot;: 0,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: null,
+        &quot;FieldValueFilterAnos&quot;: []
+      },
+      {
+        &quot;G3E_ANO&quot;: 7115,
+        &quot;ParameterId&quot;: 7,
+        &quot;G3E_USERNAME&quot;: &quot;System Nbr&quot;,
+        &quot;Type&quot;: &quot;Text&quot;,
+        &quot;G3E_PNO&quot;: 0,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: null,
+        &quot;FieldValueFilterAnos&quot;: []
+      }
+    ],
+    &quot;IsAoiRequired&quot;: false,
+    &quot;IsAoiLiRequired&quot;: false
+  },
+  {
+    &quot;G3E_AMNO&quot;: 43,
+    &quot;UserName&quot;: &quot;Air Source&quot;,
+    &quot;G3E_ACNO&quot;: 4,
+    &quot;CategoryName&quot;: &quot;Quick Find&quot;,
+    &quot;Parameters&quot;: [
+      {
+        &quot;G3E_ANO&quot;: 5213,
+        &quot;ParameterId&quot;: 1,
+        &quot;G3E_USERNAME&quot;: &quot;Old Address&quot;,
+        &quot;Type&quot;: &quot;Text&quot;,
+        &quot;G3E_PNO&quot;: 0,
+        &quot;IsOptional&quot;: true,
+        &quot;FieldValueFilter&quot;: null,
+        &quot;FieldValueFilterAnos&quot;: []
+      }
+    ],
+    &quot;IsAoiRequired&quot;: false,
+    &quot;IsAoiLiRequired&quot;: true
+  },
+  {
+    &quot;G3E_AMNO&quot;: 26,
+    &quot;UserName&quot;: &quot;Find by FID&quot;,
+    &quot;G3E_ACNO&quot;: 4,
+    &quot;CategoryName&quot;: &quot;Quick Find&quot;,
+    &quot;Parameters&quot;: [
+        {
+            &quot;G3E_ANO&quot;: 5103,
+            &quot;ParameterId&quot;: 1,
+            &quot;G3E_USERNAME&quot;: &quot;GComms Feature ID&quot;,
+            &quot;Type&quot;: &quot;Long&quot;,
+            &quot;G3E_PNO&quot;: 0,
+            &quot;IsOptional&quot;: false,
+            &quot;FieldValueFilter&quot;: null,
+            &quot;FieldValueFilterAnos&quot;: []
+        }
+    ],
+    &quot;IsAoiRequired&quot;: false,
+    &quot;IsAoiLiRequired&quot;: true
+}
+]
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ExecuteTrace </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ExecuteTrace ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="executetrace">ExecuteTrace</h1>
+
+<p>Executes the trace and returns a tracenumber for the given input parameters.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{TraceServiceName}/Trace/execute?[Jobs={list of job names} | ActiveJob={job name}]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ActiveJob</td>
+<td>Optional job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SeedFno</td>
+<td>describes the seed feature type.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>SeedFid</td>
+<td>is the feature identifier from where the trace should be started and checks whether it belongs to the given SeedFno or not.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>UserName</td>
+<td>is the user defined name for trace.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>MappingId</td>
+<td>should be a unique identifier for the given SeedFno.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>HintIdentifiesFeature</td>
+<td>is a boolean value and is used in executing the trace in the selected hint feature direction.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>OverWrite</td>
+<td>a boolean value to overwrite the existing trace.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>required for executing trace.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GoalFid</td>
+<td>the feature identifier where the trace should be stopped.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>HintFid</td>
+<td>used to choose the trace direction based on given feature identifier.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Aoi</td>
+<td>Object returned by the Areas endpoint. Used to enable an AOI and/or AOILI restriction in trace execution.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>OverrideAoiThreshold</td>
+<td>The AoiMultiThreshold is a metadata defined limit for the maximum number of possible features from an AOI area to process in the trace. (See the G3E_GENERALPARAMETER topic in the HxGN NetWorks Core Admin help). If the AoiOverwriteThreshold metadata parameter is set to -1 (meaning override is possible); and if the current database user has the role associated with G3E_AOIOverwriteThreshold in the G3E_ROLEASSOC_OPTABLE, then this OverrideAoiThreshold POST body parameter controls whether or not the limit will be enforced. When OverrideAoiThreshold is set to false and the AOI contains more possible feature instances than the limit, the trace execution will return an error message that denotes how many possible features were in the trace. When this value is set to true, the trace execution continues and returns all results. The default value is false.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>SpatialFilter</td>
+<td>Specifies a GeoJson Polygon that is used to restrict the trace execution results. All of the features in the trace result will be restricted to features that are within or touching the specified polygon. Detail features are included if their geographic referencing feature is in the polygon. Polygon is the only geometry type supported for spatial filters. A trace request cannot contain both an AOI and a SpatialFilter value. The OverrideAoiThreshold parameter and the associated AOI processing also apply to the area defined by the spatial filter.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>MeasureFeatures</td>
+<td>When specified as true, the trace result will be augmented with the length or area measurement of each feature that can be measured. If the trace result was restricted by an AOI or spatial filter polygon, then the percentage of the features that fall within the spatial filter area will also be computed. Specifically, the geometry of the features that intersect the spatial boundary will be clipped and measured and the clipped measurement / the original measurement will be reported as a percent value.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>MeasureOnCurvedEarth</td>
+<td>When specified as true, the length or area measurement of each feature will be done using the geographic reference space; otherwise, the measurements will be done on the projection reference space.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>StartingPointX</td>
+<td>X coordinate for the Cost Constraint Trace starting point.</td>
+<td>No</td>
+</tr>
+<tr>
+<td>StartingPointY</td>
+<td>Y coordinate for the Cost Constraint Trace starting point.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksAnalyticalservice/Trace/execute</p>
+<p>Post Body:</p>
+<pre><code class="lang-js">{
+    &quot;SeedFno&quot;: &quot;316&quot;,
+    &quot;SeedFid&quot;: &quot;653521&quot;,
+    &quot;UserName&quot;: &quot;SampleTrace&quot;,
+    &quot;MappingId&quot;: &quot;992&quot;,
+    &quot;HintIdentifiesFeature&quot;: &quot;True&quot;,
+    &quot;OverWrite&quot;: &quot;True&quot;,
+    &quot;Attributes&quot;: [{
+            &quot;Key&quot;: &quot;1006&quot;,
+            &quot;Value&quot;: &quot;True&quot;
+        }
+    ],
+    &quot;GoalFid&quot;: &quot;1111&quot;,
+    &quot;HintFid&quot;: &quot;2222&quot;
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code>123
+</code></pre>
+<p><strong>Sample Request #2</strong></p>
+<p>http://hostname/NetworksAnalyticalservice/Trace/execute</p>
+<p>Post Body:</p>
+<pre><code class="lang-{">      &quot;SeedFid&quot;: &quot;231967002&quot;,
+      &quot;SeedFno&quot;: &quot;7000&quot;,
+      &quot;UserName&quot;: &quot;TestCablePathInAOI&quot;,
+      &quot;MappingId&quot;: 125,
+      &quot;Attributes&quot;: [],
+      &quot;OverWrite&quot;: true,
+      &quot;HintFid&quot;: &quot;231967004&quot;,
+      &quot;HintIdentifiesFeature&quot;: false,
+      &quot;SpatialFilter&quot;: 
+      {
+        &quot;type&quot;: &quot;Polygon&quot;,
+        &quot;coordinates&quot;: 
+        [
+            [
+                [
+                    -8515242.91, 5501580.23
+                ],
+                [
+                    -8515257.71, 5501519.98
+                ],
+                [
+                    -8515152.75, 5501494.02
+                ],
+                [
+                    -8515137.95, 5501554.27
+                ],
+                [
+                    -8515242.91, 5501580.23
+                ]
+            ]
+        ],
+        &quot;crs&quot;: 
+        {
+            &quot;type&quot;: &quot;name&quot;,
+            &quot;properties&quot;: 
+            {
+                &quot;name&quot;: &quot;EPSG:3857&quot;
+            }
+        }
+      },
+      &quot;OverrideAoiThreshold&quot;: true
+    }
+</code></pre>
+<p><strong>Sample Request #3</strong></p>
+<p>http://hostname/NetworksAnalyticalservice/Trace/execute</p>
+<p>Post Body:</p>
+<pre><code class="lang-js">  {
+      &quot;SeedFno&quot;: &quot;7000&quot;,                                    
+      &quot;SeedFid&quot;: &quot;345203&quot;, 
+      &quot;UserName&quot;:&quot;OtdrTrace&quot;,                                                       
+      &quot;MappingId&quot; : 155,                                                 
+      &quot;OverWrite&quot; : &quot;True&quot;,    
+      &quot;StartPoint&quot;:&quot;7443576.40872164,1049699.66912877&quot;,                            
+      &quot;Attributes&quot;:[{&quot;Key&quot;:&quot;23&quot;,&quot;Value&quot;:20},{&quot;Key&quot;:&quot;24&quot;,&quot;Value&quot;:&quot;50&quot;},{&quot;Key&quot;:&quot;25&quot;,&quot;Value&quot;:2},{&quot;Key&quot;:&quot;26&quot;,&quot;Value&quot;:3}]
+  }
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<p>If the trace request enabled an AOI or AOILI restriction and the number of features in the trace exceeded the AoiMultiThreshold in metadata, then the request fails. If the user has the necessary user role to override the threshold, then the following message is returned: &quot;The number of trace result features in the area of interest, {0}, exceeds the threshold, {1}. Do you want to override the threshold and retrieve all results?&quot; If the user wants to override, the client should resubmit the trace execute request with &quot;OverrideAoiThreshold&quot;: true added to the POST body of the request.</p>
+<p>If the user doesn't have the override role, or if the metadata prevents overrides, then the trace fails with the following message: &quot;The number of trace result features in the area of interest, {0}, exceeds the threshold, {1}.&quot;</p>
+<p>If the trace was successful, then the trace result number (tno) is returned. Clients use the /trace/results/{tno} method to retrieve the actual trace results.</p>
+<pre><code>123
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

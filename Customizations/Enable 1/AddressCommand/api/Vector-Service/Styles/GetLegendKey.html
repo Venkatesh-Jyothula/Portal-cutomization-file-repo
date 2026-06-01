@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetLegendKey </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetLegendKey ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getlegendkey">GetLegendKey</h1>
+
+<p>Returns legend key i.e. style rules (name and style identifier) used to render the provided list of legend entries.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>POST</p>
+<p><strong>URL Template</strong></p>
+<p>/style/key</p>
+<p><strong>Request Parameters</strong></p>
+<p>None.</p>
+<h2 id="response">Response</h2>
+<p>Response is a dictionary keyed by <code>G3E_LENO</code> with legend entry information (<code>leno</code>, <code>name</code>) and a list of styles in the <code>styles</code> property.
+Each style object has two properties: <code>sno</code> with style identifier and <code>name</code> with user name of the style rule.</p>
+<h2 id="sample">Sample</h2>
+<p><strong>Sample Request</strong></p>
+<p>http://machinename/NetworksVectorService/style/key</p>
+<pre><code class="lang-json">{
+    &quot;lsno&quot;: 7,
+    &quot;entries&quot;: [{
+            &quot;l&quot;: 3060000
+        }, {
+            &quot;l&quot;: 3060700
+        }, {
+            &quot;l&quot;: 3060300
+        }, {
+            &quot;l&quot;: 3060500
+        }, {
+            &quot;l&quot;: 3060200
+        }, {
+            &quot;l&quot;: 306000
+        }, {
+            &quot;l&quot;: 306400
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-json">{
+    &quot;3060000&quot;: {
+        &quot;leno&quot;: 3060000,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 306000005,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0005&quot;
+            },
+            {
+                &quot;sno&quot;: 306000010,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0010&quot;
+            },
+            {
+                &quot;sno&quot;: 306000020,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0020&quot;
+            },
+            {
+                &quot;sno&quot;: 306000025,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0025&quot;
+            },
+            {
+                &quot;sno&quot;: 306000030,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0030&quot;
+            },
+            {
+                &quot;sno&quot;: 306000040,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0040&quot;
+            },
+            {
+                &quot;sno&quot;: 306000045,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0045&quot;
+            },
+            {
+                &quot;sno&quot;: 306000050,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0050&quot;
+            },
+            {
+                &quot;sno&quot;: 306000060,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 0060&quot;
+            },
+            {
+                &quot;sno&quot;: 306009999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;3060700&quot;: {
+        &quot;leno&quot;: 3060700,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Circuit Label - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 306070010,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Circuit Label - Inventory - 0010&quot;
+            },
+            {
+                &quot;sno&quot;: 306070020,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Circuit Label - Inventory - 0020&quot;
+            },
+            {
+                &quot;sno&quot;: 306070030,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Circuit Label - Inventory - 0030&quot;
+            },
+            {
+                &quot;sno&quot;: 306079999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Circuit Label - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;3060300&quot;: {
+        &quot;leno&quot;: 3060300,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Name - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 306030010,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Name - Inventory - 0010&quot;
+            },
+            {
+                &quot;sno&quot;: 306030020,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Name - Inventory - 0020&quot;
+            },
+            {
+                &quot;sno&quot;: 306030030,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Name - Inventory - 0030&quot;
+            },
+            {
+                &quot;sno&quot;: 306039999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Name - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;3060500&quot;: {
+        &quot;leno&quot;: 3060500,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Norm Label - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 306050010,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Norm Label - Inventory - 0010&quot;
+            },
+            {
+                &quot;sno&quot;: 306050020,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Norm Label - Inventory - 0020&quot;
+            },
+            {
+                &quot;sno&quot;: 306050030,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Norm Label - Inventory - 0030&quot;
+            },
+            {
+                &quot;sno&quot;: 306059999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Norm Label - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;3060200&quot;: {
+        &quot;leno&quot;: 3060200,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Ring - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 306020010,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Ring - Inventory - 0010&quot;
+            },
+            {
+                &quot;sno&quot;: 306020020,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Ring - Inventory - 0020&quot;
+            },
+            {
+                &quot;sno&quot;: 306020030,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Ring - Inventory - 0030&quot;
+            },
+            {
+                &quot;sno&quot;: 306029999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Conductor Segment-Ring - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;306000&quot;: {
+        &quot;leno&quot;: 306000,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Miscellaneous Label - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 30609999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Miscellaneous Label - Inventory - 9999&quot;
+            }
+        ]
+    },
+    &quot;306400&quot;: {
+        &quot;leno&quot;: 306400,
+        &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Miscellaneous Line - Inventory&quot;,
+        &quot;styles&quot;: [
+            {
+                &quot;sno&quot;: 30649999,
+                &quot;name&quot;: &quot;Ele-Conductor Segment-LV-Miscellaneous Line - Inventory - 9999&quot;
+            }
+        ]
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

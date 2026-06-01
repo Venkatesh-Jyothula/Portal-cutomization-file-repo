@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Empty Page</title>
+<script>
+
+function init() {
+
+	var searchString = window.location.search;
+	currentFeature.innerText = searchString;
+	window.$NWP = parent.$NWP;
+	if ($NWP) {	
+		$NWP.on('gtechfeatureload', updateFeature, window);
+	}
+}
+function updateFeature(data) {
+	currentFeature.innerHTML = 'FNO=' + data.G3E_FNO + '&FID=' + data.G3E_FID;	
+}
+</script>
+</head>
+<body onload="init()">
+<p id="currentFeature">No feature</p>
+</body>
+</html>

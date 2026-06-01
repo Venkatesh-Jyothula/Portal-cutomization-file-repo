@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Response examples </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Response examples ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="response-examples">Response examples</h1>
+
+<h2 id="success">Success</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;tref&quot;: 1,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 704,
+      &quot;G3E_FID&quot;: 3735268
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;tref&quot;: 2,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 19733,
+      &quot;G3E_CID&quot;: 1,
+      &quot;links&quot;: [
+        {
+          &quot;source&quot;: &quot;attachment1.pdf&quot;,
+          &quot;destination&quot;: &quot;%FMATTACHMENTS%\\2023\\2023-01\\01\\vq\\47vq2nqhl56vtd9drh6c8vt2qyr1fnob\\0001225149-704\\19733-1\\attachment1.pdf&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 19743,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_FNO&quot;: 700,
+      &quot;G3E_FID&quot;: 3735269
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19600,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19610,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19616,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;G3E_RNO&quot;: 700,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 3,
+      &quot;G3E_FNO&quot;: 705,
+      &quot;G3E_FID&quot;: 3735270
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 3,
+      &quot;G3E_CNO&quot;: 19776,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 3,
+      &quot;relatedfref&quot;: 2,
+      &quot;G3E_RNO&quot;: 702,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_FNO&quot;: 701,
+      &quot;G3E_FID&quot;: 3735271
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19633,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19643,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19647,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 1,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 4,
+      &quot;relatednode&quot;: 2,
+      &quot;G3E_RNO&quot;: 70,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_FNO&quot;: 702,
+      &quot;G3E_FID&quot;: 3735272
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 19676,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 19679,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 5,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;relatednode&quot;: 1,
+      &quot;G3E_RNO&quot;: 70,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 3,
+      &quot;relatedfref&quot;: 5,
+      &quot;G3E_RNO&quot;: 702,
+      &quot;G3E_CID&quot;: 2
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_FNO&quot;: 703,
+      &quot;G3E_FID&quot;: 3735273
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 19700,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 19710,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 6,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 4,
+      &quot;relatednode&quot;: 1,
+      &quot;G3E_RNO&quot;: 70,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_FNO&quot;: 702,
+      &quot;G3E_FID&quot;: 3735274
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 19676,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 19679,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 7,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;relatednode&quot;: 2,
+      &quot;G3E_RNO&quot;: 70,
+      &quot;G3E_CID&quot;: 1
+    }
+  ]
+}
+</code></pre>
+<h2 id="error">Error</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;tref&quot;: 1,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 0,
+      &quot;G3E_FID&quot;: 3734937,
+      &quot;errors&quot;: [
+        {
+          &quot;code&quot;: &quot;ERR_INVALID_FNO&quot;
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;UpdateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 5933,
+      &quot;G3E_CID&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;UpdateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 5951,
+      &quot;G3E_CID&quot;: 1
+    }
+  ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

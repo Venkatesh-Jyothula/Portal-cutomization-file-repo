@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Vector Tile API Overview </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Vector Tile API Overview ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="vector-tile-api-overview">Vector Tile API Overview</h1>
+
+<p>The HxGN NetWorks Vector Tile Service is a standard RESTful web service that provides an API to retrieve vector tiles. Vector tiles contain vector data instead of a rendered image. They contain geometries and attribute data used by the style specification document — in a compact, structured format. The Vector Tile Service is developed using the Mapbox Vector Tile (MVT) Specification, which explicitly provides information about file formats and extensions, projections and bounds, and the internal structure of the vector tiles.</p>
+<ul>
+<li>Tiles are generated on demand and cached at the specified location.</li>
+<li>Tiles are encoded using Google Protobufs (PBF) and have a file extension of .mvt.</li>
+<li>Uses Web Mercator (EPSG:3857) as the projection.</li>
+<li>Includes support for a single tile matrix set that follows the Google zoom levels.</li>
+<li>Tile size is fixed to 512 x 512.</li>
+<li>Includes only attributes that are published as part of the HxGN NetWorks Core component view.</li>
+<li>Follows the Slippy Map Tilenames Specification when representing the file naming convention.
+<ul>
+<li>http://hostname/NetworksVectorTileService/zoom/x/y.mvt</li>
+</ul>
+</li>
+</ul>
+<p>The Vector Tile Service also provides an API to get a Mapbox Style Specification document. A Mapbox Style Specification defines the visual appearance of a map: what data to draw, the order to draw it in, and how to style the data when drawing it. Before the Style Specification document can be retrieved through the API, administrators have to publish the document during the deployment of the Mapbox Vector Tile Service.</p>
+<ul>
+<li>Uses a style filtering approach similar to HxGN NetWorks Core where the attributes published as part of the MVT file are used when defining filters.</li>
+<li>Display is controlled by specifying the minimum and maximum zoom levels similar to the legend entry minimum and maximum display scale.</li>
+<li>Allows data-driven styling of spatial data based on the attributes published as part of the MVT file.</li>
+<li>Supports scale dependent display of symbols and text.</li>
+<li>Similar to HxGN NetWorks Core, the label text content is derived from attributes published as part of the MVT file.</li>
+<li>Mapbox plugin libraries are available for Leaflet and OpenLayers that can render the Mapbox vector tiles using the Mapbox style specification. Mapbox also provides their own Mapbox GL library to render interactive maps.</li>
+</ul>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

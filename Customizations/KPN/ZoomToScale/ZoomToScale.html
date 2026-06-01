@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zoom to Scale</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .dialog {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      font-size: 14px;
+    }
+
+    .form-row {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-row label {
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+
+    .form-row input {
+      flex-grow: 1;
+      padding: 4px;
+      font-size: 14px;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 5px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="dialog">
+    <form onsubmit="handleFormSubmit(event)">
+      <div class="form-row">
+        <label for="scaleInput">Display at scale 1:</label>
+        <input type="number" id="scaleInput" placeholder="Enter scale" />
+      </div>
+      <div class="button-row">
+        <button type="submit">Apply</button>
+        <button type="button" onclick="closeWindow()">Close</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Prevent actual form submission
+      applyScale();
+    }
+
+    function applyScale() {
+      const scaleInput = document.getElementById('scaleInput').value;
+
+      if (!scaleInput || isNaN(scaleInput)) {
+        parent.$NWP.msg.showInfo('Please enter a numeric value');
+        return;
+      }
+
+      const scale = parseInt(scaleInput);
+      const resolution = parent.Hxgn.Util.getResolutionFromScale(scale, null, 90.550);
+      parent.$NWP.map.setViewState({ resolution });
+    }
+
+    function closeWindow() {
+      if (window.parent.currentNewWindow) {
+        window.parent.currentNewWindow.destroy();
+      }
+    }
+  </script>
+</body>
+</html>

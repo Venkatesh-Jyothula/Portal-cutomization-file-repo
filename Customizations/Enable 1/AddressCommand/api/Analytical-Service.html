@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Analytical Service </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Analytical Service ">
+      
+      <link rel="icon" href="../wsfavicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="analytical-service">Analytical Service</h1>
+
+<h2 id="search">Search</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetAllDetails.html">/Details</a></td>
+<td>Gets the list of all details.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetAllDetailsGroupByFno.html">/Details/fnos</a></td>
+<td>Get the list of feature numbers that have details associated with them.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetDetailsByFno.html">/Details/Fnos/{fno}</a></td>
+<td>Gets the details associated with the given feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetDetailsByFnoAndName.html">Details/Fnos/{fnos}/Names?name={name}</a></td>
+<td>Get details by fno and name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetDetailsByName.html">/Details/Names?name={name}</a></td>
+<td>Get details by name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetQuicksearches.html">/Quicksearches</a></td>
+<td>Get quicksearch definitions.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/Execute.html">/Execute/{amno}</a></td>
+<td>Execute a search.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/ResultsDelete.html">/Results/Delete</a></td>
+<td>Delete search results from the database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSearches.html">/search/searches</a></td>
+<td>Get search definitions.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSearchCategories.html">/search/searches/categories</a></td>
+<td>Get the list of search categories.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSearchesByAcno.html">/search/searches/{acno}</a></td>
+<td>Get search definitions by ACNO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetDetailByDetailId.html">/Search/Detail/{detailId}</a></td>
+<td>Gets the MBR of a detail given its detail number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetDetailByDetailIdAndFno.html">/Search/Detail/{detailId}/{fno}</a></td>
+<td>Gets the MBR of a detail given its detail number and feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetAllSchematics.html">/Schematics</a></td>
+<td>Gets the list of all schematics.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSchematicsFnos.html">/Schematics/Fnos</a></td>
+<td>Get the list of FNOs that have schematics.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSchematicsByFNO.html">/Schematics/Fnos/{Fno}</a></td>
+<td>Get schematics by FNO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSchematicsByFNOAndName.html">/Schematics/Fnos/{Fno}/Names?name={name}</a></td>
+<td>Get schematics by FNO and name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSchematicsByName.html">/Schematics/Names?name={name}</a></td>
+<td>Get schematics by name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSearchSettings.html">/Settings</a></td>
+<td>Get the configured search settings.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetPicklistValuesWithFilter.html">/picklistvalues/{amno}/{ano}</a></td>
+<td>Returns the picklist values for the given search parameter.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/Get-PicklistValuesbyANO.html">/PickListValues/{ano}</a></td>
+<td>Returns the picklist values for the given attribute number.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Analytical-Service/Search/GetPicklistValuesbyANO-with-field-value-filter.html">/PickListValues/{ano}</a></td>
+<td>Returns the picklist values for the given attribute number based on the input filters.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Search/GetSearchResults.html">/search/results/fetch</a></td>
+<td>Returns all the analysis (query or trace) results corresponding to the given result identifier.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trace">Trace</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/DeleteTrace.html">/Delete/{Name}</a></td>
+<td>Deletes the trace if exists.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Analytical-Service/Trace/ExecuteTrace.html">/Execute</a></td>
+<td>Executes the trace and returns a tracenumber for the given input parameters.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/DoesTraceExist.html">/Exists/{TraceName}</a></td>
+<td>Returns the picklist values for the given attribute number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetHintFeatureCandidate.html">/Hint</a></td>
+<td>Returns the list of hint feature instances for the given seedFid and mappingID.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetTraceParameters.html">/Parameters/{TraceMappingID}</a></td>
+<td>Returns the trace parameters for the given trace mapping identifier.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetPicklistKeyValues.html">/PickListValues/{ANO}</a></td>
+<td>Returns true if the given tracename exists.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetTraceTypes.html">/Types</a></td>
+<td>Returns all trace definitions which are present in the connected database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetTraceTypesFno.html">/Types/{FeatureNumber}</a></td>
+<td>Returns the list of trace definitions for the given feature number which are present in the connected database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetSeedFeatureCandidate.html">/SeedFNOs</a></td>
+<td>Returns all the FNO's that are eligible to perform trace.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetMappingId.html">/MappingId</a></td>
+<td>Returns the MappingId for the given TraceId, SeedFno, and either TraceType or TraceUsername.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Trace/GetTraceReports.html">/Reports/{mappingId}</a></td>
+<td>Returns the list of valid report for given mappingID.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Analytical-Service/Trace/ComputeMarkers.html">/ComputeMarkers/{tno}</a></td>
+<td>Computes marker points for executed cost constraint trace.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Analytical-Service/Trace/ComputeMarkerPoints.html">/computemarkerpoints</a></td>
+<td>Computes the marker location points for an executed trace based on user defined stop criteria.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="results">Results</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Results/GetTraces.html">/Traces</a></td>
+<td>Returns all the executed traces, each containing TRACEID and TRACENAME.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Results/GetTraceResults.html">/Trace/{Tno}</a></td>
+<td>Returns all the trace results corresponding to the given trace number (tno).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="style">Style</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Style/GetPointStyles.html">/PointStyles</a></td>
+<td>Returns the named point styles.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Style/GetLinePatterns.html">/LinePatterns</a></td>
+<td>Returns the named line patterns.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="area-of-interest">Area of Interest</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/Area/Areas.html">/Areas</a></td>
+<td>Get a list of all areas of interest. The list can be filtered based on an optional name parameter.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="coordinate-system">Coordinate System</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/CoordSystem/GetCoordSystemNames.html">/Names</a></td>
+<td>Returns all coordinate system names present in the connected configuration.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/CoordSystem/GetCoordSystemParameters.html">/Parameters</a></td>
+<td>Returns a list of coordinate systems defined within a connected configuration along with their parameters.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/CoordSystem/Transform2DPoints.html">/Transform</a></td>
+<td>Transforms an array of 2d points from source to destination coordinate system.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Analytical-Service/CoordSystem/Transform3DPoints.html">/Transform3d</a></td>
+<td>Transforms an array of 3d points from source to destination coordinate system. This method is useful if elevation data is involved.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="return-values">Return Values</h2>
+<table>
+<thead>
+<tr>
+<th>Status Code</th>
+<th>Description</th>
+<th>Example Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Success</td>
+<td>Each payload will be different depending on the method called.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>Could not checkout 1 NetWorks_Analytical_Trace license(s)Picklist values are not defined</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

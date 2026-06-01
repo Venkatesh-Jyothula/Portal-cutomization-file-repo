@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Search </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Search ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="search">Search</h1>
+
+<p>The HxGN NetWorks Analytical web service provides methods that allow clients to query the HxGN NetWorks Core data using the metadata defined finds and simple attribute queries. It also supports the retrieval of information about available details and schematics.</p>
+<h2 id="supported-search-workflows">Supported Search Workflows</h2>
+<h3 id="dynamically-discover-the-analytical-service">Dynamically discover the Analytical service:</h3>
+<p>Call the NetWorksSolutionService/{alias}/analytical method to retrieve information on the deployed analytical service for this configuration.</p>
+<h3 id="initialize-the-client-to-use-the-analytical-service">Initialize the client to use the Analytical service:</h3>
+<p>Call the /search/settings method to retrieve information on the deployed analytical service's limits on detail results, search results and the format of date values when sending dates as input parameters.</p>
+<p>Call the /search/details/fnos and /search/schematics/fnos methods to retrieve the list of feature types that can have details or schematics. This information could be used to enable the client to search for details when a feature is selected (i.e. the selected feature's FNO is in the list).</p>
+<h3 id="search-for-details-or-schematics-so-user-can-view-it">Search for Details or Schematics so user can view it:</h3>
+<p>There are a number of different ways to retrieve information on details or schematics. All of them return the same response which contains information that can be displayed to the user to make a selection, and information needed to display the selected detail or schematic map view.</p>
+<p>Call the /Search/Details or /Search/Schematics method to return a JSON response that provides details about the all available details or schematics. The client could display the information as a list or drop down and allow the user to select one.</p>
+<p>Call the /Search/Details/fnos/{fno} or /Search/Schematics/fnos/{fno} method to return a JSON response that provides details about the all available details or schematics that match the specified feature type.</p>
+<p>Call the /Search/Details/names?name={name} or /Search/Schematics/names?name={name} method to return a JSON response that provides details about the all available details or schematics that match the specified feature name. The {name} value will be automatically wildcarded on the end of the value to allow the user to just enter a few letters before the client executes a search. The search by name methods also allow the explicit wildcard character '%' to be added in the value. For example, name=FEM would match a detail named, FEMRITE, and name='%RIT' would also match FEMRITE.</p>
+<p>Call the /Search/Details/fnos/{fno}/names?name={name} or /Search/Schematics/fnos/{fno}/names?name={name} method to return a JSON response that provides details about the all available details or schematics that match the specified feature type and name value.</p>
+<h3 id="display-the-detail-or-schematic-map-view">Display the detail or schematic map view</h3>
+<p>Within the response to any search for details or schematics, the Details object contains the ID, NAME, and LSNO values for the detail or schematic. The NAME value is what should be displayed to the user. The LSNO value is used to dynamically discover the WMS service that can display the map image, and the ID is the detailID or schematicID that will be used in the dynamic layer name in the Layers parameter when calling the WMS for details.</p>
+<p>Call the NetWorksSolutionService/{alias}/wms/{lsno} method to get the information on the WMS service that can display the detail or schematic in a map view. Then call the GetLayer method of that WMS for details service with LAYERS=Detail.{ID value} to get the GetCapabilities response that includes the bounding box to fit the map to in a subsequent call to the WMS GetMap method that also specifies the Layers=Detail.{ID value}. (See WMS Service methods for details).</p>
+<h3 id="perform-a-predefined-search-for-feature-data">Perform a predefined search for feature data</h3>
+<p>Call the /search/quicksearches method to get the list of quick searches to display, typically in a drop down combobox that allows the user to select from the list. The single input field could be either a text box or a drop down combobox depending on whether the parameter type is a picklist. If the parameter type in the quicksearch definition is anything other than a picklist, then the client would display a parameter label and a textbox field to collect the input value. If the parameter type is picklist, then the client would call the /search/picklistvalues/{ano} method to get the picklist key - value pairs to populate a combobox. The picklist value is the user visible value to show in the combobox, but the picklist key value is what should be passed to the execute method for the corresponding parameter.</p>
+<p>Call the /search/searches method to get the list of all searches that are not quick searches. The client could display a flat list of these searches or it could group them by their search category. Call the /search/searches/categories method to get the category number and user visible name for all categories. Specifically, the client can group the search definitions under the search category whose G3E_ACNO values match. The parameter handling is the same as the quicksearch, except that there can be zero or more parameters. The parameters can be picklist, text, date-time, long or double values. If the search definition specifies that the parameter is optional, then the client still needs to include the parameter in the search parameters with its value set to null. Null picklist and text values can also be specified as a single blank.</p>
+<p>When all parameter values have been collected and formatted into the POST body Json format, call the /search/execute/{amno} method to query the database and get the search results response.</p>
+<h3 id="spatially-restrict-search-execution">Spatially restrict search execution</h3>
+<p>If the search definition specifies True for IsAoiLiRequired or IsAoiRequired, then the client must prepare and append an AOI object after the Parameters array in the Post body to the /search/execute/{amno} method. An array of AOI objects is returned from the {analyticalService}/Areas controller. The client could display the areas and let the user pick an area of interest to restrict his searches to. If the search definition has IsAoiliRequired=True then the selected AOI object must have a non-null AoiLi property value. Note that not all areas have a corresponding area of interest location identifier (AoiLi) value.</p>
+<p>Any search that has IsAoiRequired set to true can also use an adhoc defined spatial filter instead of an area of interest. The client would create a GeoJson polygon and send it as the &quot;SpatialFilter&quot; parameter in the POST body of the search execute request. The execute search POST body can contain either an Aoi or SpatialFilter parameter - but not both. In both cases, the metadata defined values for AOI threshold limits and the ability to override the limits will be applied.</p>
+<h3 id="use-filter-sets-to-restrict-search-execution">Use filter sets to restrict search execution</h3>
+<p>Any search execution can be further restricted by the specifying a FilterSet parameter in the POST body. A filter set specifies a previous trace or search result set to join against to restrict the feature instances that will be included in the response. The pending edits in a job can also serve as a filter set. The FilterSet property value must match one of the following types:</p>
+<p>Trace.{traceId}</p>
+<p>Search.{searchId}</p>
+<p>Job.{jobId}</p>
+<p>{table}.{column}.{value}</p>
+<h3 id="measure-features-in-a-search-result">Measure features in a search result</h3>
+<p>Any search execution result set can be augmented with the measurement of the features. If the MeasureFeatures parameter in the POST body is set to true, then the three additional columns, LENGTH, AREA, and PERCENT, are added to the results. For linear geometry features, the LENGTH column contains the measured length in the units of the current configuration. Likewise, area geometry features contain the measured area. If the search result was spatially restricted by either an Aoi or an adhoc spatial filter, then the PERCENT column contains the ratio of the measure of the part of the feature geometry that is inside the spatial boundary divided by the measure of the total geometry. By default, all measurements are done using the curved Earth reference space, but the client can override that by setting the MeasureOnCurvedEarth parameter to false, which will measure using the projection reference space.</p>
+<h3 id="fetch-previous-search-results">Fetch previous search results</h3>
+<p>Within the response to any successful search, the ResultId property value is the &quot;handle&quot; to the saved search results in the database. The search results will remain in the database until the client explicitly deletes them with a call to /search/results/delete.</p>
+<p>When the search was executed, the client received either all or part of the results depending on whether paging control parameters were used on the search/execute request Url. At any point in the future, clients can pull additional pages of the results by calling /search/results/fetch?resultId={resultId}&amp;pageSize={rowsPerPage}&amp;pageNo={pageNumber}.</p>
+<p>When pagination parameters are specified, the query results are returned in pages based on requested page number and page size. When no pagination parameters are specified, all of the search results are returned. To assist the clients in managing the paging of the results, the response header will contain the X-Paging-xxx set of header tags (i.e. X-Paging-PageNo, X-Paging-PageSize, X-Paging-PageCount, X-Paging-TotalRecordCount).</p>
+<h3 id="augment-the-search-results">Augment the Search Results</h3>
+<p>Any search execution result set can be augmented with new attributes by providing the AUGMENT optional parameter. User can provide attribute numbers and attribute field name as input to the AUGMENT parameter. Call the /Search/Results/Fetch?resultId={resultId}&amp;Augment={Attribute Number}&amp;Augment={ComponentName.AttributeFieldName} to retrieve augmented parameters along with the search result set.</p>
+<h3 id="aggregation-on-search-results">Aggregation on Search Results</h3>
+<p>Aggregation can be performed on the result set by providing aggregate optional parameters. Supported aggregates are SUM, MIN, MAX, AVG, GROUPBY, ORDERBY and DISTINCT. User can provide attribute numbers or response field names that needs to participate in the aggregate operation. Simple arithmetic operations can also be performed on the response fields for aggregation. Supported operators for arithmetic operation are +, -, *, /. The arithmetic expression will be evaluated for each response item and then the resulting aggregation will be performed. Call the /Search/Results/Fetch?resultId={resultId}&amp;Sum={parameterName}&amp;Min={parameterName}&amp;Max={parameterName}&amp;Avg={parameterName} to perform aggregation on the search result set.</p>
+<h3 id="substitute-on-search-results">Substitute on Search Results</h3>
+<p>Substitute operation can be performed on the result set parameters by providing the SUBST optional parameter. It is performed on individual attributes or attributes in specific ranges. All the operators supported by DataTable can be used in substitute operation. Call the /Search/Results/Fetch?resultId={resultId}&amp;Subst={Substitute ParameterName},{Condition},{Substituted Value} to perform substitution functionality on the search result set.</p>
+<h3 id="function-call-on-search-results">Function Call on Search Results</h3>
+<p>An Oracle function which returns a scalar value can be executed by providing the FUNCTION optional parameter. The resultant value is added as a new parameter to the Search result set. Call the /Search/Results/Fetch?resultId={resultId}&amp;Function={OracleFunctionName}@{ParameterName} to execute the oracle function and add to the search result set.</p>
+<h3 id="display-the-search-results-on-the-map-view">Display the search results on the map view</h3>
+<p>The ResultId property value is also used as part of the dynamic layer name for the search result. The name will be Search.{ResultId}. To display the results on the map view, the client first calls the WMS GetLayer method with LAYERS=Search.{ResultId} to get the GetCapabilities response that includes the bounding box to fit the map to in a subsequent call to the WMS GetMap method that also specifies the Layers=Search.{ResultId}. (See WMS Service methods for details).</p>
+<h3 id="delete-search-results">Delete search results</h3>
+<p>Call the /search/results/delete?resultId={resultId from search/execute response} method to cleanup the saved search results in the database. It is the client's responsibility to do this cleanup since it is the only one that knows when it is finished working with a specific search result.</p>
+<h2 id="supported-application-number-for-search-workflows">Supported application number for search workflows:</h2>
+<p>The bit mask value for NetWorks is 8. If the application parameter is not specified, then the default value of 8 is used for NetWorks Web Services.
+Execute the pl/sql statement if a search is intended to be displayed through NetWorks Analytical Service.
+UPDATE G3E_ATTRIBUTEQUERY SET G3E_APPLICATION = 8 WHERE G3E_AQNO=<attribute query="" number="">;
+Note: Perform Metadata Publish for the changes to be reflected.</attribute></p>
+<h2 id="methods">Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetAllDetails.html">/Details</a></td>
+<td>Gets the list of all details.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetAllDetailsGroupByFno.html">/Details/Fnos</a></td>
+<td>Get the list of FNOs that have details.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetDetailsByFno.html">/Details/Fnos/{Fno}</a></td>
+<td>Get details by FNO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetDetailsByFnoAndName.html">/Details/Fnos/{Fno}/Names?name={name}</a></td>
+<td>Get details by FNO and name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetDetailsByName.html">/Details/Names?name={name}</a></td>
+<td>Get details by name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSearches.html">/search/searches</a></td>
+<td>Get search definitions.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSearchCategories.html">/search/searches/categories</a></td>
+<td>Get the list of search categories.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSearchesByAcno.html">/search/searches/{acno}</a></td>
+<td>Get search definitions by ACNO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetQuicksearches.html">/search/quicksearches</a></td>
+<td>Get quicksearch definitions.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/Execute.html">/Execute/{amno}</a></td>
+<td>Execute a search.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/ResultsDelete.html">/Results/Delete</a></td>
+<td>Delete search results from the database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetDetailByDetailId.html">/Search/Detail/{detailId}</a></td>
+<td>Gets the MBR of a detail given its detail number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetDetailByDetailIdAndFno.html">/Search/Detail/{detailId}/{fno}</a></td>
+<td>Gets the MBR of a detail given its detail number and feature number.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetAllSchematics.html">/Schematics</a></td>
+<td>Gets the list of all schematics.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSchematicsFnos.html">/Schematics/Fnos</a></td>
+<td>Get the list of FNOs that have schematics.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSchematicsByFNO.html">/Schematics/Fnos/{Fno}</a></td>
+<td>Get schematics by FNO.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSchematicsByFNOAndName.html">/Schematics/Fnos/{Fno}/Names?name={name}</a></td>
+<td>Get schematics by FNO and name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSchematicsByName.html">/Schematics/Names?name={name}</a></td>
+<td>Get schematics by name.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSearchSettings.html">/Settings</a></td>
+<td>Get the configured search settings.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetPicklistValuesWithFilter.html">/picklistvalues/{amno}/{ano}</a></td>
+<td>Returns the picklist values for the given search parameter.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/Get-PicklistValuesbyANO.html">/PickListValues/{ano}</a></td>
+<td>Returns the picklist values for the given attribute number.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Search/GetPicklistValuesbyANO-with-field-value-filter.html">/PickListValues/{ano}</a></td>
+<td>Returns the picklist values for the given attribute number based on the input filters.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Search/GetSearchResults.html">/search/results/fetch</a></td>
+<td>Returns all the analysis (query or trace) results corresponding to the given result identifier.</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"> 
+  <link rel="stylesheet" href="https://swdclr0615.kpn.org/PortalCustomizations/Overview/tabulator.min.css">
+  <style> 
+   * {
+            box-sizing: border-box;
+     }
+     html,body {
+      height: 100%;       /* 🔹 Make body fill entire window */
+      margin: 0;          /* remove default margins */
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    #formContainer {
+      height: 100%;              /* 🔹 Full height container */
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    #dataTable {
+      flex: 1;                   /* 🔹 Fill all remaining space */
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    #toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 6px;
+    }
+
+    #exportBtn {
+      padding: 6px 14px;
+      background: #217346;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    #exportBtn:hover {
+      background: #185c37;
+    }
+
+    body.loading {
+      cursor: wait;
+      pointer-events: none;
+    }
+
+    #loadingMsg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;          /* ← add this */
+      padding: 40px;
+      color: #666;
+      font-size: 14px;
+      gap: 12px;
+    }
+
+    #loadingSpinner {
+      width: 36px;
+      height: 36px;
+      border: 4px solid #ddd;
+      border-top-color: #217346;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+  </style>
+</head>
+<body>
+	 <div id="formContainer">
+	  <div id="toolbar">
+	    <button id="exportBtn" onclick="exportToExcel()">&#x2193; Export to Excel</button>
+	  </div>
+	  <div id="dataTable">
+	    <div id="loadingMsg">
+	      <div id="loadingSpinner"></div>
+	      <span>Loading data, please wait...</span>
+	    </div>
+	  </div>
+	</div>
+  <script src="https://swdclr0615.kpn.org/PortalCustomizations/Overview/tabulator.min.js"></script>
+  <script src="https://swdclr0615.kpn.org/PortalCustomizations/Overview/xlsx.full.min.js"></script>
+ 
+  <script>
+    const baseUrl2 = 'https://swdclr0615.kpn.org';
+    let tabulatorTable = null;
+
+    function exportToExcel() {
+	  if (tabulatorTable) {
+		const { fno, fid } = getFnoFidFromUrl();
+		tabulatorTable.download("xlsx", `Overview_${fno}_${fid}.xlsx`, {}, "all");
+	  }
+	}
+    // 🔹 Extract FNO and FID from the URL
+    function getFnoFidFromUrl() {
+      const parts = window.location.pathname.split("/");
+      const fid = parts.pop();
+      const fno = parts.pop();
+      return { fno, fid };
+    } 
+	async function loadData() {
+	  showLoading();               // ← add at top
+	  const { fno, fid } = getFnoFidFromUrl();
+	  let dtno;
+
+	  if (fno == 14100) {
+		dtno = 1410303;
+	  } else if (fno == 7200) {
+		dtno = 5911;
+	  } else if (fno == 15900) {
+		dtno = 5811;
+	  } else if(fno == 12100) { 
+	     dtno=5811;
+	  } else if(fno == 15700) { 
+	     dtno=7703;
+	  }
+	  
+	 // let url = `${baseUrl2}/KPNNwPortal/default/services/gtdws/tabcard`;
+	 let url = `/KPNNwPortal/default/services/gtdws/tabcard`;
+	  if(parent.$NWP.jobs.getActiveJob() && parent.$NWP.jobs.getActiveJob().identifier) { 
+	    url=url + `?ActiveJob=${parent.$NWP.jobs.getActiveJob().identifier}`
+	  }
+      
+	  const payload = {
+		G3E_FNO: fno,
+		G3E_FID: fid,
+		G3E_DTNO: dtno,
+		G3E_ORIENTATION: "H",
+		editorName: "networksEditor"
+	  };
+
+	  try {
+		const response = await fetch(url, {
+		  method: "POST",
+		  headers: {
+			"Content-Type": "application/json"
+			// Add Authorization header here if required
+		  },
+		  body: JSON.stringify(payload)
+		});
+
+		if (!response.ok) {
+		  throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		const responsejson = await response.json();
+		console.log("API Response:", responsejson.data);
+
+		// Assuming API gives { data: { attributes: [...] } }
+		if (responsejson?.data?.attributes) {
+		  renderAttributesTable(responsejson.data.attributes);
+		} else {
+		  document.getElementById("dataTable").innerHTML =
+			`<div style="padding:10px;color:orange">No attributes found</div>`;
+		}
+	  } catch (err) {
+		console.error("Error fetching data:", err);
+		document.getElementById("dataTable").innerHTML =
+		  `<div style="padding:10px;color:red">Error loading data</div>`;
+	  } finally {
+		hideLoading();             // ← add in finally so it always runs
+	  }
+	}
+	function renderAttributesTable(attributes) {
+	  // 🔹 Step 1: Preserve column order as per API
+	  const userNames = [];
+	  attributes.forEach(attr => {
+		if (!userNames.includes(attr.userName)) {
+		  userNames.push(attr.userName); // keep first-seen order
+		}
+	  });
+
+	  // 🔹 Step 2: Group attributes by cid
+	  const grouped = {};
+	  attributes.forEach(attr => {
+		const cid = attr.G3E_CID; // ✅ correct property
+		if (!grouped[cid]) {
+		  grouped[cid] = { _cid: cid }; // keep cid hidden for sorting
+		}
+		grouped[cid][attr.userName] = attr.attributeText ?? ""; // fallback if null
+	  });
+
+	  // 🔹 Step 3: Prepare rows (sorted by cid)
+	  const rows = Object.values(grouped).sort((a, b) => a._cid - b._cid);
+
+	 const columns = userNames.map(name => ({
+		title: name,
+		field: name,
+		headerFilter: "input",   // ✅ enable text filter
+		headerFilterPlaceholder: "Filter..."
+	  }));
+
+	  // 🔹 Render Tabulator
+	 tabulatorTable = new Tabulator("#dataTable", {
+	  data: rows,
+	  columns: columns,
+	  layout:"fitDataStretch",
+	  pagination:"local",
+	  paginationSize:100,
+	});
+	}
+
+
+    async function loadData_featureData() {
+      const { fno, fid } = getFnoFidFromUrl();
+	   let dtno;
+	  if(fno == 14100)  { 
+	    dtno=1410303;
+	  } else if(fno == 7200) { 
+	   dtno=5911;
+	  } else if(fno == 15900) { 
+	     dtno=5811;
+	  } else if(fno == 12100) { 
+	     dtno=5811;
+	  }
+      const apiUrl = `${baseUrl2}/KPNNwPortal/proxy/networks/KPNNwFeatureDataService/dialog/tab/${dtno}/${fno}/${fid}`;
+      console.log(apiUrl);
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+        console.log("API Response:", data);
+
+        renderTable(data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        document.getElementById("dataTable").innerHTML = `<div style="padding:10px;color:red">Error loading data</div>`;
+      }
+    }
+	function getDistinctRows(rows, attributes) {
+	  const seen = new Set();
+	  return rows.filter(row => {
+		// Create a unique key string for the row
+		const key = attributes.map(attr => {
+		  const cell = row.values[attr.tano];
+		  return cell ? cell.c : "";
+		}).join("|");
+
+		if (seen.has(key)) {
+		  return false; // duplicate
+		} else {
+		  seen.add(key);
+		  return true; // keep
+		}
+	  });
+	}
+	
+    function renderTable(data) {
+      const attributes = [...data.attributes].sort((a, b) => a.ordinal - b.ordinal);
+
+      // 🔹 Build Tabulator columns (show username as title, but map by tano internally)
+      const columns = attributes.map(attr => ({
+        title: attr.username,
+        field: attr.username,
+        headerFilter: "input",
+        hozAlign: "left",
+        vertAlign: "middle",
+        resizable: true
+      })); 
+	  
+	  const distinctRows = getDistinctRows(data.rows, attributes).sort((a, b) => a.cid - b.cid);;
+	  console.log(distinctRows);
+
+      // 🔹 Build rows (map values to username keys so they match columns)
+      const rows = distinctRows.map(row => {
+        const obj = {};
+        attributes.forEach(attr => {
+          const cell = row.values[attr.tano];
+		   let username;
+		   if(cell && cell.c ) { 
+		     username=cell.t ? String(cell.t).trim() :String(cell.c).trim();
+		   } else if(cell && cell.n) { 
+		     username=cell.t ? String(cell.t).trim() :String(cell.n).trim();
+		   } else { 
+		   username="";
+		   }
+
+          obj[attr.username] = username;
+        });
+        return obj;
+      });
+
+      // 🔹 Render Tabulator
+      new Tabulator("#dataTable", {
+        data: rows,
+        columns: columns,
+        layout: "fitDataStretch",
+        pagination: "local",
+        paginationSize: 30,
+        movableColumns: true,
+        selectable: true,
+        height: "500px",
+        placeholder: "No Data Available"
+      });
+    }
+
+    function showLoading() {
+      document.body.classList.add("loading");
+      document.getElementById("loadingMsg").style.display = "flex";
+    }
+
+    function hideLoading() {
+      document.body.classList.remove("loading");
+      const msg = document.getElementById("loadingMsg");
+      if (msg) msg.style.display = "none";
+    }
+
+    // Run on load
+    loadData();
+  </script>
+</body>
+</html>

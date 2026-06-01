@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Export to PDF</title>
+	
+	<script>
+	var map;
+	var olMap;
+	//var scaleLine=null; 
+	
+	var dims = {
+  a0: [1189, 841],
+  a1: [841, 594],
+  a2: [594, 420],
+  a3: [420, 297],
+  a4: [297, 210],
+  a5: [210, 148],
+};
+
+	var dimsTimeout={
+  a0: 4,
+  a1: 3,
+  a2: 2,
+  a3: 2,
+  a4: 2,
+  a5: 1,
+	};
+
+	function sleep(milliseconds) {
+		var start = new Date().getTime();
+		for (var i = 0; i < 1e7; i++) {
+			if ((new Date().getTime() - start) > milliseconds){
+				break;
+			}
+		}
+	}
+
+	function exportToPDF() {
+		var format = document.getElementById('format').value;
+		var resolution = document.getElementById('resolution').value;
+		var scale = document.getElementById('scale').value/10;
+
+//console.log("scale="+scale);
+
+		var dim = dims[format];
+		var width = Math.round((dim[0] * resolution) / 25.4);
+		var height = Math.round((dim[1] * resolution) / 25.4);
+		var scaleResolution =scale /
+			ol.proj.getPointResolution(olMap.getView().getProjection(),
+			resolution / 25.4,
+			olMap.getView().getCenter()
+		);
+//console.log("scaleres=" + scaleResolution);
+
+		var size = olMap.getSize();
+		var viewResolution = olMap.getView().getResolution();
+		
+// Set print size
+		var printSize = [width, height];
+		olMap.setSize(printSize);
+		//var scaling = Math.min(width / size[0], height / size[1]);
+		//olMap.getView().setResolution(viewResolution / scaling);
+		olMap.getView().setResolution(scaleResolution);
+
+//console.log("before rendersync");		
+		olMap.renderSync();
+//Compute the timeout before generating the PDF.  10 seconds if A0, 300DPI and 1:500.
+		var timeout=1000*(dimsTimeout[format]+resolution/100+1+(5000-scale)/5000*3+1)
+//console.log("tiemout=" + timeout);
+//Wait timeout seconds until rendering is done before exporting to PDF		
+		window.setTimeout(function() {
+			var mapCanvas = document.createElement('canvas');
+			mapCanvas.width = width;
+			mapCanvas.height = height;
+			var mapContext = mapCanvas.getContext('2d');
+			mapContext.fillStyle = "white";
+			mapContext.fillRect(0, 0, mapCanvas.width, mapCanvas.height);
+			
+			Array.prototype.forEach.call(
+				parent.document.querySelectorAll('canvas'),
+				function (canvas) {
+//console.log(canvas.width);
+					if (canvas.width > 300) { //To avoid printing other canvas than the map
+						var opacity = canvas.parentNode.style.opacity;
+						mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+																		
+						var transform = canvas.style.transform;
+						if(transform){
+            // Get the transform parameters from the style's transform matrix
+							var matrix = transform
+								.match(/^matrix\(([^\(]*)\)$/)[1]
+								.split(',')
+								.map(Number);
+            // Apply the transform to the export map context
+							CanvasRenderingContext2D.prototype.setTransform.apply(
+								mapContext,
+								matrix
+							);
+						}
+						mapContext.drawImage(canvas, 0, 0);
+					}
+				}
+			);
+			var pdf = new jsPDF('landscape', undefined, format);
+			pdf.addImage(
+				mapCanvas.toDataURL('image/jpeg'),
+				'JPEG',
+				0,
+				0,
+				dim[0],
+				dim[1]
+			);
+			pdf.save('map.pdf');
+      // Reset original map size
+			olMap.setSize(size);
+			olMap.getView().setResolution(viewResolution);
+		}, timeout);
+		
+//console.log("after rendersync");
+//console.log(olMap);
+	}
+	
+	function nothing(args)
+	{
+	}
+		
+	function focusin(args)
+	{
+		parent.$NWP.map.setModeToDefault();
+	}
+	
+	function focusout(args)
+	{
+		parent.$NWP.map.resetMode();
+		parent.$NWP.on("sidebarpanelupdating", nothing, null);
+		parent.$NWP.map.setModeToDefault();
+	}
+	
+	//Fired at the OnLoad event
+	function main() {
+		//Retrieving the openlayer and Networks Portal references
+		window.ol = parent.ol;
+		window.proj4 = parent.proj4;
+		window.$NWP = parent.$NWP;
+		window.myParent=parent;
+		//map=parent.Ext.ComponentQuery.query('hxgn-map')[0].getOlObject();
+		map=parent.$NWP.map;
+		window.map=map;
+		olMap=map.getOlMapObject();
+				
+		parent.$NWP.on("sidebarpanelupdated", focusin, null);
+		parent.$NWP.on("sidebarpanelupdating", focusout, null);
+		parent.$NWP.map.setModeToDefault();
+	}
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+	<script src="https://unpkg.com/dom-to-image-more@2.8.0/dist/dom-to-image-more.min.js"></script>
+</head>
+<body onload="main()"> 
+<form class="form">
+      <label>Page size </label>
+      <select id="format">
+        <option value="a0">A0 (slow)</option>
+        <option value="a1">A1</option>
+        <option value="a2">A2</option>
+        <option value="a3">A3</option>
+        <option value="a4" selected>A4</option>
+        <option value="a5">A5 (fast)</option>
+      </select>
+      <label>Resolution </label>
+      <select id="resolution">
+        <option value="72">72 dpi (fast)</option>
+        <option value="150">150 dpi</option>
+        <option value="200" selected>200 dpi</option>
+        <option value="300">300 dpi (slow)</option>
+      </select>
+      <label>Scale </label>
+      <select id="scale">
+        <option value="5000">1:500000</option>
+        <option value="2500">1:250000</option>
+        <option value="1000">1:100000</option>
+        <option value="500">1:50000</option>
+        <option value="250">1:25000</option>
+        <option value="100">1:10000</option>
+		<option value="50" selected>1:5000</option>
+		<option value="25">1:2500</option>
+		<option value="10">1:1000</option>
+		<option value="5">1:500</option>
+      </select>
+    </form>
+    <button id="export-pdf" onclick="exportToPDF()">Export PDF</button>
+	</body>
+</html>

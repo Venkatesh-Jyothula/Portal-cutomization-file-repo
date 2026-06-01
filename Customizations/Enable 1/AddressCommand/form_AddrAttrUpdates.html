@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address Attribution Updates</title>
+<style>
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            border: 1px solid #ccc; /* Grey lines */
+            padding: 8px;
+            text-align: center;
+            color: #335ca5; /* Text color */
+			font-family: "Times New Roman", Times, serif; /* Font family */
+        }
+
+        .table th {
+            background-color: #f2f2f2; /* Light grey background */
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light grey background for even rows */
+        }
+		        /* Button styles */
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .button {
+            background-color: #335ca5; /* Blue color */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d3b73; /* Darker blue color on hover */
+        }
+		.loading {
+		font-size: 14px;
+		text-align: center;
+		margin-top: 20px;
+		}
+    </style>
+	<!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="./Datatable.css">
+    <!-- jQuery library (required for DataTables) -->
+    <script src="./jquery-3.5.0.js"></script> 
+	<script src="./jquery-3.6.0.min.js"></script>	
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" src="./Datatable.js"></script>
+</head>
+<body>
+    <div class="form-container">
+	  <div class="loading" id="loading">
+        <img src="./Images/loading.gif" alt="Loading...">
+      </div>
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+                        <!-- Column names will be populated here dynamically -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+        <button class="button btnEditAttribute">Edit Attributes</button>
+        <button class="button btnExit">Exit</button>
+        </div>
+
+    <script>
+	let lastChecked = null;
+	var IsDelete = "No";
+	var cFSLFNO=112;	
+	var EditCommonAttribute = null;
+	// Function to fetch service data from the API
+    async function fetchServiceData() {
+        try {
+            const response = await fetch('http://VENBGT104PDC1/NetWorksSolutionService/ENPROD/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            document.getElementById("result").textContent = 'Failed to fetch data. Please check the console for details.';
+            return null;
+        }
+    }
+	
+	// Function to get the URL by type
+    async function getUrlByType(type) {
+        const data = await fetchData();
+        for (const service of data) {
+            if (service.Type === type) {
+                return service.Url;
+            }
+        }
+        return null;
+    }
+	//example:  const url = await getUrlByType("VectorService");
+	
+	function sendPostRequest(url,payload) {	
+            console.log("In sendPostRequest");
+			
+      // Convert payload to JSON string
+      var payloadString = JSON.stringify(payload);
+
+      // Create new XMLHttpRequest object
+      var xhr = new XMLHttpRequest();
+
+      // Set the HTTP method, URL, and asynchronous flag
+      xhr.open('POST', url, true);
+
+      // Set the request header
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      // Define the function to handle the response
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Request was successful
+            console.log('Request successful');
+            console.log(xhr.responseText);
+        } else {
+            // Request failed
+            console.error('Request failed');
+            console.error(xhr.statusText);
+        }
+      };
+
+      // Define the function to handle network errors
+      xhr.onerror = function () {
+        console.error('Network error');
+      };
+
+      // Send the request with the payload
+      xhr.send(payloadString);
+	  IsDelete = "Yes";
+    }
+	
+async function fetchData(fidCSV) {
+    console.log("FID CSV >", fidCSV, "<");
+	var AnalyticalUrl = await getServiceUrl('AnalyticalService');
+        console.log('Service URL:', AnalyticalUrl);
+    if (AnalyticalUrl != null) {
+            const response = await fetch(AnalyticalUrl + '/Search/QuickSearches');
+            const data = await response.json();
+
+            // Loop through each object in the response array
+            let g3e_amno = null;
+            for (let item of data) {
+                // Check if the UserName matches the targetUserName
+                if (item.UserName === "Address By FID") {
+                    // Store the G3E_AMNO in a variable
+                    g3e_amno = item.G3E_AMNO;
+                    break; // Exit the loop once the match is found
+                }
+            }
+
+            if (g3e_amno != null) {
+                // Replace with the actual AnalyticalUrl and g3e_amno
+                var url = AnalyticalUrl + '/search/execute/' + g3e_amno;
+				const fids = fidCSV.split(','); // Split the comma-separated string into individual FIDs
+				let combinedData = []; // Array to hold all combined data
+				let requestsCompleted = 0; // Counter to track completed requests
+
+				fids.forEach((fid) => {
+					const requestData = {
+						"Parameters": [{
+							"ParameterId": 1,
+							"TextValue": fid // Use the individual FID here
+						}]
+					};
+
+				console.log("Request >", requestData, "<");
+				console.log(requestData);
+
+				const xhttp = new XMLHttpRequest();
+				xhttp.open("POST", url, true);
+				xhttp.setRequestHeader("Content-type", "application/json");
+
+				xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    const data = JSON.parse(this.responseText);
+                    console.log("responseText:", this.responseText);
+                    console.log("data:", data);
+                    combinedData = combinedData.concat(data); // Concatenate the response data
+
+                    requestsCompleted++;
+                    if (requestsCompleted === fids.length) {
+                        $('#loading').remove();
+                        populateTable(combinedData); // Populate table with combined data once all requests are completed
+						 localStorage.removeItem('CloseEditCommonAttribute');
+                    }
+                } else {
+                    const errorMessage = 'Error: ' + this.status;
+                    displayErrorMessage(errorMessage);
+                }
+            }
+			
+        };
+
+        xhttp.send(JSON.stringify(requestData));
+		
+    })
+	};
+}
+}
+
+
+function fetchSelectSet() {
+    console.log("In fetchSelectSet");
+
+    const selectResults = parent.$NWP.features.getSelectionSet();
+	if(selectResults.length  === 0 ) 
+	{
+	parent.$NWP.msg.showInfo("Features Selection Panel does not have any Address Features");
+			if (window.parent.currentNewWindow) {
+                window.parent.currentNewWindow.destroy();
+            }
+	 
+	 return;
+	}
+    const g3e_fnoArray = [];
+    const g3e_fidArray = [];
+    let firstTime = true;
+    let sourceName;
+	let fidCSV;
+		for (let i = 0; i < selectResults.length; i++) {
+			const vFNO = parseInt(selectResults[i].properties.G3E_FNO);
+			const vFID = parseInt(selectResults[i].properties.G3E_FID);
+
+			// Check if G3E_FNO matches cFSLFNO and vFID is not already in g3e_fidArray
+			if (selectResults[i].properties.G3E_FNO === cFSLFNO && !g3e_fidArray.includes(vFID)) {
+				g3e_fnoArray.push(vFNO);
+				g3e_fidArray.push(vFID);
+				console.log("FID prop:", selectResults[i].properties.G3E_FID);
+				console.log("FID array:", g3e_fidArray[0]);
+			}
+		}
+
+
+    if (g3e_fidArray.length === 0) {
+        parent.$NWP.msg.showInfo("Features Selection Panel does not have any Address Features");
+    } else {
+        const featureKeys = [];
+        fidCSV = g3e_fidArray.join(",");
+
+        for (let i = 0; i < g3e_fnoArray.length; i++) {
+            featureKeys.push({ G3E_FNO: g3e_fnoArray[i], G3E_FID: g3e_fidArray[i] });
+        }
+
+        console.log("featureKeys:", featureKeys.length > 0 ? featureKeys[0] : "length is 0");
+    }
+
+    if (Boolean(fidCSV)) {
+        console.log("FID CSV >", fidCSV, "<");
+    } else {
+        console.log("FID CSV is empty");
+    }
+
+    fetchData(fidCSV);
+	console.log("fidCSV:"+fidCSV);
+}
+
+		async function fetchNetworkSolutionData() {
+				try {
+					// Get the mapsource section
+					var mapsource = parent.$NWP.workspace.getSection("mapsource");
+
+					// Initialize variables
+					var vectorServiceURL;
+
+					// Loop through mapsource items to find the NetworksVector type
+					for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+						if (mapsource.items[i].type === 'NetworksVector') {
+							vectorServiceURL = mapsource.items[i].url;
+							urlSolution = vectorServiceURL.substring(0, vectorServiceURL.lastIndexOf('/')) + '/NetWorksSolutionService';
+							break;
+						}
+					}
+
+					// Check if urlSolution was found
+					if (!urlSolution) {
+						throw new Error("NetworksVector type not found in mapsource items.");
+					}
+					
+					//Retrieve the DB Alias for the Solution Service
+					var dbAlias=await parent.$NWP.fetchJson({ url: urlSolution });
+
+					// Fetch data from the selected option endpoint
+					const response = await fetch(`${urlSolution}/${dbAlias}/`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					});
+
+					// Check if the response is ok
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+
+					// Parse the response data as JSON
+					const urlSolutiondata = await response.json();
+
+					// Check if urlSolutiondata is null
+					if (urlSolutiondata === null) {
+						throw new Error("Received null data from the network solution service.");
+					}
+
+					// Return the parsed data
+					return urlSolutiondata;
+
+				} catch (error) {
+					// Handle errors
+					console.error('Error fetching network solution data:', error);
+					throw error;  // Re-throw the error after logging it
+				}
+			}
+		function findServiceUrl(urlSolutiondata, serviceType) {
+			for (const service of urlSolutiondata) {
+				if (service.Type === serviceType) {
+					return service.Url;
+				}
+			}
+			throw new Error(`${serviceType} not found in network solution data.`);
+		}
+
+		async function getServiceUrl(serviceType) {
+			try {
+				// Fetch network solution data
+				const urlSolutiondata = await fetchNetworkSolutionData();
+
+				// Find and return the service URL for the specified service type
+				const serviceUrl = findServiceUrl(urlSolutiondata, serviceType);
+				return serviceUrl;
+			} catch (error) {
+				console.error('Error:', error);
+				throw error;
+			}
+		}
+
+		function populateTable(combinedData) {
+			console.log("In populateTable");
+			var table = document.getElementById('result-table');
+			var thead = table.querySelector('thead');
+			var tbody = table.querySelector('tbody');
+
+			// Clear existing table rows and column headers
+			tbody.innerHTML = '';
+			thead.innerHTML = '';
+
+			console.log("combinedData:", combinedData);
+
+			if (combinedData.length > 0) {
+				console.log("Data received. Length:", combinedData.length);
+			} else {
+				console.log("No data received.");
+			}
+
+			let allResultItems = [];
+
+			combinedData.forEach(data => {
+				if (Array.isArray(data.ResultItems) && data.ResultItems.length > 0) {
+					allResultItems = allResultItems.concat(data.ResultItems);
+				}
+			});
+
+			if (allResultItems.length > 0) {
+				// Create column headers from the keys of the first ResultItem
+				var headerRow = document.createElement('tr');
+
+				// Add an empty cell for the checkbox column in the header row
+				var checkboxHeaderCell = document.createElement('th');
+				headerRow.appendChild(checkboxHeaderCell);
+
+				Object.keys(allResultItems[0]).forEach(key => {
+					var headerCell = document.createElement('th');
+					headerCell.textContent = key;
+					headerRow.appendChild(headerCell);
+				});
+
+				thead.appendChild(headerRow);
+
+				// Iterate over each item in allResultItems
+				allResultItems.forEach(item => {
+					var row = document.createElement('tr');
+
+					// Add a checkbox column
+					var checkboxCell = document.createElement('td');
+					var checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkboxCell.appendChild(checkbox);
+					row.appendChild(checkboxCell);
+
+					// Iterate over each property of the item
+					Object.values(item).forEach(value => {
+						var cell = document.createElement('td');
+						cell.textContent = value;
+						row.appendChild(cell);
+					});
+
+					tbody.appendChild(row);
+				});       
+
+        // Initialize DataTable
+        $(document).ready(function() {
+          var table = $('#result-table').DataTable({
+            // Enable sorting
+            "order": [],
+            // Enable filtering
+            "searching": true,
+            // Enable multi-select checkbox
+            "columnDefs": [{
+              "orderable": false,
+              "targets": 0 // First column
+            }],
+		    "columns": [
+		       null,
+              { "visible": false }, // G3E_FNO
+              { "visible": false }, // G3E_FID
+	  		  null,
+			  null,
+			  null,
+			  null,
+			  null,
+			  null,
+			  null,
+              { "visible": false }, // GAO_NET_FEATURENAME
+              { "visible": false }, // G3E_VIEW
+            ],
+		    dom: '<"button-left"f>rtip'
+          });
+		  // G3E_FNO, G3E_FID, FSL, INITCAP(COMPLETE_ADDRESS) as "Address", INITCAP(FULL_RD_NM) as "Road Name", INITCAP(SUBURB) as "Suburb", DEPLOY_STATUS as "Status" 
+		  // G3E_FNO, G3E_FID, FSL, INITCAP(COMPLETE_ADDRESS) as "Address", INITCAP(FULL_RD_NM) as "Road Name", INITCAP(SUBURB) as "Suburb", DEPLOY_STATUS as "Status", ARCHIVED as "Archived", CAB_ID "Cabinet ID"
+		  
+          // Add the button
+	      $('div.button-left').prepend('<button class="button fit-button" title="Fit and Highlight">Fit</button>');
+
+	      // Add CSS to align the button to the right
+	      $('head').append('<style>' +
+		    'div.button-left {' +
+			'display: flex;' +
+			'align-items: center;' +
+		    '}' +
+		    'div.button-left .fit-button {' +
+			'margin-left: auto;' + // Aligns the button to the right
+			'width: 30px;' +      // Set the width of the button
+			'height: 30px;' +      // Set the height of the button
+			'background-image: url("./Images/Unselected.png");' + // Set the background image
+			'background-size: contain;' + // Ensure the image fits within the button
+			'background-repeat: no-repeat;' + // Prevent the image from repeating
+			'background-position: center;' + // Center the image
+			'border: none;' +       // Remove the default button border
+			'color: transparent;' + // Make the button text transparent
+			'text-indent: -9999px;' + // Hide the button text
+			'padding: 0;' +         // Remove default padding
+		    '}' +
+	      '</style>');
+			// Add click event for the button
+		  $(document).on('click', 'button.fit-button', function() {
+			var $button = $(this);
+			// Change the background image to "./Images/Selected.png"
+			$button.css('background-image', 'url("./Images/Selected.png")');
+			var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+			var g3e_fnoArray = [];
+			var g3e_fidArray = [];
+
+			// Loop through the checked rows and populate the arrays
+			checkedRows.each(function() {
+				var table = $('#result-table').DataTable();
+				var rowData = table.row($(this)).data();
+				var vg3e_fno = parseInt(rowData[1], 10);
+				var vg3e_fid = parseInt(rowData[2], 10);
+
+				g3e_fnoArray.push(vg3e_fno);
+				g3e_fidArray.push(vg3e_fid);
+			});
+
+			// Check if vg3e_fidArray count is zero
+			if (g3e_fidArray.length === 0) {
+				parent.$NWP.msg.showInfo("Nothing to Fit");
+			} else {
+				// Construct the featureKeys array
+			var featureKeys = [];
+			for (var i = 0; i < g3e_fnoArray.length; i++) {
+				featureKeys.push({ G3E_FNO: g3e_fnoArray[i], G3E_FID: g3e_fidArray[i] });
+			}
+
+			// Fetch GTech features for all G3E_FNO and G3E_FID values
+			parent.$NWP.features.fetchGTechFeatures(featureKeys).then(function(result) {
+				if (result.success) {
+					parent.$NWP.features.highlight(result.data, true);
+				}
+			});
+			}
+			
+			$button.css('background-image', 'url("./Images/Unselected.png")');
+
+		  });
+          // Initialize colResizable on DataTable's header
+          <!-- $('#result-table thead').colResizable({ -->
+            <!-- liveDrag: true, -->
+            <!-- gripInnerHtml: "<div class='grip'></div>", -->
+            <!-- draggingClass: "dragging" -->
+          <!-- }); -->
+
+          // Recalculate column widths when DataTable redraws (e.g., after sorting)
+          table.on('draw.dt', function() {
+            $('#result-table thead').colResizable({
+                disable: true
+            });
+            $('#result-table thead').colResizable({
+               liveDrag: true,
+                gripInnerHtml: "<div class='grip'></div>",
+                draggingClass: "dragging"
+            });
+          });
+	    });
+	    enableShiftClickSelection();
+      } else {
+        console.error('ResultItems is not an array or is empty:', data);
+        // Optionally, you can handle this error by displaying a message to the user
+      }
+    }
+
+
+    function displayErrorMessage(message) {
+        alert(message); // Display error message in a pop-up
+    }
+		
+    function enableShiftClickSelection() {
+        const checkboxes = $('#result-table tbody input[type="checkbox"]');
+
+        checkboxes.on('click', function(e) {
+            if (!lastChecked) {
+                lastChecked = this;
+                return;
+            }
+
+            if (e.shiftKey) {
+                const start = checkboxes.index(this);
+                const end = checkboxes.index(lastChecked);
+
+                checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                    .prop('checked', lastChecked.checked);
+            }
+
+            lastChecked = this;
+        });
+    }
+	
+		setInterval(checkParameter, 1000);
+        // Function to check the parameter
+        function checkParameter() {
+		let parameterToCheck = JSON.parse(localStorage.getItem('CloseEditCommonAttribute'));	
+		if (parameterToCheck && Array.isArray(parameterToCheck) && parameterToCheck[0]) {
+            if (parameterToCheck[0]==="Yes") {
+                console.log('Closing EditCommonAttribute');
+				localStorage.removeItem('CloseEditCommonAttribute');
+                // Perform some action when the parameter is true
+				if (EditCommonAttribute)
+				{
+					EditCommonAttribute.destroy();
+				}
+            } else {
+                console.log('Not Closing EditCommonAttribute');
+                // Perform some action when the parameter is false
+            }
+			}
+		}
+	// Event listener for the "EditAttribute" button
+    $('.btnEditAttribute').on('click', function() {
+		var vg3e_fid = [];
+		var firstCheckedRow = $('#result-table tbody input[type="checkbox"]:checked').closest('tr').first();
+		if (firstCheckedRow.length === 0) {
+			parent.$NWP.msg.showInfo("Check Atleast one row to Edit Common Attributes");
+		}
+		else{
+				var GTDialogWebService = null;
+				GTDialogWebService = getServiceUrl('GTDWS');
+				console.log(GTDialogWebService);
+		var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+		checkedRows.each(function() {
+				var table = $('#result-table').DataTable();
+				// Get the row data from DataTables
+				var rowData = table.row($(this)).data();
+
+				// Extract the value of G3E_FID from the row data
+				<!-- var vg3e_fid = rowData[2]; // Assuming G3E_FID is the third column, adjust index as needed -->
+				vg3e_fid.push(parseInt(rowData[2], 10));
+        
+		});
+// Convert the array to a JSON string and store it in localStorage
+			localStorage.setItem('formCheckedFidsValues', JSON.stringify(vg3e_fid));
+			if (vg3e_fid.length === 0) {
+					parent.$NWP.msg.showInfo("Check Atleast one row to Edit Common Attributes");						 
+				}
+			else {			
+				if (EditCommonAttribute)
+				{
+					EditCommonAttribute.destroy();
+				}
+				// Use the parent.$NWP.createWindow function to open the second form
+				EditCommonAttribute = parent.$NWP.createWindow({
+					title: "Addres Common Attributes",
+					height: 580,
+					width: 480,
+					url: '/AddressCommand/form_EditCommonAttribute.html'
+				});
+				window.childFBEwindow = EditCommonAttribute;
+				EditCommonAttribute.show();
+
+				// To verify, you can log the stored value
+				console.log(localStorage.getItem('formCheckedFidsValues'));
+			}	
+		}
+		});
+			
+    // Event listener for the "Exit" button
+    $('.btnExit').on('click', function() {
+       // Close the current window
+	if (window.parent.currentNewWindow) {
+                window.parent.currentNewWindow.destroy();
+            }
+	if (EditCommonAttribute)
+				{
+					EditCommonAttribute.destroy();
+				}
+    });		
+	console.log("In AddrAttrUpdates");
+	
+	fetchSelectSet();
+    </script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address with Status 3</title>
+<style>
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th,
+        .table td {
+            border: 1px solid #ccc; /* Grey lines */
+            padding: 8px;
+            text-align: center;
+            color: #335ca5; /* Text color */
+        }
+
+        .table th {
+            background-color: #f2f2f2; /* Light grey background */
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light grey background for even rows */
+        }
+		        /* Button styles */
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .button {
+            background-color: #335ca5; /* Blue color */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #1d3b73; /* Darker blue color on hover */
+        }
+		.loading {
+		font-size: 14px;
+		text-align: center;
+		margin-top: 20px;
+		}
+    </style>
+	<!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="./Datatable.css">
+    <!-- jQuery library (required for DataTables) -->
+    <script src="./jquery-3.5.0.js"></script> 
+	<script src="./jquery-3.6.0.min.js"></script>	
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" src="./Datatable.js"></script>
+</head>
+<body>
+    <div class="form-container">
+	  <div class="loading" id="loading">Loading...</div>
+        <div class="table-container">
+            <table class="table" id="result-table">
+                <thead>
+                    <tr>
+                        <!-- Column names will be populated here dynamically -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Results will be populated here -->
+                </tbody>
+            </table>
+        <button class="button set-not-orderable">Set to Not Orderable (Status 5)</button>
+        <button class="button set-orderable">Set to Orderable  (Status 2)</button>
+        </div>
+
+    <script>
+	let lastChecked = null;
+	var IsDelete = "No";
+	function sendPostRequest(url,payload) {
+    // Convert payload to JSON string
+    var payloadString = JSON.stringify(payload);
+
+    // Create new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Set the HTTP method, URL, and asynchronous flag
+    xhr.open('POST', url, true);
+
+    // Set the request header
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // Define the function to handle the response
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // Request was successful
+            console.log('Request successful');
+            console.log(xhr.responseText);
+        } else {
+            // Request failed
+            console.error('Request failed');
+            console.error(xhr.statusText);
+        }
+    };
+
+    // Define the function to handle network errors
+    xhr.onerror = function () {
+        console.error('Network error');
+    };
+
+    // Send the request with the payload
+    xhr.send(payloadString);
+	IsDelete = "Yes";
+}
+
+        async function fetchNetworkSolutionData() {
+		try {
+			// Get the mapsource section
+			var mapsource = parent.$NWP.workspace.getSection("mapsource");
+
+			// Initialize variables
+			var vectorServiceURL;
+
+			// Loop through mapsource items to find the NetworksVector type
+			for (var i = 0, iLen = mapsource.items.length; i < iLen; i++) {
+				if (mapsource.items[i].type === 'NetworksVector') {
+					vectorServiceURL = mapsource.items[i].url;
+					urlSolution = vectorServiceURL.substring(0, vectorServiceURL.lastIndexOf('/')) + '/NetWorksSolutionService';
+					break;
+				}
+			}
+
+			// Check if urlSolution was found
+			if (!urlSolution) {
+				throw new Error("NetworksVector type not found in mapsource items.");
+			}
+
+			// Fetch available options for the endpoint
+			const responseOptions = await fetch(urlSolution, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			// Check if the response is ok
+			if (!responseOptions.ok) {
+				throw new Error(`HTTP error! status: ${responseOptions.status}`);
+			}
+
+			// Parse the response data as JSON
+			const options = await responseOptions.json();
+
+			// Check if options data is valid and not empty
+			if (!Array.isArray(options) || options.length === 0) {
+				throw new Error("No options available from the network solution service.");
+			}
+
+			// Use the first option (you can modify this to choose a specific option)
+			const selectedOption = options[0];
+
+			// Fetch data from the selected option endpoint
+			const response = await fetch(`${urlSolution}/${selectedOption}/`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			// Check if the response is ok
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// Parse the response data as JSON
+			const urlSolutiondata = await response.json();
+
+			// Check if urlSolutiondata is null
+			if (urlSolutiondata === null) {
+				throw new Error("Received null data from the network solution service.");
+			}
+
+			// Return the parsed data
+			return urlSolutiondata;
+
+		} catch (error) {
+			// Handle errors
+			console.error('Error fetching network solution data:', error);
+			throw error;  // Re-throw the error after logging it
+		}
+	}
+		function findServiceUrl(urlSolutiondata, serviceType) {
+			for (const service of urlSolutiondata) {
+				if (service.Type === serviceType) {
+					return service.Url;
+				}
+			}
+			throw new Error(`${serviceType} not found in network solution data.`);
+		}
+
+		async function getServiceUrl(serviceType) {
+			try {
+				// Fetch network solution data
+				const urlSolutiondata = await fetchNetworkSolutionData();
+
+				// Find and return the service URL for the specified service type
+				const serviceUrl = findServiceUrl(urlSolutiondata, serviceType);
+				return serviceUrl;
+			} catch (error) {
+				console.error('Error:', error);
+				throw error;
+			}
+		}
+
+	var urlNetWorkSolutiondata = null;
+	async function fetchData() {
+    try {
+        AnalyticalUrl = await getServiceUrl('AnalyticalService');
+        console.log('Service URL:', AnalyticalUrl);
+
+        if (AnalyticalUrl != null) {
+            const response = await fetch(AnalyticalUrl + '/Search/QuickSearches');
+            const data = await response.json();
+
+            // Loop through each object in the response array
+            let g3e_amno = null;
+            for (let item of data) {
+                // Check if the UserName matches the targetUserName
+                if (item.UserName === "Address Display") {
+                    // Store the G3E_AMNO in a variable
+                    g3e_amno = item.G3E_AMNO;
+                    break; // Exit the loop once the match is found
+                }
+            }
+
+            if (g3e_amno != null) {
+                // Replace with the actual AnalyticalUrl and g3e_amno
+                var url = AnalyticalUrl + '/search/execute/' + g3e_amno;
+                var requestData = {
+                    "Parameters": [{
+                        "ParameterId": 1,
+                        "PickListKey": 3
+                    }]
+                };
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) { // When the request is complete
+                        if (this.status == 200) { // If the request was successful
+                            var data = JSON.parse(this.responseText);
+                            console.log("responseText:" + this.responseText);
+                            console.log("data :" + data);
+                            populateTable(data); // Populate table with received data
+                            $('#loading').remove();
+                        } else {
+                            var errorMessage = 'Error: ' + this.status;
+                            displayErrorMessage(errorMessage); // Display error message
+                        }
+                    }
+                };
+
+                xhttp.send(JSON.stringify(requestData)); // Send the request with JSON data
+            } else {
+                console.error('G3E_AMNO not found.');
+            }
+        } else {
+            console.error('AnalyticalUrl is null.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+        function populateTable(data) {
+    var table = document.getElementById('result-table');
+    var thead = table.querySelector('thead');
+    var tbody = table.querySelector('tbody');
+
+    // Clear existing table rows and column headers
+    tbody.innerHTML = '';
+    thead.innerHTML = '';
+
+    if (Array.isArray(data.ResultItems) && data.ResultItems.length > 0) {
+        // Create column headers
+        var headerRow = document.createElement('tr');
+		
+		// Add an empty cell for the checkbox column in the header row
+        var checkboxHeaderCell = document.createElement('th');
+        headerRow.appendChild(checkboxHeaderCell);
+		
+        Object.keys(data.ResultItems[0]).forEach(key => {
+            var headerCell = document.createElement('th');
+            headerCell.textContent = key;
+            headerRow.appendChild(headerCell);
+        });
+        thead.appendChild(headerRow);
+
+        // Iterate over each address item
+        data.ResultItems.forEach(address => {
+            var row = document.createElement('tr');
+
+            // Add a checkbox column
+            var checkboxCell = document.createElement('td');
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkboxCell.appendChild(checkbox);
+            row.appendChild(checkboxCell);
+
+            // Iterate over each property of the address item
+            Object.values(address).forEach(value => {
+                var cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        // Initialize DataTable
+        $(document).ready(function() {
+    var table = $('#result-table').DataTable({
+        // Enable sorting
+        "order": [],
+        // Enable filtering
+        "searching": true,
+        // Enable multi-select checkbox
+        "columnDefs": [{
+            "orderable": false,
+            "targets": 0 // First column
+        }],
+		"columns": [
+		     null,
+            { "visible": false }, // G3E_FNO
+            { "visible": false }, // G3E_FID
+			null,
+			null,
+			null,
+			null,
+			null,
+            { "visible": false }, // GAO_NET_FEATURENAME
+            { "visible": false }, // G3E_VIEW
+        ],
+		dom: '<"button-left"f>rtip'
+    });
+    // Add the button
+	$('div.button-left').prepend('<button class="button fit-button" title="Fit and Highlight">Fit</button>');
+
+	// Add CSS to align the button to the right
+	$('head').append('<style>' +
+		'div.button-left {' +
+			'display: flex;' +
+			'align-items: center;' +
+		'}' +
+		'div.button-left .fit-button {' +
+			'margin-left: auto;' + // Aligns the button to the right
+			'width: 30px;' +      // Set the width of the button
+			'height: 30px;' +      // Set the height of the button
+			'background-image: url("./Images/Unselected.png");' + // Set the background image
+			'background-size: contain;' + // Ensure the image fits within the button
+			'background-repeat: no-repeat;' + // Prevent the image from repeating
+			'background-position: center;' + // Center the image
+			'border: none;' +       // Remove the default button border
+			'color: transparent;' + // Make the button text transparent
+			'text-indent: -9999px;' + // Hide the button text
+			'padding: 0;' +         // Remove default padding
+		'}' +
+	'</style>');
+			// Add click event for the button
+		$(document).on('click', 'button.fit-button', function() {
+			var $button = $(this);
+			// Change the background image to "./Images/Selected.png"
+			$button.css('background-image', 'url("./Images/Selected.png")');
+			var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+			var g3e_fnoArray = [];
+			var g3e_fidArray = [];
+
+			// Loop through the checked rows and populate the arrays
+			checkedRows.each(function() {
+				var table = $('#result-table').DataTable();
+				var rowData = table.row($(this)).data();
+				var vg3e_fno = parseInt(rowData[1], 10);
+				var vg3e_fid = parseInt(rowData[2], 10);
+
+				g3e_fnoArray.push(vg3e_fno);
+				g3e_fidArray.push(vg3e_fid);
+			});
+
+			// Check if vg3e_fidArray count is zero
+			if (g3e_fidArray.length === 0) {
+				parent.$NWP.msg.showInfo("Nothing to Fit");
+			} else {
+				// Construct the featureKeys array
+			var featureKeys = [];
+			for (var i = 0; i < g3e_fnoArray.length; i++) {
+				featureKeys.push({ G3E_FNO: g3e_fnoArray[i], G3E_FID: g3e_fidArray[i] });
+			}
+
+			// Fetch GTech features for all G3E_FNO and G3E_FID values
+			parent.$NWP.features.fetchGTechFeatures(featureKeys).then(function(result) {
+				if (result.success) {
+					parent.$NWP.features.highlight(result.data, true);
+				}
+			});
+			}
+
+			
+			$button.css('background-image', 'url("./Images/Unselected.png")');
+
+		});
+    // Initialize colResizable on DataTable's header
+    <!-- $('#result-table thead').colResizable({ -->
+        <!-- liveDrag: true, -->
+        <!-- gripInnerHtml: "<div class='grip'></div>", -->
+        <!-- draggingClass: "dragging" -->
+    <!-- }); -->
+
+    // Recalculate column widths when DataTable redraws (e.g., after sorting)
+    table.on('draw.dt', function() {
+        $('#result-table thead').colResizable({
+            disable: true
+        });
+        $('#result-table thead').colResizable({
+            liveDrag: true,
+            gripInnerHtml: "<div class='grip'></div>",
+            draggingClass: "dragging"
+        });
+    });
+	});
+	enableShiftClickSelection();
+    } else {
+        console.error('ResultItems is not an array or is empty:', data);
+        // Optionally, you can handle this error by displaying a message to the user
+    }
+}
+
+
+        function displayErrorMessage(message) {
+            alert(message); // Display error message in a pop-up
+        }
+		
+		function enableShiftClickSelection() {
+            const checkboxes = $('#result-table tbody input[type="checkbox"]');
+
+            checkboxes.on('click', function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    const start = checkboxes.index(this);
+                    const end = checkboxes.index(lastChecked);
+
+                    checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+            });
+        }
+		
+		    // Event listener for the "Set to Not Orderable" button
+   $('.set-not-orderable').on('click', function() {
+    // Get the number of checked rows
+    
+    var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+    var url = 'http://VENBGT104PDC1.INGRNET.COM/NwFeatureTransactionService/transaction';
+
+    checkedRows.each(function() {
+	    var table = $('#result-table').DataTable();
+        // Get the row data from DataTables
+        var rowData = table.row($(this)).data();
+
+        // Extract the value of G3E_FID from the row data
+        <!-- var vg3e_fid = rowData[2]; // Assuming G3E_FID is the third column, adjust index as needed -->
+		var vg3e_fid = parseInt(rowData[2], 10);
+        var payload = {
+            "transactions": [
+                {
+                    "type": "UpdateFeature",
+                    "fref": 1,
+                    "G3E_FNO": 112,
+                    "G3E_FID": vg3e_fid
+                },
+                {
+                    "type": "UpdateComponent",
+                    "fref": 1,
+                    "G3E_CNO": 11203,
+                    "G3E_CID": 1,
+                    "attributes": {
+                        "DEPLOY_STATUS": 5
+                    }
+                }
+            ]
+        };
+				var currentRow = $(this); // Store a reference to the current row
+
+        // Send the request and remove the row if successful
+		IsDelete = "No";
+       sendPostRequest(url, payload);
+	   if (IsDelete === "Yes") {
+			this.remove();
+		}
+    });
+    // Display the count
+    <!-- alert('Number of checked rows: ' + checkedRows.length); -->
+	parent.$NWP.msg.showInfo(" Records processed: "+checkedRows.length);
+});	
+
+ // Event listener for the "Set to Orderable" button
+   $('.set-orderable').on('click', function() {
+    // Get the number of checked rows
+    
+    var checkedRows = $('#result-table tbody input[type="checkbox"]:checked').closest('tr');
+    var url = 'http://VENBGT104PDC1.INGRNET.COM/NwFeatureTransactionService/transaction';
+
+    checkedRows.each(function() {
+	    var table = $('#result-table').DataTable();
+        // Get the row data from DataTables
+        var rowData = table.row($(this)).data();
+
+        // Extract the value of G3E_FID from the row data
+        <!-- var vg3e_fid = rowData[2]; // Assuming G3E_FID is the third column, adjust index as needed -->
+		var vg3e_fid = parseInt(rowData[2], 10);
+        var payload = {
+            "transactions": [
+                {
+                    "type": "UpdateFeature",
+                    "fref": 1,
+                    "G3E_FNO": 112,
+                    "G3E_FID": vg3e_fid
+                },
+                {
+                    "type": "UpdateComponent",
+                    "fref": 1,
+                    "G3E_CNO": 11203,
+                    "G3E_CID": 1,
+                    "attributes": {
+                        "DEPLOY_STATUS": 2
+                    }
+                }
+            ]
+        };
+				var currentRow = $(this); // Store a reference to the current row
+
+        // Send the request and remove the row if successful
+		IsDelete = "No";
+       sendPostRequest(url, payload);
+	   if (IsDelete === "Yes") {
+			this.remove();
+		}
+    });
+    // Display the count
+    <!-- alert('Number of checked rows: ' + checkedRows.length); -->
+	parent.$NWP.msg.showInfo(" Records processed: "+checkedRows.length);
+});		
+		fetchData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Get Metadata for Model Features </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Get Metadata for Model Features ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="get-metadata-for-model-features">Get Metadata for Model Features</h1>
+
+<p>Returns metadata about all feature types in the published feature model.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/metadata/modelfeatures/{filter?}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter</td>
+<td>Optional</td>
+<td>Controls what type of metadata is returned in the response. Possible values are as follows: (1) <not specified=""> - default response includes basic metadata about the feature. (2) all - include metadata for all components, attributes and relationships of the feature. (3) components - include metadata about the components of the feature. (4) relationships - include metadata about the relationships of the feature. (5) components, relationships - include metadata about the components and relationships of the feature.</not></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFeatureModelService/metadata/modelfeatures/relationships</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>[
+    {
+        &quot;Fno&quot;: 208,
+        &quot;Username&quot;: &quot;Pole&quot;,
+        &quot;Name&quot;: &quot;Pole&quot;,
+        &quot;PrimaryGeographicCno&quot;: 20802,
+        &quot;PrimaryAttributeCno&quot;: 20801,
+        &quot;Relationships&quot;: [
+            {
+                &quot;Rno&quot;: 8,
+                &quot;Username&quot;: &quot;Feature Dimensioning Relationship&quot;,
+                &quot;Type&quot;: &quot;Dimensioning&quot;,
+                &quot;IsSubordinate&quot;: false
+            },
+            {
+                &quot;Rno&quot;: 3,
+                &quot;Username&quot;: &quot;Parent to Child Ownership&quot;,
+                &quot;Type&quot;: &quot;Ownership&quot;,
+                &quot;IsSubordinate&quot;: false
+            }
+        ]
+    },
+    {
+        &quot;Fno&quot;: 300,
+        &quot;Username&quot;: &quot;Breaker&quot;,
+        &quot;Name&quot;: &quot;Breaker&quot;,
+        &quot;PrimaryGeographicCno&quot;: 30002,
+        &quot;PrimaryAttributeCno&quot;: 30001,
+        &quot;PrimaryDetailCno&quot;: 30004,
+        &quot;PrimarySchematicCno&quot;: 5,
+        &quot;Relationships&quot;: [
+            {
+                &quot;Rno&quot;: 5,
+                &quot;Username&quot;: &quot;Detail Area&quot;,
+                &quot;Type&quot;: &quot;Detail&quot;,
+                &quot;IsSubordinate&quot;: true
+            },
+            {
+                &quot;Rno&quot;: 55,
+                &quot;Username&quot;: &quot;Child to Parent Smart Grid Ownership&quot;,
+                &quot;Type&quot;: &quot;Ownership&quot;,
+                &quot;IsSubordinate&quot;: true
+            },
+            {
+                &quot;Rno&quot;: 1,
+                &quot;Username&quot;: &quot;Electrical Connectivity&quot;,
+                &quot;Type&quot;: &quot;NodeEdgeConnectivity&quot;,
+                &quot;IsSubordinate&quot;: false
+            }
+        ]
+    },
+    ... truncated for brevity
+]
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

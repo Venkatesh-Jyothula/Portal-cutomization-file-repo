@@ -1,0 +1,66 @@
+In Toolbar section:				
+				<JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/tag.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Show Selected</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>hiliteSelected</JValue>
+                </JProperty>
+              </JObject>
+			  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/refresh.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Refresh Job</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>refreshJob</JValue>
+                </JProperty>
+              </JObject>
+		  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/fitjob.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Fit Job Edit</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>fitJob</JValue>
+                </JProperty>
+              </JObject>
+		  <JObject>
+                <JProperty name="xtype">
+                  <JValue>actionbutton</JValue>
+                </JProperty>
+                <JProperty name="icon">
+                  <JValue>../actionbuttons/discard.svg</JValue>
+                </JProperty>
+				<JProperty name="tooltip">
+                  <JValue>Discard Job</JValue>
+                </JProperty>
+                <JProperty name="actionName">
+                  <JValue>discardJob</JValue>
+                </JProperty>
+              </JObject>
+
+
+under DatabaseAlias (section Workspace):
+
+<Section type="scripts">
+            <Script name="1">
+                <Url>..\multiplewindows\CaptureEvents.js</Url>
+            </Script>
+        </Section>

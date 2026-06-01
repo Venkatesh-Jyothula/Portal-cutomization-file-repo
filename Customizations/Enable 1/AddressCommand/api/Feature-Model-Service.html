@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Feature Model Service </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Feature Model Service ">
+      
+      <link rel="icon" href="../wsfavicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="feature-model-service">Feature Model Service</h1>
+
+<p>The HxGN NetWorks Feature Model Service provides API for querying HxGN NetWorks Core data and metadata and editing HxGN NetWorks Core features.</p>
+<h2 id="get-feature-data">Get Feature Data</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Query-Feature-Data/Get-Features-By-Filter">/data/{featureName}?[{oDataOptions}][&amp; BBOX={left,bottom,right,top}][&amp;FilterSet={filterSetId}][&amp;MeasureFeatures={true or false}][&amp;MeasureOnCurvedEarth={true or false}][&amp; Jobs={list of job names} or ActiveJob={job name} ]</a></td>
+<td>Returns the requested feature data for the specified feature type that matches the optional OData filter options and bounding box.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Query-Feature-Data/Get-Feature-By-Fid">/data/{featureName}/{fid}?[{oDataOptions}][&amp; Jobs={list of job names} or ActiveJob={job name} ]</a></td>
+<td>Returns the requested feature data for the specified feature instance that matches the specified G3E_FID value.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Query-Feature-Data/Get-Feature-Component">/data/{featureName}/{fid}/{componentName}[/{cid}]?[{oDataOptions}][&amp; Jobs={list of job names} or ActiveJob={job name} ]</a></td>
+<td>Returns the requested component for the specified feature instance that matches the specified G3E_FID value, and G3E_CID if component is repeating.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Query-Feature-Data/Get-Feature-Component-Attribute">/data/{featureName}/{fid}/{componentName}[/{cid}]/{attributeName}[/$value]?[&amp; Jobs={list of job names} or ActiveJob={job name} ]</a></td>
+<td>Returns the requested component attribute for the specified feature instance that matches the specified G3E_FID value, and G3E_CID if component is repeating.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="edit-feature-data">Edit Feature Data</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Edit-Feature-Data/Insert-a-New-Feature">/data/{featureName}?[{oDataOptions}][&amp; ActiveJob={job name} ]</a></td>
+<td>Returns a new instance of the specified feature type.</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Edit-Feature-Data/Update-Existing-Feature">/data/{featureName}/{fid}?[{oDataOptions}][&amp; ActiveJob={job name} ]</a></td>
+<td>Updates the specified feature instance that matches the specified G3E_FID value and returns the requested feature information.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Edit-Feature-Data/Delete-Feature">/data/{featureName}/{fid}?[ ActiveJob={job name}]</a></td>
+<td>Deletes the specified feature instance.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Edit-Feature-Data/Delete-a-Repeating-Component">/data/{featureName}/{fid}/{componentName}/{cid}?[ ActiveJob={job name} ]</a></td>
+<td>Deletes the specified component instance from the specified feature.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-model-metadata-for-features">Get Model Metadata for Features</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/Model-Feature-Metadata/Get-Metadata-for-Model-Features">/metadata/modelfeatures[/{filter}]</a></td>
+<td>Returns metadata about the feature types in the published feature model.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Feature-Model-Service/Model-Feature-Metadata/Get-Metadata-for-Model-Feature-by-Fno.html">/metadata/modelfeature/{fno}</a></td>
+<td>Returns metadata about the specific feature type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-general-metadata-for-features">Get General Metadata for Features</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="/NetWorks/API/Feature-Model-Service/General-Feature-Metadata/Get-Metadata-for-Features">/metadata/features[/{filter}]</a></td>
+<td>Returns metadata about the HxGN NetWorks Core feature types.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Feature-Model-Service/General-Feature-Metadata/Get-Metadata-for-Feature-by-Fno.html">/metadata/feature/{fno}</a></td>
+<td>Returns metadata about the specific HxGN NetWorks Core feature type.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Feature-Model-Service/General-Feature-Metadata/Get-Metadata-for-Component-by-Cno.html">/metadata/component/{cno}</a></td>
+<td>Returns metadata about the specific HxGN NetWorks Core component type.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Feature-Model-Service/General-Feature-Metadata/Get-Metadata-for-Relationship-by-Rno.html">/metadata/relationship/{rno}</a></td>
+<td>Returns metadata about the specific HxGN NetWorks Core relationship type.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Feature-Model-Service/General-Feature-Metadata/Get-Metadata-for-Attribute-by-Ano.html">/metadata/attribute/{ano}</a></td>
+<td>Returns metadata about the specific HxGN NetWorks Core attribute type.</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

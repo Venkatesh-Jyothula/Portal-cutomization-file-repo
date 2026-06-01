@@ -1,0 +1,11 @@
+				<JObject>
+                    <JProperty name="xtype">
+                        <JValue>iframepanel</JValue>
+                    </JProperty>
+                    <JProperty name="title">
+                        <JValue>What3Words</JValue>
+                    </JProperty>
+                    <JProperty name="url">
+                        <JValue>examples/what3words/what3words.html</JValue>
+                    </JProperty>
+                </JObject>

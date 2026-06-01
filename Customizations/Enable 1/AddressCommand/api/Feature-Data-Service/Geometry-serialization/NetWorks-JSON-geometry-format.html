@@ -1,0 +1,607 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>NetWorks JSON geometry format </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="NetWorks JSON geometry format ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="networks-json-geometry-format">NetWorks JSON geometry format</h1>
+
+<p>The NetWorks geometry format uses object-model approach. It uses the set of geometry primitives used by NetWorks Core.</p>
+<h2 id="serialization-in-json">Serialization in JSON</h2>
+<p>Geometries are serialized to WKT strings wrapped in a JSON object with a single <code>networksjson</code> property, which contains a JSON object. The first property of the geometry JSON object is always type.</p>
+<pre><code class="lang-json">{
+  &quot;networksjson&quot;: {
+    &quot;type&quot;: &quot;OrientedPoint&quot;,
+    &quot;origin&quot;: [1, 2, 3],
+    &quot;orientation&quot;: [1, 1, 0]
+  }
+}
+</code></pre>
+<h2 id="coordinate">Coordinate</h2>
+<p>Array of ordinates. The array is expected to have 2 or 3 members ([X, Y] or [X, Y, Z]). Other members beyond Z are ignored. If Z is missing, it is assumed to be 0.</p>
+<h2 id="orientedpoint">OrientedPoint</h2>
+<p>Point with orientation vector (unit vector).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>OrientedPoint</code></td>
+</tr>
+<tr>
+<td>origin</td>
+<td><a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Position</td>
+</tr>
+<tr>
+<td>orientation</td>
+<td><a href="#coordinate">Coordinate</a></td>
+<td></td>
+<td>Orientation unit vector.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;OrientedPoint&quot;,
+    &quot;origin&quot;: [1, 2, 3],
+    &quot;orientation&quot;: [1, 1, 0]
+}
+</code></pre>
+<h2 id="textpoint">TextPoint</h2>
+<p>Point with orientation vector (unit vector), text and alignment. This type is not used to represent label geometries.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>String</td>
+<td>Y</td>
+<td>Constant <code>TextPoint</code></td>
+</tr>
+<tr>
+<td>origin</td>
+<td><a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Position</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>double</td>
+<td></td>
+<td>Orientation angle.</td>
+</tr>
+<tr>
+<td>text</td>
+<td>String</td>
+<td></td>
+<td>Label</td>
+</tr>
+<tr>
+<td>alignment</td>
+<td>integer</td>
+<td></td>
+<td>Alignment (see Networks Core constants for alignment).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;TextPoint&quot;,
+    &quot;origin&quot;: [1, 2, 3],
+    &quot;rotation&quot;: 1.57,
+    &quot;text&quot;: &quot;text&quot;,
+    &quot;alignment&quot;: 5
+}
+</code></pre>
+<h2 id="polyline">Polyline</h2>
+<p>Linear sequence of points.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>Polyline</code></td>
+</tr>
+<tr>
+<td>points</td>
+<td>Array of <a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Points</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;Polyline&quot;,
+    &quot;points&quot;: [
+        [ 1, 2, 3 ],
+        [ 4, 5, 6 ],
+        [ 7, 8, 9 ]
+    ]
+}
+</code></pre>
+<h2 id="polygon">Polygon</h2>
+<p>Closed polygon formed by linear sequence of points. The first and last points are the same.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>Polygon</code></td>
+</tr>
+<tr>
+<td>points</td>
+<td>Array of <a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Points</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;Polygon&quot;,
+    &quot;points&quot;: [
+        [ 1, 2, 1 ],
+        [ 3, 4, 2 ],
+        [ 5, 6, 3 ],
+        [ 7, 8, 4 ],
+        [ 1, 2, 1 ]
+    ]
+}
+</code></pre>
+<h2 id="arc">Arc</h2>
+<p>Circular arc defined by start point, point on the arc and end point.</p>
+<p><strong>Note</strong></p>
+<p>Arc is not used as a standalone top-level geometry. It is a part of CompositePolyline, CompositePolygon or Boundary geometries.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>Arc</code></td>
+</tr>
+<tr>
+<td>points</td>
+<td>Array of <a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Points. Exactly 3 points must be specified.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;Arc&quot;,
+    &quot;points&quot;: [
+        [ 0, 1, 0 ],
+        [ 0.5, 0.5, 0 ],
+        [ 0, 0, 0 ]
+    ]
+}
+</code></pre>
+<h2 id="polylinesegment">PolylineSegment</h2>
+<p><a href="#polyline">Polyline</a> | <a href="#arc">Arc</a></p>
+<h2 id="compositepolyline">CompositePolyline</h2>
+<p>Collection of linear segments formed by polyline and arc segments. Starting and ending points of internal segments are the same (end point of segment 1 is the same as start point of segment 2, etc).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>CompositePolyline</code></td>
+</tr>
+<tr>
+<td>geometries</td>
+<td>Array of <a href="#polylinesegment">PolylineSegment</a></td>
+<td>Y</td>
+<td>Polyline segments. Only Polyline and Arc geometries are allowed.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;CompositePolyline&quot;,
+    &quot;geometries&quot;: [{
+            &quot;type&quot;: &quot;Polyline&quot;,
+            &quot;points&quot;: [[0, 0, 0], [1, 1, 0]]
+        }, {
+            &quot;type&quot;: &quot;Polyline&quot;,
+            &quot;points&quot;: [[1, 1, 0], [2, 2, 0], [0, 0, 0]]
+        }
+    ]
+}
+</code></pre>
+<h2 id="compositepolygon">CompositePolygon</h2>
+<p>Polygon formed by a collection of linear and circular arc segments. Starting and ending points of internal segments are the same (end point of segment 1 is the same as start point of segment 2, etc).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>CompositePolygon</code></td>
+</tr>
+<tr>
+<td>geometries</td>
+<td>Array of <a href="#polylinesegment">PolylineSegment</a></td>
+<td>Y</td>
+<td>Polygon segments. Only Polyline and Arc geometries are allowed.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;CompositePolygon&quot;,
+    &quot;geometries&quot;: [
+        {
+            &quot;type&quot;: &quot;Polyline&quot;,
+            &quot;points&quot;: [
+                [ 0, 0, 0 ],
+                [ 1, 0, 0 ],
+                [ 1, 1, 0 ]
+            ]
+        },
+        {
+            &quot;type&quot;: &quot;Polyline&quot;,
+            &quot;points&quot;: [
+                [ 1, 1, 0 ],
+                [ 1, 2, 0 ],
+                [ 0, 1, 0 ]
+            ]
+        },
+        {
+            &quot;type&quot;: &quot;Arc&quot;,
+            &quot;points&quot;: [
+                [ 0, 1, 0 ],
+                [ 0.5, 0.5, 0 ],
+                [ 0, 0, 0 ]
+            ]
+        }
+    ]
+}
+</code></pre>
+<h2 id="boundary">Boundary</h2>
+<p>Polygon with zero or more holes.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>Boundary</code></td>
+</tr>
+<tr>
+<td>exterior</td>
+<td>Geometry</td>
+<td>Y</td>
+<td>Exterior Polygon or CompositePolygon geometry.</td>
+</tr>
+<tr>
+<td>holes</td>
+<td>Array of Geometry</td>
+<td></td>
+<td>Geometry collection of holes. Each hole must be a Polygon or CompositePolygon.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;Boundary&quot;,
+    &quot;exterior&quot;: {
+        &quot;type&quot;: &quot;Polygon&quot;,
+        &quot;points&quot;: [
+            [ 0, 0, 0 ],
+            [ 5, 5, 0 ],
+            [ 3, 3, 0 ],
+            [ 4, 4, 0 ],
+            [ 0, 0, 0 ]
+        ]
+    },
+    &quot;holes&quot;: {
+        &quot;type&quot;: &quot;GeometryCollection&quot;,
+        &quot;geometries&quot;: [
+            {
+                &quot;type&quot;: &quot;Polygon&quot;,
+                &quot;points&quot;: [
+                    [ 0, 0, 0 ],
+                    [ 1, 1, 0 ]
+                ]
+            },
+            {
+                &quot;type&quot;: &quot;CompositePolygon&quot;,
+                &quot;geometries&quot;: [
+                    {
+                        &quot;type&quot;: &quot;Polygon&quot;,
+                        &quot;points&quot;: [
+                            [ 0, 0, 0 ],
+                            [ 1, 1, 0 ]
+                        ]
+                    },
+                    {
+                        &quot;type&quot;: &quot;Arc&quot;,
+                        &quot;points&quot;: [
+                            [ 0, 0, 0 ],
+                            [ 1, 2, 0 ],
+                            [ 1, 1, 0 ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
+</code></pre>
+<h2 id="geometrycollection">GeometryCollection</h2>
+<p>Heterogenous collection of multiple geometries. This type is not used for top-level geometries in NetWorks.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>GeometryCollection</code></td>
+</tr>
+<tr>
+<td>geometries</td>
+<td>Array of Geometry</td>
+<td></td>
+<td>Child geometries.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;GeometryCollection&quot;,
+    &quot;geometries&quot;: [{
+            &quot;type&quot;: &quot;OrientedPoint&quot;,
+            &quot;origin&quot;: [1, 2, 3],
+            &quot;orientation&quot;: [1, 1, 0]
+        }, {
+            &quot;type&quot;: &quot;Polyline&quot;,
+            &quot;points&quot;: [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+            ]
+        }, {
+            &quot;type&quot;: &quot;Polygon&quot;,
+            &quot;points&quot;: [
+                [1, 2, 1],
+                [3, 4, 2],
+                [5, 6, 3],
+                [7, 8, 4],
+                [1, 2, 1]
+            ]
+        }
+    ]
+}
+</code></pre>
+<h2 id="raster">Raster</h2>
+<p>NetWorks Core Raster geometry.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Y</td>
+<td>Constant <code>Raster</code></td>
+</tr>
+<tr>
+<td>points</td>
+<td>Array of <a href="#coordinate">Coordinate</a></td>
+<td>Y</td>
+<td>Raster polygon. 5 points are expected.</td>
+</tr>
+<tr>
+<td>filename</td>
+<td>string</td>
+<td></td>
+<td>Name of the file with raster geometry.</td>
+</tr>
+<tr>
+<td>matrix</td>
+<td>Array of Number</td>
+<td></td>
+<td>Raster transformation 4x4 matrix stored in as rows (each inner array is a row in the matrix). The rightmost column of the array is omitted.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<pre><code class="lang-json">{
+    &quot;type&quot;: &quot;Raster&quot;,
+    &quot;polygon&quot;: {
+        &quot;type&quot;: &quot;Polygon&quot;,
+        &quot;points&quot;: [
+            [1, 2, 1],
+            [3, 4, 2],
+            [5, 6, 3],
+            [7, 8, 4],
+            [1, 2, 1]
+        ]
+    },
+    &quot;filename&quot;: &quot;test.jpg&quot;,
+    &quot;matrix&quot;: [[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

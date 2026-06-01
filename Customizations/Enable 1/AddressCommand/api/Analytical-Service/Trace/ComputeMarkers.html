@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ComputeMarkers </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ComputeMarkers ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="computemarkers">ComputeMarkers</h1>
+
+<p>Computes marker points for executed cost constraint trace.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{TraceServiceName}/Trace/ComputeMarkers/{tno}[?rpno={rpno}]</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tno</td>
+<td>TNO returned from previous Execute Trace call</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>rpno</td>
+<td>RPNO of requested report. If not provided, the setting is read from service configuration.</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MappingId</td>
+<td>Should be the same mappingId as used in Execute Trace call.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Attributes</td>
+<td>Required for executing trace. Should contain Step Cost attribute as defined for current trace.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksAnalyticalservice/Trace/ComputeMarkers/1010?rpno=300</p>
+<p>Post Body :</p>
+<pre><code class="lang-js">{
+    &quot;MappingId&quot;: &quot;442&quot;,
+    &quot;Attributes&quot;: [{
+            &quot;Key&quot;: &quot;30500&quot;,
+            &quot;Value&quot;: &quot;13&quot;
+        }
+    ]
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;totalCount&quot;: 2,
+    &quot;items&quot;: [
+        {
+            &quot;G3E_FNO&quot;: 306,
+            &quot;G3E_FID&quot;: 1029094,
+            &quot;G3E_CNO&quot;: 5643,
+            &quot;G3E_CID&quot;: 1,
+            &quot;G3E_MARKERID&quot;: 1,
+            &quot;G3E_DETAILID&quot;: 0,
+            &quot;G3E_MARKERDISTANCE&quot;: 13.002069449546347,
+            &quot;G3E_POINTX&quot;: 4501940.66978025,
+            &quot;G3E_POINTY&quot;: 5925734.6979207536
+        },
+        {
+            &quot;G3E_FNO&quot;: 306,
+            &quot;G3E_FID&quot;: 1030717,
+            &quot;G3E_CNO&quot;: 5643,
+            &quot;G3E_CID&quot;: 1,
+            &quot;G3E_MARKERID&quot;: 2,
+            &quot;G3E_DETAILID&quot;: 0,
+            &quot;G3E_MARKERDISTANCE&quot;: 43.968173789342131,
+            &quot;G3E_POINTX&quot;: 4501918.2413808564,
+            &quot;G3E_POINTY&quot;: 5925738.4969012858
+        }
+    ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

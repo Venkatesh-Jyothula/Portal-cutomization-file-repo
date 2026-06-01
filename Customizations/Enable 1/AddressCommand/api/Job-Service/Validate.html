@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Validate </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Validate ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="validate">Validate</h1>
+
+<p>Validate the specified job's pending edits.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{JobServiceName}/job/{jobId}/validate?pageNo={pageNo}&amp;pageSize={pageSize}</p>
+<p><strong>Request Parameters</strong></p>
+<p>A list of validation errors is returned for the specified job.
+Job has to have pending edits.
+PageNo and pageSize are used for paging the result.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobId</td>
+<td>Job identifier</td>
+</tr>
+<tr>
+<td>pageNo</td>
+<td>Number of the page for paged result.</td>
+</tr>
+<tr>
+<td>pageSize</td>
+<td>Size of one page for paged result.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetworksJobService/job/j8045/validate</p>
+<p><strong>Sample Response</strong></p>
+<p>The list of validation errors for job 'j8045'.</p>
+<pre><code>[
+    {
+        &quot;ErrorDescription&quot;: &quot;desc&quot;,
+        &quot;ErrorLocation&quot;: &quot;loc&quot;,
+        &quot;ErrorPriority&quot;: &quot;P4&quot;,
+        &quot;FeatureKey&quot;: {
+            &quot;Fno&quot;: 100,
+            &quot;Cno&quot;: 31,
+            &quot;Fid&quot;: 1053890,
+            &quot;Cid&quot;: 1
+        }
+    }
+]
+</code></pre>
+<h2 id="get">GET</h2>
+<p>Validate all pending edits within the specified job. The edited features will be checked to make sure that all required components, attributes and relationships have been created. Also, the Validate method of all associated Functional interfaces and Validation interfaces will be executed.</p>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{JobServiceName}/validate/{jobId}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobId</td>
+<td>The job identifier for the job. It must be an exact match to the job identifier in the job table.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetworksJobService/validate/WmsTestJob</p>
+<p><strong>Sample Response</strong></p>
+<p>A JSON array of validation error objects is returned. Each object specifies the feature keys, error priority, error description and error location. The error priority values are P1, P2, P3 and P4 where P1 is the most severe. Only the validation errors whose error priority is higher than the ValidationPriorityFilter value from the G3E_GENERALPARAMETER table will be included in the response.</p>
+<pre><code>// JSON array of validation errors.
+[
+  { 
+    &quot;Fno&quot;:&lt;featureNumber&gt;,
+    &quot;Fid&quot;:&lt;featureId&gt;,
+    &quot;Cno&quot;:&lt;componentNumber&gt;,
+    &quot;Cid&quot;:&lt;componentId&gt;,
+    &quot;ErrorPriority&quot;:&lt;either &quot;P1&quot;,&quot;P2&quot;,&quot;P3&quot;, or &quot;P4&quot;&gt;,
+    &quot;ErrorDescription&quot;:&lt;error message&gt;,
+    &quot;ErrorLocation&quot;:&lt;software component that reported error&gt;
+  },
+  ...
+]
+</code></pre>
+<p><strong>Remarks</strong>
+All pending edits within the specified job are validated. A job cannot be posted if there are any validation errors that are higher than or equal to the ValidationPriorityThreshold value from the G3E_GENERALPARAMETER table.</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

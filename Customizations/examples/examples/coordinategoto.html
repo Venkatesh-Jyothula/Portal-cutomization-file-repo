@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Coordinate goto</title>
+<style>
+	.coord-style {
+        width: 120px;
+    }
+</style>
+<script>
+function init() {
+	window.ol = parent.ol;
+	window.proj4 = parent.proj4;
+	window.$NWP = parent.$NWP;
+
+}
+function goto() {
+	var lonCC = document.getElementById("lonCC");
+	var latCC = document.getElementById("latCC");
+	
+    //Getting the current coordinate system	
+	var viewProj = $NWP.map.getViewState().projection;
+//Converting from WGS84 to the current coordinate system
+	var coord = ol.proj.fromLonLat([lonCC.value, latCC.value], viewProj);
+	$NWP.map.center(coord);
+}
+</script>
+</head>
+<body onload="init()">
+	<div>
+       <p title="Longitude and Latitude in WGS84 coordinates">Enter coordinate (lon, lat)</p>        
+        <p><input id="lonCC" class="coord-style" type="text" title="Longitude"/></p>
+        <p><input id="latCC" class="coord-style" type="text" title="Latitude"/></p>
+        <button id="searchBtn" title="Goto" onclick="goto()" >Goto</button>
+	</div>
+</body>
+</html>

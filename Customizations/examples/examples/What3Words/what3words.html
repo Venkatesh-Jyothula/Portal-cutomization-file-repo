@@ -1,0 +1,323 @@
+<html>
+<head>
+<title>What3Words Search</title>
+
+<script>
+
+const w3wKey="WBDOR7RV";
+
+function initW3W(){
+    const me = this;
+}
+
+function searchFromWGS84() {
+    const me = this;
+    var lonCC = document.getElementById("lonCC");
+	var latCC = document.getElementById("latCC");
+	var language= document.getElementById("language");
+    fetch("https://api.what3words.com/v3/convert-to-3wa?coordinates="+latCC.value+","+lonCC.value+"&language="+language.value+"&key="+w3wKey).then(
+        (response) => {
+            return response.json();
+        }
+    ).then((json) => {me.onResultLoad(json,'wgs84',false)});
+}
+
+function searchFromXY() {
+    const me = this;
+    var xCC = document.getElementById("xCC");
+	var yCC = document.getElementById("yCC");
+	var language= document.getElementById("language");
+	var point=ol.proj.transform([xCC.value,yCC.value],$NWP.request('mapviewstate')[0].projection,'EPSG:4326');
+//console.log(point);
+    fetch("https://api.what3words.com/v3/convert-to-3wa?coordinates="+point[1]+","+point[0]+"&language="+language.value+"&key="+w3wKey).then(
+        (response) => {
+            return response.json();
+        }
+    ).then((json) => {me.onResultLoad(json,'current',false)});
+}
+
+function searchFromW3W() {
+    const me = this;
+    var w3w = document.getElementById("w3w");
+    fetch("https://api.what3words.com/v3/convert-to-coordinates?words="+w3w.value+"&key="+w3wKey).then(
+        (response) => {
+            return response.json();
+        }
+    ).then((json) => {me.onResultLoad(json,'w3w',false)});
+}
+	 
+function onResultLoad(w3wFeature,source,locate) {
+//console.log(w3wFeature);
+	if(w3wFeature==null){
+		return;
+	}
+	var xCC = document.getElementById("xCC");
+	var yCC = document.getElementById("yCC");
+	var lonCC = document.getElementById("lonCC");
+	var latCC = document.getElementById("latCC");
+	var w3w = document.getElementById("w3w");
+	var address = document.getElementById("address");
+	
+	address.value=w3wFeature.nearestPlace;
+	w3w.value=w3wFeature.words;
+	if(source=='wgs84')
+	{
+		var point=ol.proj.transform([lonCC.value,latCC.value],'EPSG:4326',$NWP.request('mapviewstate')[0].projection);
+		xCC.value=point[0];
+		yCC.value=point[1];
+		if(locate==true){
+			locateFromWGS84();
+		}
+	}
+	else if (source=='current')
+	{
+		var point=ol.proj.transform([xCC.value,yCC.value],$NWP.request('mapviewstate')[0].projection,'EPSG:4326');
+		lonCC.value=point[0];
+		latCC.value=point[1];
+		if(locate==true){
+			locateFromWY();
+		}
+	}
+	else if(source=='w3w')
+	{
+//console.log("w3w");
+//console.log(w3wFeature.coordinates);
+//console.log(w3wFeature.coordinates.lat);
+		lonCC.value=w3wFeature.coordinates.lng;
+		latCC.value=w3wFeature.coordinates.lat;
+		var point=ol.proj.transform([lonCC.value,latCC.value],'EPSG:4326',$NWP.request('mapviewstate')[0].projection);
+		xCC.value=point[0];
+		yCC.value=point[1];
+		if(locate==true){
+			locateFromWGS84();
+		}
+	}
+}
+
+function locateFromWGS84() {
+
+	var lonCC = document.getElementById("lonCC");
+	var latCC = document.getElementById("latCC");
+	
+    //Getting the current coordinate system	
+	var viewProj = $NWP.request('mapviewstate')[0].projection;
+//Converting from WGS84 to the current coordinate system
+	var point=ol.proj.transform([lonCC.value, latCC.value],'EPSG:4326',viewProj);
+
+	//var point=ol.proj.fromLonLat([coordLon.value, coordLat.value], viewProj);
+	var geojsonObject = {
+		'type': 'FeatureCollection',
+		'crs': {
+			'type': 'name',
+			'properties': {
+				'name': viewProj
+			}
+		},
+		'features': [{
+			'type': 'Feature',
+			'geometry': {
+				'type': 'Point',
+				'coordinates': [point[0], point[1]]
+			}
+		}]
+	};
+
+	var feature = geojsonObject.features[0];
+//Fir on the point
+	$NWP.request('featurehighlight', {features: [feature], fit:true});
+}
+
+function locateFromXY() {
+	var xCC = document.getElementById("xCC");
+	var yCC = document.getElementById("yCC");
+	var viewProj = $NWP.request('mapviewstate')[0].projection;
+	
+	var geojsonObject = {
+		'type': 'FeatureCollection',
+		'crs': {
+			'type': 'name',
+			'properties': {
+				'name': viewProj
+			}
+		},
+		'features': [{
+			'type': 'Feature',
+			'geometry': {
+				'type': 'Point',
+				'coordinates': [xCC.value, yCC.value]
+			}
+		}]
+	};
+
+	var feature = geojsonObject.features[0];
+//Fir on the point
+	$NWP.request('featurehighlight', {features: [feature], fit:true});
+}
+
+function locateFromW3W() {
+	var w3w = document.getElementById("w3w");
+	const me = this;
+    fetch("https://api.what3words.com/v3/convert-to-coordinates?words="+w3w.value+"&key="+w3wKey).then(
+        (response) => {
+            return response.json();
+        }
+    ).then((json) => {me.onResultLoad(json,'w3w',true)});
+}
+
+function focusin(args)
+{
+	parent.$NWP.map.setModeToDefault();
+	
+}
+
+function focusout(args)
+{
+	parent.$NWP.map.resetMode();
+	parent.$NWP.on("sidebarpanelupdating", null, "");
+}
+
+
+//Create and add the new interaction
+function selectPoint()
+{
+	$NWP.map.drawGeometry($NWP.map.geometryType.POINT).then(function(result) {
+			var xCC = document.getElementById("xCC");
+			var yCC = document.getElementById("yCC");
+			var coordinates=result.coordinates;
+			xCC.value=Math.round(coordinates[0]*100)/100;
+			yCC.value=Math.round(coordinates[1]*100)/100;			
+			searchFromXY();	
+	})	
+}
+		
+
+function main() {
+	//Retrieving the openlayer and Networks Portal references
+	window.ol = parent.ol;
+	window.proj4 = parent.proj4;
+	window.$NWP = parent.$NWP;
+	window.map=$NWP.map.getOlMapObject();
+	
+	
+	initW3W();
+}
+</script>
+</head>
+<style>
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-style: normal;
+		font-variant-ligatures: normal;
+		font-variant-caps: normal;
+		font-variant-numeric: normal;
+		font-variant-east-asian: normal;
+		font-weight: 400;
+		font-stretch: normal;
+		font-size: 14px;
+		line-height: 20px;
+		font-family: arial;
+	}
+
+	.nominatim
+	{
+
+	}
+	.nominatim tr
+	{ 
+		padding: 0px;
+		margin: 0px;
+	}
+	.nominatim td
+	{ 
+		border-top: 1px solid #D1D1D1;		
+		padding: 7px 10px 6px;
+	}
+	
+	.nominatim-form 
+	{
+		padding: 15px 10px 6px;
+	}
+	
+	.nominatim-form input
+	{
+		height: 32px;
+		width: 100px;
+	}
+
+	.nominatim-form button
+	{
+		margin: 8px 0px 8px 0px;
+		height: 28px;
+	}
+	
+    .auto-style1 {
+        width: 169px;
+    }
+    .auto-style2 {
+        width: 35px;
+        height: 35px;
+    }
+	
+    .auto-style3 {
+        width: 68px;
+    }
+	
+    .auto-style4 {
+        width: 150px;
+    }
+	
+	.coord-style {
+        width: 120px;
+    }
+	
+</style>
+
+<body onload="main()">
+        &nbsp;&nbsp;
+        Address<br />
+        &nbsp;&nbsp;
+        <input id="address" class="auto-style4" type="text" readonly="readonly"/><br />
+        &nbsp;&nbsp;
+        <select id="language" title="Select language" class="auto-style3" name="D1" aria-valuemax="en">
+            <option>de</option>
+			<option selected="selected">en</option>
+			<option>fr</option>
+			<option>it</option>
+			<option>nl</option>
+        </select><br />
+        <br />
+		<div>
+        &nbsp;&nbsp;&nbsp; <span title="Longitude and Latitude in WGS84 coordinates">WGS84</span><br />
+        &nbsp;&nbsp;
+        <input id="lonCC" class="coord-style" type="text" title="Longitude"/><br />
+&nbsp;&nbsp;
+        <input id="latCC" class="coord-style" type="text" title="Latitude"/><br />
+&nbsp;&nbsp;
+        <button id="searchBtn" title="Find in What3Words" onclick="searchFromWGS84()"><img src="./find.png" /></button>
+		<button id="locateBtn" title="Locate on the Map" width="17px" height="17px" onclick="locateFromWGS84()"><img src="./earth.png" width="17px" height="17px" /></button>
+		</div>
+		<br />
+		<br />
+        &nbsp;&nbsp;
+        <span title="Horizontal and Vertical coordinates in current map system">Current</span><br />
+    &nbsp;&nbsp;
+    <input id="xCC" type="text" class="coord-style" title="Horizontal coordinate" /><br />
+&nbsp;&nbsp;
+	<input id="yCC" type="text" class="coord-style" title="Vertical coordinate" /><br />
+&nbsp;&nbsp;
+	<button title="Find in What3Words" onclick="searchFromXY()"><img src="./find.png" /></button>
+	<button title="Locate on the Map" width="17px" height="17px" onclick="locateFromXY()"><img src="./earth.png" width="17px" height="17px" /></button><br />
+        <br />
+        &nbsp;&nbsp;
+        What3Words<br />
+        &nbsp;&nbsp;
+        <input id="w3w" class="auto-style1" type="text" title="3 words separated by a ." /><br />
+        &nbsp;&nbsp;
+		<button title="Find in What3Words" onclick="searchFromW3W()"><img src="./find.png" /></button>
+		<button title="Locate on the Map" width="17px" height="17px" onclick="locateFromW3W()"><img src="./earth.png" width="17px" height="17px" /></button><br />
+        <br />
+		<button title="Select a point on the map" onclick="selectPoint()"><img src="./gps.png" /></button><br />
+</body>
+</html>

@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GeneratePathReport </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GeneratePathReport ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="generatepathreport">GeneratePathReport</h1>
+
+<p>Generates the fiber path report that describes the physical connections along a trace, given a starting fiber device port or conductor strand.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Fiber/Report/GeneratePathReport?Jobs={list of job names}&amp;ActiveJob={job name}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ActiveJob</td>
+<td>Optional</td>
+<td>Job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional</td>
+<td>Comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Templates</strong></p>
+<pre><code>{
+	          &quot;StartFeatureFno&quot;:7200,
+	          &quot;StartFeatureFid&quot;:1552,
+	          &quot;Low&quot;:1,
+	          &quot;High&quot;:1,
+	          &quot;WaveLength&quot;:1550
+          }
+</code></pre>
+<p><strong>Post Body</strong></p>
+<table>
+<thead>
+<tr>
+<th>Post Body Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StartFeatureFno</td>
+<td>Fiber feature number of the starting conductor or device.</td>
+</tr>
+<tr>
+<td>StartFeatureFid</td>
+<td>Fiber feature identitifier of the starting conductor or device.</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>Start device port or conductor strand ordinal.</td>
+</tr>
+<tr>
+<td>High</td>
+<td>End device port or conductor strand ordinal.</td>
+</tr>
+<tr>
+<td>OtdrLength</td>
+<td>OTDR length stop criterion value. The marker location computed is along the conductor on which the cumulative length measured is greater than or equal to the stop criterion.</td>
+</tr>
+<tr>
+<td>OtdrLoss</td>
+<td>OTDR loss stop criterion value. The marker location computed is along the conductor on which the cumulative loss measured is greater than or equal to the stop criterion.</td>
+</tr>
+<tr>
+<td>WaveLength</td>
+<td>Wavelength attenuation value. The loss measured is calculated based on the wavelength specified.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Report/GeneratePathReport</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code>{
+	          &quot;StartFeatureFno&quot;:7200,
+	          &quot;StartFeatureFid&quot;:1552,
+	          &quot;Low&quot;:1,
+	          &quot;High&quot;:1,
+	          &quot;WaveLength&quot;:1550
+          }
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code>&lt;!--Fiber Path Report - Wednesday, March 13, 2019 at 10:58:32 AM--&gt;
+&lt;FiberPathReport Title=&quot;Fiber Path Report&quot;&gt;
+    &lt;SeedInfo FeatureName=&quot;Fiber Cable - Position  - 1552&quot; FID=&quot;1552&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; OTDRLength=&quot;0&quot; OTDRLoss=&quot;0&quot; /&gt;
+    &lt;FiberPath OriginatingFeatureName=&quot;Fiber Cable - Position  - 1552&quot; OriginatingFNO=&quot;7200&quot; OriginatingFID=&quot;1552&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot;&gt;
+        &lt;Feature FeatureName=&quot;Fiber Cable - Position  - 1552&quot; FNO=&quot;7200&quot; FID=&quot;1552&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;7200&quot; HighlightFID=&quot;1552&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; PortOrStrand=&quot;Fiber 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;CMGR-06&quot; Fiber_Length=&quot;12&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0&quot; Contained_By=&quot;Conduit 23&amp;lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;Fiber Duct 26&amp;lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;Fiber Inner Duct - Position 1 - 27&amp;lt;BR&amp;gt;&quot;&gt;
+            &lt;SubPath OriginatingFeatureName=&quot;Fiber Cable - Position  - 1552&quot; OriginatingFNO=&quot;7200&quot; OriginatingFID=&quot;1552&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot;&gt;
+                &lt;Feature FeatureName=&quot;Fiber Cable - Position  - 1544&quot; FNO=&quot;7200&quot; FID=&quot;1544&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;7200&quot; HighlightFID=&quot;1544&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; PortOrStrand=&quot;Fiber 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;CMGR-12&quot; Cumulative_Length=&quot;0&quot; Cumulative_Loss_Measured=&quot;0&quot; Cumulative_Loss_Typical=&quot;0&quot; Contained_By=&quot;Fiber Duct 36&amp;lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;Fiber Inner Duct - Position 1 - 37&amp;lt;BR&amp;gt;&quot; /&gt;
+                &lt;Feature FeatureName=&quot;Fiber Cable - Position  - 1548&quot; FNO=&quot;7200&quot; FID=&quot;1548&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;7200&quot; HighlightFID=&quot;1548&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; PortOrStrand=&quot;Fiber 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;CMGR-12&quot; Cumulative_Length=&quot;0&quot; Cumulative_Loss_Measured=&quot;0&quot; Cumulative_Loss_Typical=&quot;0&quot; Contained_By=&quot;Fiber Duct 45&amp;lt;BR&amp;gt;Fiber Duct 50&amp;lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;Fiber Inner Duct - Position 1 - 46&amp;lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;Fiber Inner Duct - Position 1 - 51&amp;lt;BR&amp;gt;&quot; /&gt;
+                &lt;Feature FeatureName=&quot;Fiber Optical Network Unit 66&quot; FNO=&quot;12100&quot; FID=&quot;66&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;12100&quot; HighlightFID=&quot;66&quot; Low=&quot;Back Port 1&quot; High=&quot;Back Port 1&quot; PortOrStrand=&quot;Back Port 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;Description&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0.1&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0.01&quot; Contained_By=&quot;&quot; /&gt;
+            &lt;/SubPath&gt;
+            &lt;SubPath OriginatingFeatureName=&quot;Fiber Cable - Position  - 1552&quot; OriginatingFNO=&quot;7200&quot; OriginatingFID=&quot;1552&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot;&gt;
+                &lt;Feature FeatureName=&quot;Fiber Card - Slot 10 - 1569&quot; FNO=&quot;15900&quot; FID=&quot;1569&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;15900&quot; HighlightFID=&quot;1569&quot; Low=&quot;Front Port 1&quot; High=&quot;Front Port 1&quot; PortOrStrand=&quot;Front Port 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0.1&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0.01&quot; Contained_By=&quot;&quot; /&gt;
+                &lt;Feature FeatureName=&quot;Fiber Card - Slot 10 - 1569&quot; FNO=&quot;15900&quot; FID=&quot;1569&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;15900&quot; HighlightFID=&quot;1569&quot; Low=&quot;Back Port 1&quot; High=&quot;Back Port 1&quot; PortOrStrand=&quot;Back Port 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;NORTEL 4 PORT SPLITTER CARD&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0.1&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0.01&quot; Contained_By=&quot;&quot; /&gt;
+                &lt;Feature FeatureName=&quot;Fiber Patch Panel - Position 39 - 1567&quot; FNO=&quot;12200&quot; FID=&quot;1567&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;15700&quot; HighlightFID=&quot;1565&quot; Low=&quot;Front Port 1&quot; High=&quot;Front Port 1&quot; PortOrStrand=&quot;Front Port 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;INTERGRAPH TEST PATCH PANEL&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0.2&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0.02&quot; Contained_By=&quot;&quot; /&gt;
+            &lt;/SubPath&gt;
+        &lt;/Feature&gt;
+    &lt;/FiberPath&gt;
+    &lt;Note&gt;&lt;/Note&gt;
+&lt;/FiberPathReport&gt;
+</code></pre>
+<p><strong>Sample Request for OTDR with length stop criterion value</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Report/GeneratePathReport</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code>{
+        &quot;StartFeatureFno&quot;:7200,
+        &quot;StartFeatureFid&quot;:1552,
+        &quot;Low&quot;:1,
+        &quot;High&quot;:1,
+        &quot;OtdrLength&quot;: 30
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code>&lt;!--Fiber Path Report - Thursday, October 14, 2021 at 4:26:53 PM--&gt;
+&lt;FiberPathReport Title=&quot;Fiber Length OTDR Report&quot;&gt;
+    &lt;SeedInfo FeatureName=&quot;Fiber Optical Network Unit 71&quot; FID=&quot;71&quot; Low=&quot;Back Port 1&quot; High=&quot;Back Port 1&quot; OTDRLength=&quot;30&quot; OTDRLoss=&quot;0&quot; /&gt;
+    &lt;FiberPath OriginatingFeatureName=&quot;Fiber Optical Network Unit 71&quot; OriginatingFNO=&quot;12100&quot; OriginatingFID=&quot;71&quot; Low=&quot;Back Port 1&quot; High=&quot;Back Port 1&quot; OTDRTerminatingLengthAlong=&quot;18.00&quot; OTDRTerminatingLengthAlongUnit=&quot;m&quot; OTDRTerminatingFeatureName=&quot;Fiber Cable - Position  - 21&quot; OTDRTerminatingFID=&quot;21&quot; OTDRMarkerDetailId=&quot;0&quot; OTDRMarkerPointX=&quot;6866514.075457477&quot; OTDRMarkerPointY=&quot;1153157.756786475&quot;&gt;
+        &lt;Feature FeatureName=&quot;Fiber Optical Network Unit 71&quot; FNO=&quot;12100&quot; FID=&quot;71&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;12100&quot; HighlightFID=&quot;71&quot; Low=&quot;Back Port 1&quot; High=&quot;Back Port 1&quot; PortOrStrand=&quot;Back Port 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;Description&quot; Fiber_Length=&quot;0&quot; Cumulative_Length=&quot;0&quot; Loss_Measured=&quot;0&quot; Cumulative_Loss_Measured=&quot;0&quot; Loss_Typical=&quot;0.05&quot; Cumulative_Loss_Typical=&quot;0&quot; Contained_By=&quot;&quot; /&gt;
+        &lt;Feature FeatureName=&quot;Fiber Wire 69&quot; FNO=&quot;7300&quot; FID=&quot;69&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;7300&quot; HighlightFID=&quot;69&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; PortOrStrand=&quot;Fiber 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;FIBER DISTRIBUTION CABLE - 12&quot; Fiber_Length=&quot;12&quot; Cumulative_Length=&quot;12&quot; Loss_Measured=&quot;0&quot; Cumulative_Loss_Measured=&quot;0&quot; Loss_Typical=&quot;0&quot; Cumulative_Loss_Typical=&quot;0&quot; Contained_By=&quot;&quot; /&gt;
+        &lt;Feature FeatureName=&quot;Fiber Cable - Position  - 21&quot; FNO=&quot;7200&quot; FID=&quot;21&quot; HighlightFPNO=&quot;1&quot; HighlightFNO=&quot;7200&quot; HighlightFID=&quot;21&quot; Low=&quot;Fiber 1&quot; High=&quot;Fiber 1&quot; PortOrStrand=&quot;Fiber 1&quot; Location=&quot;ABCYONXT&quot; Material=&quot;CMGR-12&quot; Fiber_Length=&quot;53&quot; Cumulative_Length=&quot;65&quot; Loss_Measured=&quot;0.1&quot; Cumulative_Loss_Measured=&quot;0.1&quot; Loss_Typical=&quot;0.01&quot; Cumulative_Loss_Typical=&quot;0.01&quot; Contained_By=&quot;&quot; /&gt;
+    &lt;/FiberPath&gt;
+    &lt;Note&gt;&lt;/Note&gt;
+&lt;/FiberPathReport&gt;
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

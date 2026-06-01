@@ -1,0 +1,11 @@
+﻿			  <JObject>
+                    <JProperty name="xtype">
+                        <JValue>iframepanel</JValue>
+                    </JProperty>
+                    <JProperty name="title">
+                        <JValue>Search OSM</JValue>
+                    </JProperty>
+                    <JProperty name="url">
+                        <JValue>examples/Example6/nominatimsearch.html</JValue>
+                    </JProperty>
+                </JObject>

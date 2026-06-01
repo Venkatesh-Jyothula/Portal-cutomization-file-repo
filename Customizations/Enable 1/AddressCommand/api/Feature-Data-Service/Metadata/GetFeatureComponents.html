@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetFeatureComponents </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetFeatureComponents ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getfeaturecomponents">GetFeatureComponents</h1>
+
+<p>Returns content of metadata table G3E_FEATURECOMPS_OPTABLE for given G3E_FNO and relevant rows from G3E_COMPONENTINFO_OPTABLE and G3E_ATTRIBUTEINFO_OPTABLE.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>GET</p>
+<p><strong>URL Template</strong></p>
+<p><code>/metadata/feature/{fno}/components</code></p>
+<p><strong>Path variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{fno}</td>
+<td>Integer</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>Serialized rows from G3E_FEATURECOMPS_OPTABLE, G3E_FEATUREPLACEMENT_OPTABLE, with added attribute data type information.</p>
+<h2 id="example">Example</h2>
+<p><strong>Example Request</strong></p>
+<p>http://machinename/fds/metadata/feature/100/components</p>
+<p><strong>Example Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;fno&quot;: 306,
+    &quot;username&quot;: &quot;Ele-Conductor Segment-LV&quot;,
+    &quot;tooltip&quot;: &quot;Ele-Conductor Segment-LV&quot;,
+    &quot;featurename&quot;: &quot;Ele_Conductor_Segment_LV&quot;,
+    &quot;numberofnodes&quot;: 2,
+    &quot;primaryattributecno&quot;: 5633,
+    &quot;primarygeographiccno&quot;: 5643,
+    &quot;primarydetailcno&quot;: 5644,
+    &quot;dcno&quot;: 1,
+    &quot;gdotype&quot;: &quot;G3E.GDatabase&quot;,
+    &quot;connectiontype&quot;: 1,
+    &quot;replace&quot;: false,
+    &quot;components&quot;: [{
+            &quot;cno&quot;: 5633,
+            &quot;name&quot;: &quot;E_CONSEG_5633_N&quot;,
+            &quot;username&quot;: &quot;Ele-Conductor Segment&quot;,
+            &quot;tooltip&quot;: &quot;Ele-Conductor Segment&quot;,
+            &quot;table&quot;: &quot;E_CONSEG_N&quot;,
+            &quot;ltt&quot;: 1,
+            &quot;type&quot;: 1,
+            &quot;componenttype&quot;: 0,
+            &quot;lrno&quot;: 97000,
+            &quot;detail&quot;: false,
+            &quot;attributes&quot;: [{
+                    &quot;ano&quot;: 56330000,
+                    &quot;field&quot;: &quot;ID&quot;,
+                    &quot;datatype&quot;: 10,
+                    &quot;datatypecode&quot;: &quot;C&quot;,
+                    &quot;maxlength&quot;: 50
+                }, {
+                    &quot;ano&quot;: 56330001,
+                    &quot;field&quot;: &quot;MID&quot;,
+                    &quot;datatype&quot;: 4,
+                    &quot;datatypecode&quot;: &quot;N&quot;,
+                    &quot;maxlength&quot;: 38,
+                    &quot;format&quot;: &quot;General Number&quot;,
+                    &quot;default&quot;: &quot;0&quot;,
+                    &quot;required&quot;: true,
+                    &quot;copy&quot;: true
+                }
+            ],
+            &quot;required&quot;: true,
+            &quot;repeating&quot;: false,
+            &quot;insertordinal&quot;: 10,
+            &quot;deleteordinal&quot;: 330
+        }, {
+            &quot;cno&quot;: 5643,
+            &quot;name&quot;: &quot;E_CONSEG_5643_LN&quot;,
+            &quot;username&quot;: &quot;Ele-Conductor Segment - Inventory&quot;,
+            &quot;tooltip&quot;: &quot;Ele-Conductor Segment - Inventory&quot;,
+            &quot;table&quot;: &quot;E_CONSEG_LN&quot;,
+            &quot;ltt&quot;: 1,
+            &quot;type&quot;: 4,
+            &quot;componenttype&quot;: 0,
+            &quot;geometrytype&quot;: &quot;CompositePolylineGeometry&quot;,
+            &quot;detail&quot;: false,
+            &quot;attributes&quot;: [{
+                    &quot;ano&quot;: 56430994,
+                    &quot;field&quot;: &quot;G3E_GEOMETRY&quot;,
+                    &quot;datatype&quot;: 32,
+                    &quot;datatypecode&quot;: &quot;G&quot;,
+                    &quot;required&quot;: true
+                }, {
+                    &quot;ano&quot;: 56430995,
+                    &quot;field&quot;: &quot;G3E_ID&quot;,
+                    &quot;datatype&quot;: 4,
+                    &quot;datatypecode&quot;: &quot;N&quot;,
+                    &quot;maxlength&quot;: 10,
+                    &quot;format&quot;: &quot;General Number&quot;,
+                    &quot;required&quot;: true
+                }
+            ],
+            &quot;required&quot;: true,
+            &quot;repeating&quot;: false,
+            &quot;insertordinal&quot;: 190,
+            &quot;deleteordinal&quot;: 150
+        }
+    ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

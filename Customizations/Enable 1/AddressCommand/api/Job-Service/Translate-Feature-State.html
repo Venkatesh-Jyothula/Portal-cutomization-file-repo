@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Translate Feature State </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Translate Feature State ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="translate-feature-state">Translate Feature State</h1>
+
+<p>Translate specified features to the default next state or the specified next state based on their current state; or return a list of possible next states based on the current state of the features.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{JobServiceName}/translatefeaturestate/{jobid}/{newState?}[? useDefault={true | false} ]</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobId</td>
+<td>The job identifier for the job.</td>
+</tr>
+<tr>
+<td>newState</td>
+<td>Optional. Specifies the new state value for the feature state attribute of all input features. If the newstate parameter is omitted and the useDefault query parameter is omitted or false, then the response shows the list of possible next state values based on the current feature state value of the features.</td>
+</tr>
+<tr>
+<td>useDefault</td>
+<td>Optional. Determines whether the default next state in the transitions metadata will be used when the newstate parameter is omitted.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Post Body Template</strong></p>
+<pre><code>// JSON array of objects in POST body
+[ { &quot;Fno&quot;: fnoValue1, &quot;Fid&quot;: fidValue1}, { &quot;Fno&quot;: fnoValue2, &quot;Fid&quot;: fidValue2}, ... ]
+</code></pre>
+<p><strong>Post Body</strong></p>
+<table>
+<thead>
+<tr>
+<th>Post Body Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature List</td>
+<td>Array of feature objects (Fno and Fid).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://localhost/NetworksJobService/translatefeaturestate/WmsTestJob?useDefault=false</p>
+<p><strong>Sample Post Body</strong></p>
+<pre><code>[ { &quot;Fno&quot;: 100, &quot;Fid&quot;: 3759617},{ &quot;Fno&quot;: 326, &quot;Fid&quot;: 3747378},{ &quot;Fno&quot;: 100, &quot;Fid&quot;: 3759633} ]
+</code></pre>
+<p><strong>Sample Response</strong>
+The response is a list of objects, one for each distinct current state from the set of input Fids. Each object shows the current state, its new state (if a transition was successful), its default next state (if it has one) and the set of next states that can be transitioned to. For example, if the input features are currently in either the &quot;Proposed&quot; or &quot;In Service&quot; feature state, then response would be as follows: (Note: actual progression of feature states is controlled by each customer's metadata).</p>
+<pre><code>[
+    {
+        &quot;CurrentState&quot;: &quot;Proposed&quot;,
+        &quot;NewState&quot;: &quot;&quot;,
+        &quot;DefaultNextState&quot;: &quot;Constructed&quot;,
+        &quot;NextStates&quot;: [
+            &quot;Constructed&quot;,
+            &quot;Conceptual&quot;
+        ]
+    },
+    {
+        &quot;CurrentState&quot;: &quot;In Service&quot;,
+        &quot;NewState&quot;: &quot;&quot;,
+        &quot;DefaultNextState&quot;: &quot;Proposed Removed&quot;,
+        &quot;NextStates&quot;: [
+            &quot;Proposed Removed&quot;,
+            &quot;Out of Service&quot;,
+            &quot;Proposed Retired&quot;
+        ]
+    }
+]
+</code></pre>
+<p>Since the set of input features in the Post body doesn't have any common next state value to transition to, no new state value can be specified on the request. However, since all features have a metadata defined default next state value, the request can be sent again with useDefault=true to make each feature transition to its default next state. The example request and response are shown below:</p>
+<p><strong>Sample Request 2</strong></p>
+<p>http://localhost/NetworksJobService/translatefeaturestate/WmsTestJob?useDefault=true</p>
+<p><strong>Sample Response 2</strong>
+Note that each current state transitioned to default next state from the response above and is shown as the NewState. After a successful state transition where NewState has a value, the DefaultNextState and NextStates list show the possible states from the NewState value.</p>
+<pre><code>[
+    {
+        &quot;CurrentState&quot;: &quot;Proposed&quot;,
+        &quot;NewState&quot;: &quot;Constructed&quot;,
+        &quot;DefaultNextState&quot;: &quot;In Service&quot;,
+        &quot;NextStates&quot;: [
+            &quot;In Service&quot;,
+            &quot;Out of Service&quot;
+        ]
+    },
+    {
+        &quot;CurrentState&quot;: &quot;In Service&quot;,
+        &quot;NewState&quot;: &quot;Proposed Removed&quot;,
+        &quot;DefaultNextState&quot;: &quot;Operational Removed&quot;,
+        &quot;NextStates&quot;: [
+            &quot;Operational Removed&quot;,
+            &quot;Out of Service&quot;,
+            &quot;In Service&quot;
+        ]
+    }
+]
+</code></pre>
+<p><strong>Sample Request 3</strong></p>
+<p>Since each of the current states from the previous request had a next state in common (i.e. &quot;Out of Service&quot;), that common state can be specified as the new state value for all the input features.</p>
+<p>http://localhost/NetworksJobService/translatefeaturestate/WmsTestJob/Out%20of%20Service?useDefault=false</p>
+<p><strong>Sample Response 3</strong>
+Note that each current state transitioned to specified next state from the request.</p>
+<pre><code>[
+    {
+        &quot;CurrentState&quot;: &quot;Constructed&quot;,
+        &quot;NewState&quot;: &quot;Out of Service&quot;,
+        &quot;DefaultNextState&quot;: &quot;In Service&quot;,
+        &quot;NextStates&quot;: [
+            &quot;In Service&quot;,
+            &quot;Proposed Retired&quot;,
+            &quot;Proposed Removed&quot;
+        ]
+    },
+    {
+        &quot;CurrentState&quot;: &quot;Proposed Removed&quot;,
+        &quot;NewState&quot;: &quot;Out of Service&quot;,
+        &quot;DefaultNextState&quot;: &quot;In Service&quot;,
+        &quot;NextStates&quot;: [
+            &quot;In Service&quot;,
+            &quot;Proposed Retired&quot;,
+            &quot;Proposed Removed&quot;
+        ]
+    }
+]
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

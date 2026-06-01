@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>GetFeatureDataWithoutGeometry </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="GetFeatureDataWithoutGeometry ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getfeaturedatawithoutgeometry">GetFeatureDataWithoutGeometry</h1>
+
+<p>Returns feature data without geometry attributes.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>GET</p>
+<p><strong>URL Template</strong></p>
+<p><code>/feature/{fno}/{fid}/attributes[?cno={cno}]</code></p>
+<p><strong>Path variables</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{fno}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FNO</td>
+</tr>
+<tr>
+<td>{fid}</td>
+<td>int</td>
+<td>Y</td>
+<td>G3E_FID</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Query params</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{cno}</td>
+<td>string</td>
+<td></td>
+<td>Comma-separated list of G3E_CNOs to retrieve. When not specified, all components are retrieved.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">Response</h2>
+<p>Serialized feature data.</p>
+<h2 id="example">Example</h2>
+<p><strong>Example Request</strong></p>
+<p>http://machinename/fds/feature/323/1002458?cno=5633,5648</p>
+<p><strong>Example Response</strong></p>
+<pre><code class="lang-js">{
+  &quot;components&quot;: {
+    &quot;E_CONSEG_5633_N&quot;: [
+      {
+        &quot;ID&quot;: &quot;76AYNT&quot;,
+        &quot;MID&quot;: 0,
+        &quot;OPERATING_VOLTAGE&quot;: &quot;2&quot;,
+        &quot;LENGTH&quot;: 84.473,
+        &quot;LENGTH_REAL&quot;: 146.75,
+        &quot;YEAR_OF_CONSTRUCTION&quot;: 1963,
+        &quot;CONDUCTOR_ID&quot;: &quot;PH0E3V&quot;,
+        &quot;SUBUNIT&quot;: &quot;331&quot;,
+        &quot;CATEGORY&quot;: &quot;1&quot;,
+        &quot;TYPE&quot;: &quot;0&quot;,
+        &quot;MATERIAL&quot;: &quot;0&quot;,
+        &quot;DIAMETER&quot;: &quot;0&quot;,
+        &quot;NOM_CURRENT&quot;: &quot;0&quot;,
+        &quot;NOM_VOLTAGE&quot;: &quot;0&quot;,
+        &quot;STREET_MID&quot;: &quot;14020000000000447440&quot;,
+        &quot;NUM&quot;: &quot;1234567890987654321&quot;,
+        &quot;G3E_ID&quot;: 201,
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 5633,
+        &quot;G3E_FNO&quot;: 306,
+        &quot;G3E_FID&quot;: 1030478
+      }
+    ],
+    &quot;E_CONSEG_5648_LB&quot;: [
+      {
+        &quot;G3E_ALIGNMENT&quot;: 9,
+        &quot;G3E_ID&quot;: 191,
+        &quot;G3E_CID&quot;: 1,
+        &quot;G3E_CNO&quot;: 5648,
+        &quot;G3E_FNO&quot;: 306,
+        &quot;G3E_FID&quot;: 1030478
+      }
+    ]
+  }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

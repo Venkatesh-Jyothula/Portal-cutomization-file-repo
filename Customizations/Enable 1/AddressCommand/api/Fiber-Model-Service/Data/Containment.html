@@ -1,0 +1,750 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Containment </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Containment ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="containment">Containment</h1>
+
+<p>Returns the fiber inner duct connections for a given fiber feature.</p>
+<p>The fiber inner ducts returned indicates the following status:</p>
+<ul>
+<li>Cut or Straight Through.</li>
+<li>Coupled or Not Coupled.</li>
+</ul>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Fiber/Containment/{Fno}/{Fid}?Jobs={list of job names}&amp;ActiveJob={job name}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fno</td>
+<td>Required</td>
+<td>Feature number of the fiber infrastructure feature.</td>
+</tr>
+<tr>
+<td>Fid</td>
+<td>Required</td>
+<td>Feature identifier of the fiber infrastructure feature.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional</td>
+<td>Job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional</td>
+<td>Comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Containment/4200/65</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{  
+             InfrastructureType:&quot;Node&quot;,
+             SuperType:&quot;Infrastructure&quot;,
+             Fno:4200,
+             Fid:65,
+             IsDefective:false,
+             HasGraphics:true,
+             Location:&quot;ABCYONXT&quot;,
+             ConnectedToNode1:[  
+                {  
+                   TotalLength:0,
+                   InfrastructureType:&quot;Edge&quot;,
+                   SuperType:&quot;Infrastructure&quot;,
+                   Fno:4000,
+                   Fid:55,
+                   IsDefective:false,
+                   HasGraphics:true,
+                   Location:&quot;ABCYONXT&quot;,
+                   Contains:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:56,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode1:[  
+                            {  
+                               Position:2,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:47,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 2 - 47&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1549,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1549&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 56&quot;
+                      },
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:57,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 57&quot;
+                      },
+                      {  
+                         Position:3,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:58,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 3 - 58&quot;
+                      },
+                      {  
+                         Position:4,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:59,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 4 - 59&quot;
+                      }
+                   ],
+                   Type:&quot;Duct&quot;,
+                   Username:&quot;Fiber Duct&quot;,
+                   Description:&quot;Fiber Duct 55&quot;
+                },
+                {  
+                   TotalLength:0,
+                   InfrastructureType:&quot;Edge&quot;,
+                   SuperType:&quot;Infrastructure&quot;,
+                   Fno:4000,
+                   Fid:60,
+                   IsDefective:false,
+                   HasGraphics:true,
+                   Location:&quot;ABCYONXT&quot;,
+                   Contains:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:61,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 61&quot;
+                      },
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:62,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 62&quot;
+                      },
+                      {  
+                         Position:3,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:63,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode1:[  
+                            {  
+                               Position:3,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:48,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 3 - 48&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1550,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1550&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 3 - 63&quot;
+                      },
+                      {  
+                         Position:4,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:64,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode1:[  
+                            {  
+                               Position:4,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:49,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 4 - 49&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1551,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1551&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 4 - 64&quot;
+                      }
+                   ],
+                   Type:&quot;Duct&quot;,
+                   Username:&quot;Fiber Duct&quot;,
+                   Description:&quot;Fiber Duct 60&quot;
+                },
+                {  
+                   TotalLength:0,
+                   InfrastructureType:&quot;Edge&quot;,
+                   SuperType:&quot;Infrastructure&quot;,
+                   Fno:4000,
+                   Fid:6148,
+                   IsDefective:false,
+                   HasGraphics:true,
+                   Location:&quot;ABCYONXT&quot;,
+                   Contains:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:6149,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 6149&quot;
+                      }
+                   ],
+                   Type:&quot;Duct&quot;,
+                   Username:&quot;Fiber Duct&quot;,
+                   Description:&quot;Fiber Duct 6148&quot;
+                },
+                {  
+                   TotalLength:0,
+                   InfrastructureType:&quot;Edge&quot;,
+                   SuperType:&quot;Infrastructure&quot;,
+                   Fno:4000,
+                   Fid:50,
+                   IsDefective:false,
+                   HasGraphics:true,
+                   Location:&quot;ABCYONXT&quot;,
+                   Contains:[  
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:51,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode1:[  
+                            {  
+                               Position:1,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:46,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 1 - 46&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1548,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1548&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 51&quot;
+                      },
+                      {  
+                         Position:3,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:53,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 3 - 53&quot;
+                      },
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:52,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 52&quot;
+                      },
+                      {  
+                         Position:4,
+                         ConnectionType:&quot;Cut&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:54,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 4 - 54&quot;
+                      }
+                   ],
+                   Type:&quot;Duct&quot;,
+                   Username:&quot;Fiber Duct&quot;,
+                   Description:&quot;Fiber Duct 50&quot;
+                },
+                {  
+                   TotalLength:0,
+                   InfrastructureType:&quot;Edge&quot;,
+                   SuperType:&quot;Infrastructure&quot;,
+                   Fno:4000,
+                   Fid:45,
+                   IsDefective:false,
+                   HasGraphics:true,
+                   Location:&quot;ABCYONXT&quot;,
+                   Contains:[  
+                      {  
+                         Position:2,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:47,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode2:[  
+                            {  
+                               Position:1,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:56,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 1 - 56&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1549,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1549&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 2 - 47&quot;
+                      },
+                      {  
+                         Position:3,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:48,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode2:[  
+                            {  
+                               Position:3,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:63,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 3 - 63&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1550,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1550&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 3 - 48&quot;
+                      },
+                      {  
+                         Position:4,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:49,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode2:[  
+                            {  
+                               Position:4,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:64,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 4 - 64&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1551,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1551&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 4 - 49&quot;
+                      },
+                      {  
+                         Position:1,
+                         ConnectionType:&quot;Coupled&quot;,
+                         TotalLength:0,
+                         InfrastructureType:&quot;Edge&quot;,
+                         SuperType:&quot;Infrastructure&quot;,
+                         Fno:4100,
+                         Fid:46,
+                         IsDefective:false,
+                         HasGraphics:false,
+                         Location:&quot;ABCYONXT&quot;,
+                         ConnectedToNode2:[  
+                            {  
+                               Position:1,
+                               ConnectionType:&quot;Coupled&quot;,
+                               TotalLength:0,
+                               InfrastructureType:&quot;Edge&quot;,
+                               SuperType:&quot;Infrastructure&quot;,
+                               Fno:4100,
+                               Fid:51,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Inner Duct&quot;,
+                               Username:&quot;Fiber Inner Duct&quot;,
+                               Description:&quot;Fiber Inner Duct - Position 1 - 51&quot;
+                            }
+                         ],
+                         Contains:[  
+                            {  
+                               ConnectionType:&quot;StraightThrough&quot;,
+                               TotalLength:0,
+                               SuperType:&quot;Conductor&quot;,
+                               Fno:7200,
+                               Fid:1548,
+                               IsDefective:false,
+                               HasGraphics:false,
+                               Location:&quot;ABCYONXT&quot;,
+                               Type:&quot;Cable&quot;,
+                               Username:&quot;Fiber Cable&quot;,
+                               Description:&quot;Fiber Cable - Position - 1548&quot;
+                            }
+                         ],
+                         Type:&quot;Inner Duct&quot;,
+                         Username:&quot;Fiber Inner Duct&quot;,
+                         Description:&quot;Fiber Inner Duct - Position 1 - 46&quot;
+                      }
+                   ],
+                   Type:&quot;Duct&quot;,
+                   Username:&quot;Fiber Duct&quot;,
+                   Description:&quot;Fiber Duct 45&quot;
+                }
+             ],
+             Type:&quot;Branch Enclosure&quot;,
+             Username:&quot;Fiber Branch Enclosure&quot;,
+             Description:&quot;Fiber Branch Enclosure 65&quot;
+          }
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

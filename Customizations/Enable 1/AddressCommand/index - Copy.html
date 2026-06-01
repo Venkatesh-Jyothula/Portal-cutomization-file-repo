@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body { font-family: Arial, serif; Helvetica; }
+	h3 { color: #335ca5; }
+	.button {
+		background-color: #335ca5;
+		border: none;
+		color: white;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}
+	.button:hover {
+		background-color: #1d3b73;
+	}
+	.form-container {
+		width: 600px;
+		margin: 20px auto;
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	}
+	.table-container {
+		overflow-x: auto;
+	}
+	.table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+	.table th, .table td {
+		border: 1px solid #ddd;
+		padding: 8px;
+		text-align: center;
+	}
+	.table th {
+		background-color: #f2f2f2;
+	}
+	.table tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+	.button-container {
+		margin-top: 20px;
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+<h3>APAC Commands</h3>
+
+<button class="button" onclick="openForm()">Address with Status 3</button><br>
+
+<script>
+    // Define variables for $NWP and map
+    var $NWP = parent.$NWP;
+    var map = parent.Ext.ComponentQuery.query('hxgn-map')[0].getOlObject();
+    var newWindow;
+
+    function openForm() {
+        newWindow = $NWP.createWindow({
+            title: 'Address with Status 3',
+            height: 500,
+            width: 800,
+            url: null
+        });
+        fetchData();
+    }
+
+    function fetchData() {
+        var url = 'http://venbgt104pdc1.ingrnet.com/NwAnalyticalService1905/search/execute/114';
+        var requestData = {
+            "Parameters": [{
+                "ParameterId": 1,
+                "PickListKey": 3
+            }]
+        };
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) { // When the request is complete
+                if (this.status == 200) { // If the request was successful
+                    var data = JSON.parse(this.responseText);
+                    populateTable(data); // Populate table with received data
+                } else {
+                    var errorMessage = 'Error: ' + this.status;
+                    displayErrorMessage(errorMessage); // Display error message
+                }
+            }
+        };
+
+        xhttp.send(JSON.stringify(requestData)); // Send the request with JSON data
+    }
+
+    function populateTable(data) {
+        if (!newWindow || !newWindow.document) {
+            console.error('New window is not accessible.');
+            return;
+        }
+
+        var tableHTML = '<table class="table">';
+        tableHTML += '<thead><tr>';
+
+        if (Array.isArray(data.ResultItems) && data.ResultItems.length > 0) {
+            // Create the header row for column names
+            Object.keys(data.ResultItems[0]).forEach(key => {
+                tableHTML += '<th>' + key + '</th>';
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            // Iterate over each address item
+            data.ResultItems.forEach(address => {
+                tableHTML += '<tr>';
+
+                // Iterate over each property of the address item
+                Object.values(address).forEach(value => {
+                    tableHTML += '<td>' + value + '</td>';
+                });
+
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+
+            // Display the table in the new window
+            newWindow.document.body.innerHTML = tableHTML;
+        } else {
+            console.error('ResultItems is not an array or is empty:', data);
+            // Optionally, you can handle this error by displaying a message to the user
+        }
+    }
+
+    function displayErrorMessage(message) {
+        alert(message); // Display error message in a pop-up
+    }
+</script>
+
+</body>
+</html>

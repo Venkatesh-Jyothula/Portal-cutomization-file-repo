@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ComputeMarkerPoints </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ComputeMarkerPoints ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="computemarkerpoints">ComputeMarkerPoints</h1>
+
+<p>Computes the marker location points for an executed trace based on user defined stop criteria.</p>
+<h2 id="post">POST</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{HostName}/{TraceServiceName}/Trace/computemarkerpoints</p>
+<p><strong>Post Body Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tno</td>
+<td>Trace number of the executed trace.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>StopCriteria</td>
+<td>Input stop criteria.</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksAnalyticalservice/Trace/computemarkerpoints</p>
+<p>Post Body :</p>
+<pre><code class="lang-js">{
+    &quot;StopCriteria&quot;:25,
+    &quot;TraceId&quot;:19775
+}
+</code></pre>
+<p><strong>Sample Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;PointX&quot;: -8511548.62955291,
+    &quot;PointY&quot;: 5507937.9876390938,
+    &quot;DetailId&quot;: 0
+}
+</code></pre>
+<p><strong>Remarks</strong></p>
+<p>Pre-requisite to execute the API:</p>
+<p>A new GAONET_PARAMETER table is introduced which contains the following columns:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Column Name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GAO_PNO</td>
+<td>Maps to G3E_RINO value for the Interface</td>
+</tr>
+<tr>
+<td>GAO_KEY</td>
+<td>Unique identifier for the table, Even though GAO_PNO is unique, it might be null for some entries.  Eg: If the Compute Partial Start Value Interface Argument Group Number is null, then the relevant G3E_RINO values will not exist for Stop criteria field name, Cable Value Filed Name and Cumulative Value Field Name.</td>
+</tr>
+<tr>
+<td>GAO_TYPE</td>
+<td>For ComputeMarkerPoints API, it checks for OTDR value</td>
+</tr>
+<tr>
+<td>GAO_PARAMETERNAME</td>
+<td>G3E_USERNAME field of G3E_RELATIONIFACE_OPTABLE</td>
+</tr>
+<tr>
+<td>GAO_PARAMETERDESCRIPTION</td>
+<td>G3E_TYPE field of G3E_RELATIONIFACE_OPTABLE</td>
+</tr>
+<tr>
+<td>GAO_PARAMETERVALUE</td>
+<td>G3E_INTERFACE field of G3E_RELATIONIFACE_OPTABLE</td>
+</tr>
+<tr>
+<td>GAO_PARAMETERTYPE</td>
+<td>Will be the interface argument data type</td>
+</tr>
+<tr>
+<td>GAO_EDITDATE</td>
+<td>Edit Date</td>
+</tr>
+</tbody>
+</table>
+<p>Sample values that are stored in the GAONET_PARAMETER  table for OTDR:</p>
+<table>
+<thead>
+<tr>
+<th><strong>GAO_PNO</strong></th>
+<th><strong>GAO_KEY</strong></th>
+<th><strong>GAO_TYPE</strong></th>
+<th><strong>GAO_PARAMETERNAME</strong></th>
+<th><strong>GAO_PARAMETERDESCRIPTION</strong></th>
+<th><strong>GAO_PARAMETERVALUE</strong></th>
+<th><strong>GAO_PARAMETERTYPE</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Marker Location Interface Number</td>
+<td></td>
+<td>21</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Marker Location Interface Argument Group Number</td>
+<td></td>
+<td>715001</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Geo Point Interface Number</td>
+<td></td>
+<td>22</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Geo Point Interface Argument Group Number</td>
+<td></td>
+<td>715002</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Partial Start Value Interface Number</td>
+<td></td>
+<td>29</td>
+<td>4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Compute Partial Start Value Interface Argument Group Number</td>
+<td></td>
+<td>-1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Stop Criteria Field Name</td>
+<td></td>
+<td>INPUT_STOP_CRITERIA</td>
+<td>10</td>
+</tr>
+<tr>
+<td>8</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Cable Value Field Name</td>
+<td></td>
+<td>STOP_CRITERIA</td>
+<td>10</td>
+</tr>
+<tr>
+<td>9</td>
+<td>10</td>
+<td>OTDR</td>
+<td>Cumulative Value Field Value</td>
+<td></td>
+<td>CUMULATIVE_STOP_CRITERIA</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Response contains:</p>
+<p>'PointX' is the x coordinate of the marker point.</p>
+<p>'PointY' is the y coordinate of the marker point.</p>
+<p>'DetailId' is the identifier of the detail drawing where the marker point exists.</p>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,925 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Path </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Path ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="path">Path</h1>
+
+<p>Returns the path for a given fiber conductor, device, link or channel. This API only works if Path Extensions is part of the model.</p>
+<h2 id="get">GET</h2>
+<p><strong>Request URL Template</strong></p>
+<p>http://{hostname}/{service instance}/Fiber/Path/{Fno}/{Fid}?Jobs={list of job names}&amp;ActiveJob={job name}</p>
+<p><strong>Request Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter Name</th>
+<th>Optional or Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fno</td>
+<td>Required</td>
+<td>Fiber feature number for conductor, device, link or channel.</td>
+</tr>
+<tr>
+<td>Fid</td>
+<td>Required</td>
+<td>Fiber feature identifier for the conductor, device, link or channel.</td>
+</tr>
+<tr>
+<td>ActiveJob</td>
+<td>Optional</td>
+<td>Job name whose pending edits will participate in the operation.</td>
+</tr>
+<tr>
+<td>Jobs</td>
+<td>Optional</td>
+<td>Comma separated list of jobs whose pending edits will participate in the operation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample Request</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Path/7200/52409</p>
+<p><strong>Sample Response</strong></p>
+<pre><code>{
+   &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+   &quot;TotalLength&quot;: 14,
+   &quot;Links&quot;: [
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F1&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F1&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52426,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F1 / CA:ABCYONXT-0053.T1.F1]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52414,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F1 - [CA:ABCYONXT-0053.T1.F1 / CA:ABCYONXT-0054.T1.F1]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F2&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F2&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52427,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F2 / CA:ABCYONXT-0053.T1.F2]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52415,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F2 - [CA:ABCYONXT-0053.T1.F2 / CA:ABCYONXT-0054.T1.F2]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F3&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F3&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52428,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F3 / CA:ABCYONXT-0053.T1.F3]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52416,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F3 - [CA:ABCYONXT-0053.T1.F3 / CA:ABCYONXT-0054.T1.F3]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F4&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F4&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52429,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F4 / CA:ABCYONXT-0053.T1.F4]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52417,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F4 - [CA:ABCYONXT-0053.T1.F4 / CA:ABCYONXT-0054.T1.F4]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F5&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F5&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52430,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F5 / CA:ABCYONXT-0053.T1.F5]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52418,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F5 - [CA:ABCYONXT-0053.T1.F5 / CA:ABCYONXT-0054.T1.F5]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F6&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F6&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52431,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F6 / CA:ABCYONXT-0053.T1.F6]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52419,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F6 - [CA:ABCYONXT-0053.T1.F6 / CA:ABCYONXT-0054.T1.F6]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F7&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F7&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52432,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F7 / CA:ABCYONXT-0053.T1.F7]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52420,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F7 - [CA:ABCYONXT-0053.T1.F7 / CA:ABCYONXT-0054.T1.F7]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F8&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F8&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52433,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F8 / CA:ABCYONXT-0053.T1.F8]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52421,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F8 - [CA:ABCYONXT-0053.T1.F8 / CA:ABCYONXT-0054.T1.F8]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F9&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F9&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52434,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F9 / CA:ABCYONXT-0053.T1.F9]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52422,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F9 - [CA:ABCYONXT-0053.T1.F9 / CA:ABCYONXT-0054.T1.F9]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F10&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F10&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52435,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F10 / CA:ABCYONXT-0053.T1.F10]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52423,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F10 - [CA:ABCYONXT-0053.T1.F10 / CA:ABCYONXT-0054.T1.F10]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F11&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F11&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52436,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F11 / CA:ABCYONXT-0053.T1.F11]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52424,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F11 - [CA:ABCYONXT-0053.T1.F11 / CA:ABCYONXT-0054.T1.F11]&quot;
+      },
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F12&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F12&quot;
+            }
+         ],
+         &quot;Channels&quot;: [
+            {
+               &quot;SuperType&quot;: &quot;Logical&quot;,
+               &quot;Fno&quot;: 5100,
+               &quot;Fid&quot;: 52437,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: false,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Channel&quot;,
+               &quot;Username&quot;: &quot;Fiber Channel&quot;,
+               &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F12 / CA:ABCYONXT-0053.T1.F12]&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52425,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;T1.F12 - [CA:ABCYONXT-0053.T1.F12 / CA:ABCYONXT-0054.T1.F12]&quot;
+      }
+   ],
+   &quot;SuperType&quot;: &quot;Conductor&quot;,
+   &quot;Fno&quot;: 7200,
+   &quot;Fid&quot;: 52409,
+   &quot;IsDefective&quot;: false,
+   &quot;HasGraphics&quot;: true,
+   &quot;Location&quot;: &quot;ABCYONXT&quot;,
+   &quot;NumberOfNodes&quot;: 0,
+   &quot;Type&quot;: &quot;Cable&quot;,
+   &quot;Username&quot;: &quot;Fiber Cable&quot;,
+   &quot;Description&quot;: &quot;CA:ABCYONXT-0053&quot;
+}
+</code></pre>
+<p><strong>Sample Request for Fiber Link</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Path/5000/52414</p>
+<p><strong>Sample Response for Fiber Link</strong></p>
+<pre><code>{
+   &quot;Items&quot;: [
+      {
+         &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+         &quot;TotalLength&quot;: 14,
+         &quot;SuperType&quot;: &quot;Conductor&quot;,
+         &quot;Fno&quot;: 7200,
+         &quot;Fid&quot;: 52409,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: true,
+         &quot;Location&quot;: &quot;ABCYONXT&quot;,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Cable&quot;,
+         &quot;Username&quot;: &quot;Fiber Cable&quot;,
+         &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F1&quot;
+      },
+      {
+         &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+         &quot;TotalLength&quot;: 40,
+         &quot;SuperType&quot;: &quot;Conductor&quot;,
+         &quot;Fno&quot;: 7200,
+         &quot;Fid&quot;: 52412,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: true,
+         &quot;Location&quot;: &quot;ABCYONXT&quot;,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Cable&quot;,
+         &quot;Username&quot;: &quot;Fiber Cable&quot;,
+         &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F1&quot;
+      }
+   ],
+   &quot;Channels&quot;: [
+      {
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5100,
+         &quot;Fid&quot;: 52426,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Channel&quot;,
+         &quot;Username&quot;: &quot;Fiber Channel&quot;,
+         &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F1 / CA:ABCYONXT-0053.T1.F1]&quot;
+      }
+   ],
+   &quot;SuperType&quot;: &quot;Logical&quot;,
+   &quot;Fno&quot;: 5000,
+   &quot;Fid&quot;: 52414,
+   &quot;IsDefective&quot;: false,
+   &quot;HasGraphics&quot;: false,
+   &quot;NumberOfNodes&quot;: 0,
+   &quot;Type&quot;: &quot;Link&quot;,
+   &quot;Username&quot;: &quot;Fiber Link&quot;,
+   &quot;Description&quot;: &quot;[CA:ABCYONXT-0053.T1.F1 / CA:ABCYONXT-0054.T1.F1]&quot;
+}
+</code></pre>
+<p><strong>Sample Request for Fiber Channel</strong></p>
+<p>http://hostname/NetworksFiberModelService/Fiber/Path/5100/52426</p>
+<p><strong>Sample Response for Fiber Channel</strong></p>
+<pre><code>{
+   &quot;Links&quot;: [
+      {
+         &quot;Items&quot;: [
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 14,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52409,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0053.T1.F1&quot;
+            },
+            {
+               &quot;ConnectionType&quot;: &quot;StraightThrough&quot;,
+               &quot;TotalLength&quot;: 40,
+               &quot;SuperType&quot;: &quot;Conductor&quot;,
+               &quot;Fno&quot;: 7200,
+               &quot;Fid&quot;: 52412,
+               &quot;IsDefective&quot;: false,
+               &quot;HasGraphics&quot;: true,
+               &quot;Location&quot;: &quot;ABCYONXT&quot;,
+               &quot;NumberOfNodes&quot;: 0,
+               &quot;Type&quot;: &quot;Cable&quot;,
+               &quot;Username&quot;: &quot;Fiber Cable&quot;,
+               &quot;Description&quot;: &quot;CA:ABCYONXT-0054.T1.F1&quot;
+            }
+         ],
+         &quot;SuperType&quot;: &quot;Logical&quot;,
+         &quot;Fno&quot;: 5000,
+         &quot;Fid&quot;: 52414,
+         &quot;IsDefective&quot;: false,
+         &quot;HasGraphics&quot;: false,
+         &quot;NumberOfNodes&quot;: 0,
+         &quot;Type&quot;: &quot;Link&quot;,
+         &quot;Username&quot;: &quot;Fiber Link&quot;,
+         &quot;Description&quot;: &quot;[CA:ABCYONXT-0053.T1.F1 / CA:ABCYONXT-0054.T1.F1]&quot;
+      }
+   ],
+   &quot;SuperType&quot;: &quot;Logical&quot;,
+   &quot;Fno&quot;: 5100,
+   &quot;Fid&quot;: 52426,
+   &quot;IsDefective&quot;: false,
+   &quot;HasGraphics&quot;: false,
+   &quot;NumberOfNodes&quot;: 0,
+   &quot;Type&quot;: &quot;Channel&quot;,
+   &quot;Username&quot;: &quot;Fiber Channel&quot;,
+   &quot;Description&quot;: &quot;[CA:ABCYONXT-0054.T1.F1 / CA:ABCYONXT-0053.T1.F1]&quot;
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

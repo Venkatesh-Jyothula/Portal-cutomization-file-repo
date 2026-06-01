@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Hyperlink mapping </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Hyperlink mapping ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="hyperlink-mapping">Hyperlink mapping</h1>
+
+<p>File references in CreateComponent, UpdateComponent transactions are transformed before inserting or updating data in database. The purpose of this step is to transform the relative path to a file within transaction to attribute value and also to a physical path (which may be different). The transformed physical path is returned in response of the <a href="../ProcessTransactions.html">ProcessTransactions</a> request in links property of the attribute.</p>
+<p>Hyperlink transformation uses the following configuration parameters in table <a href="../../../techdoc/Reference/Metadata-tables/NWG_GENERALPARAMETER.html">NWG_GENERALPARAMETER</a>:</p>
+<ul>
+<li>HyperlinkFilter</li>
+<li>HyperlinkPathTemplate</li>
+<li>HyperlinkValueTemplate</li>
+</ul>
+<p>All file references (<code>&quot;f&quot;</code> attributes), which pass regular expression defined in <em>HyperlinkFilter</em> are transformed. If <em>HyperlinkFilter</em> is empty, all files references are processed.</p>
+<p><em>HyperlinkValueTemplate</em> is the template for attribute value. If not specified, the source value is copied without modification.</p>
+<p>Secondary link is constructed using <em>HyperlinkPathTemplate</em>. This value is not stored in database. It is returned in the response to the caller in the links property of the transaction. The caller is expected to use this value to perform a physical file operation with the file.</p>
+<p>Hyperlink templates are strings which may contain placeholders. Placeholders are enclosed in curly brackets {}. Each placeholder has a source, optional format string separated by : and zero or more processing instructions, separated by |.</p>
+<p>Placeholder format:</p>
+<pre><code>{source}
+{source:format}
+{source|processing}
+{source:format|processing1|processing2|…|processingN}
+</code></pre>
+<h2 id="available-placeholders">Available placeholders</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Data type</th>
+<th>Processing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td>string</td>
+<td>Original value of the hyperlink.</td>
+</tr>
+<tr>
+<td>fid</td>
+<td>number</td>
+<td>G3E_FID of the current feature</td>
+</tr>
+<tr>
+<td>fno</td>
+<td>number</td>
+<td>G3E_FNO of the current feature</td>
+</tr>
+<tr>
+<td>cid</td>
+<td>number</td>
+<td>G3E_FID of the current component instance</td>
+</tr>
+<tr>
+<td>cno</td>
+<td>number</td>
+<td>G3E_FNO of the current component instance</td>
+</tr>
+<tr>
+<td>date</td>
+<td>datetime</td>
+<td>Current date and time.</td>
+</tr>
+<tr>
+<td>job</td>
+<td>string</td>
+<td>Current job identifier.</td>
+</tr>
+<tr>
+<td>uid</td>
+<td>string</td>
+<td>Unique identifier, 32 character long.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="formatting">Formatting</h2>
+<p>For formatting numeric values, see .NET numeric format strings (<a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings">documentation</a>).
+For formatting date and time values, see .NET date and time format strings (<a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings">documentation</a>).</p>
+<h2 id="processing-instructions">Processing instructions</h2>
+<table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Processing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>substr(start,length)</td>
+<td>Substring, starting at index start (0-based), length characters long.</td>
+</tr>
+<tr>
+<td>file</td>
+<td>Returns file name without path.</td>
+</tr>
+<tr>
+<td>filename</td>
+<td>Returns file name without path and extension.</td>
+</tr>
+<tr>
+<td>fileext</td>
+<td>Returns file extension.</td>
+</tr>
+<tr>
+<td>filepath</td>
+<td>Returns file path.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-1--hyperlinkfilter">Example 1 – HyperlinkFilter</h2>
+<p>Regular expression to match any file path except for those starting with <code>http://</code>, <code>https://</code> or <code>file://</code></p>
+<pre><code>^(?!(?:file|https?)[:]\/\/.*$).*
+</code></pre>
+<h2 id="example-2--hyperlinkvaluetemplate-or-hyperlinkpathtemplate">Example 2 – HyperlinkValueTemplate or HyperlinkPathTemplate</h2>
+<pre><code>%ATTACHMENTS%\{date:yyyy}\{date:MM}\{uid|substr(0,2)}\{uid|substr(2,2)}\{uid}\{fid:0000000000}-{fno}\{cno}-{cid}\{value|file}
+</code></pre>
+<p>With context values:</p>
+<ul>
+<li>file reference <code>attachment1.pdf</code></li>
+<li>date <code>2020-01-02</code></li>
+<li>unique id <code>01234567890123456789012345678901</code></li>
+<li>FNO,FID,CNO,CID = <code>999,25252,456,1</code></li>
+</ul>
+<p>Is translated to:</p>
+<pre><code>%ATTACHMENTS%\2020\01\01\23\01234567890123456789012345678901/0000025252-999/456-1/attachment1.pdf
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

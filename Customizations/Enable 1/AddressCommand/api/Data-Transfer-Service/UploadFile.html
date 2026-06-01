@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>UploadFile </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="UploadFile ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="uploadfile">UploadFile</h1>
+
+<p>Upload contents of a file to an open transaction. There are two options available:</p>
+<ul>
+<li>Upload file as multipart/form-data</li>
+<li>Upload data in regular body (JSON) with provided file name.</li>
+</ul>
+<h2 id="request">Request</h2>
+<h3 id="uri">URI</h3>
+<p><strong>POST</strong> /transaction/<strong>{tid}</strong>/file</p>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tid</td>
+<td>String</td>
+<td>Y</td>
+<td>Transaction id (<code>tid</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-type-1-form-data">Request type 1 (form-data)</h3>
+<p>The file content is sent in the request body. The body must use <strong>multipart/form-data</strong> encoding (see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST">POST</a>). Two named parameters are accepted:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file</td>
+<td>File</td>
+<td>Y</td>
+<td>File contents and name.</td>
+</tr>
+<tr>
+<td>path</td>
+<td>String</td>
+<td>N</td>
+<td>Relative path of the file. Use <code>/</code> as path delimiter. Optional.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="request-type-2-json-body">Request type 2 (JSON body)</h3>
+<p>The file content is sent as JSON in the request body. Query parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file</td>
+<td>String</td>
+<td>Y</td>
+<td>File name.</td>
+</tr>
+<tr>
+<td>path</td>
+<td>String</td>
+<td></td>
+<td>Relative path of the file. Use <code>/</code> as path delimiter (URL encoding is reqiured).</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-json">{
+   &quot;columns&quot;: [&quot;Header 1&quot;, &quot;Header 2&quot; ],
+   &quot;rows&quot; : [
+      [&quot;row 1&quot;, 123 ],
+      [&quot;row 2&quot;, 456 ]
+  ]
+}
+</code></pre>
+<h2 id="response">Response</h2>
+<h3 id="normal-response-200">Normal response (200)</h3>
+<pre><code class="lang-json">{
+    &quot;Success&quot;: true
+}
+</code></pre>
+<h3 id="bad-request-400">Bad request (400)</h3>
+<p>Returned when the request has invalid parameters.</p>
+<pre><code class="lang-json">{
+    &quot;success&quot;: false,
+    &quot;ErrorCode&quot;: &quot;ERR_TRANSACTION_NOT_OPEN&quot;,
+    &quot;ErrorMessage&quot;: &quot;Transaction is not open&quot;
+}
+</code></pre>
+<h3 id="authentication-failure-401">Authentication failure (401)</h3>
+<p>Returned when authorization token is missing or invalid.</p>
+<h3 id="server-error-500">Server error (500)</h3>
+<p>Returned when the request has invalid parameters.</p>
+<pre><code class="lang-json">{
+    &quot;success&quot;: false,
+    &quot;ErrorCode&quot;: &quot;ERR_UPLOAD_FAILED&quot;,
+    &quot;ErrorMessage&quot;: &quot;Error details&quot;
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

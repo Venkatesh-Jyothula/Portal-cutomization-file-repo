@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>ConvertGeometryFormat </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="ConvertGeometryFormat ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="convertgeometryformat">ConvertGeometryFormat</h1>
+
+<p>Convert geometries into a selected format. The output can be 2D or 3D. Optionally, complex geometries with circular arcs can be stroked and simplified.</p>
+<h2 id="request">Request</h2>
+<p><strong>Method</strong></p>
+<p>POST</p>
+<p><strong>URL Template</strong></p>
+<p><code>/geometry/convert?gf={gf}[&amp;dims={dims}][&amp;resolution={resolution}]</code></p>
+<p><strong>Query params</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gf</td>
+<td>string</td>
+<td>Y</td>
+<td>Output geometry format. Allowed values: wkt, networksjson, geojson. Default is wkt.</td>
+</tr>
+<tr>
+<td>dims</td>
+<td>integer</td>
+<td></td>
+<td>Dimensions of the output. Allowed values: 2, 3. Default is 3.</td>
+</tr>
+<tr>
+<td>resolution</td>
+<td>double</td>
+<td></td>
+<td>Resolution (ground units pre display unit). When specified, all circular arcs are stroked to polylines and geometries are simplified (consecutive polyline segments are merged).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Body</strong></p>
+<p>A JSON object with one or more properties. Each property contains a single geometry. The property name is repeated in the response to allow matching geometries in request and response. There is no restriction on the property names (beyond standard JSON rules).
+Geometries in the request can be specified in mixed formats. The API will deserialize the geometry according to its format specifier.</p>
+<h2 id="response">Response</h2>
+<p>Data of the detail window, with storage, projected and geographic (WGS84) MBR.</p>
+<h2 id="example">Example</h2>
+<p><strong>Example Request</strong></p>
+<p>http://machinename/fds/geometry/convert?gf=geojson&amp;dims=2</p>
+<p><em>Body</em></p>
+<pre><code class="lang-js">{
+    &quot;a&quot;: {
+        &quot;networksjson&quot;: {
+            &quot;type&quot;: &quot;OrientedPoint&quot;,
+            &quot;origin&quot;: [
+                1,
+                2,
+                0
+            ],
+            &quot;orientation&quot;: [
+                0.4472142375143948,
+                0.8944268699924094,
+                0
+            ]
+        }
+    },
+    &quot;b&quot;: {
+        &quot;wkt&quot;: &quot;LINESTRING Z(1 2 3,4 5 6,7 8 9)&quot;
+    }
+}
+</code></pre>
+<p><strong>Example Response</strong></p>
+<pre><code class="lang-js">{
+    &quot;a&quot;: {
+        &quot;geojson&quot;: {
+            &quot;type&quot;: &quot;Point&quot;,
+            &quot;coordinates&quot;: [
+                1,
+                2
+            ],
+            &quot;orientation&quot;: [
+                0.4472142375143948,
+                0.8944268699924094
+            ]
+        }
+    },
+    &quot;b&quot;: {
+        &quot;geojson&quot;: {
+            &quot;type&quot;: &quot;LineString&quot;,
+            &quot;coordinates&quot;: [
+                [
+                    1,
+                    2
+                ],
+                [
+                    4,
+                    5
+                ],
+                [
+                    7,
+                    8
+                ]
+            ]
+        }
+    }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

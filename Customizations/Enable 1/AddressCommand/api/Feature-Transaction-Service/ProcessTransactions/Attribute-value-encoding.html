@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Attribute value encoding </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Attribute value encoding ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="attribute-value-encoding">Attribute value encoding</h1>
+
+<p>Attribute data types and their encoding in requests and responses:</p>
+<h2 id="string">string</h2>
+<p>Encoded as JSON string value.</p>
+<pre><code class="lang-json">{ 
+  &quot;TEXT&quot;: &quot;Example text 1&quot; 
+}
+</code></pre>
+<h2 id="number">number</h2>
+<p>Encoded as JSON number, with . as decimal separator. Both integer and double values are supported.</p>
+<pre><code class="lang-json">{ 
+  &quot;LENGTH&quot;: 12.56 
+}
+</code></pre>
+<h2 id="datetime">datetime</h2>
+<p>Wrapped in a JSON object with single <code>&quot;d&quot;</code> property containing string value in ISO 8601 format.</p>
+<pre><code class="lang-json">{ 
+  &quot;LAST_CLEANING_DT&quot;: { 
+    &quot;d&quot;: &quot;2020-01-02T15:46:22&quot;
+  } 
+}
+</code></pre>
+<h2 id="geometry">geometry</h2>
+<p>Wrapped in a JSON object with single <code>&quot;wkt&quot;</code>, <code>&quot;networksjson&quot;</code> or <code>&quot;geojson&quot;</code> property which contains a WKT string representation of the geometry, JSON representation of the NetWorks geometry format or GeoJSON respectively.</p>
+<p>See <a href="../../Feature-Data-Service/Geometry-serialization.html">Geometry serialization</a> for details.</p>
+<pre><code class="lang-json">{
+  &quot;G3E_GEOMETRY&quot;: {
+    &quot;wkt&quot;: &quot;POINT M (4501991.49 5925480.29 1570000)&quot;
+  }
+}
+</code></pre>
+<pre><code class="lang-json">{
+  &quot;G3E_GEOMETRY&quot;: {
+    &quot;networksjson&quot;: {
+      &quot;type&quot;: &quot;OrientedPoint&quot;,
+      &quot;origin&quot;: [4501991.49, 5925480.29, 3],
+      &quot;orientation&quot;: [0, 1, 0]
+  }
+}
+</code></pre>
+<h2 id="file">file</h2>
+<p>Wrapped in a JSON object with single <code>&quot;f&quot;</code> property which contains the relative path to the file within the transaction.</p>
+<p><em>Note</em></p>
+<p>Feature Transaction Service performs transformation of the incoming value (see <a href="Hyperlink-mapping.html">Hyperlink mapping</a>, but does not copy or move the physical file.
+This is done by Work Service as <a href="../../../techdoc/Services/Work-Service/Workloads/Features/Post-processing.html">post-processing</a> after the ProcessTransactions completes.</p>
+<pre><code class="lang-json">{
+  &quot;ATTACHMENT_HL&quot;: {
+    &quot;f&quot;: &quot;photo1.jpg&quot;
+  }
+}
+</code></pre>
+<h2 id="binary">binary</h2>
+<p>Wrapped in a JSON object with single <code>&quot;b&quot;</code> property containing string value with Base64 encoding.</p>
+<pre><code class="lang-json">{
+  &quot;INTERFACE&quot;: {
+    &quot;b&quot;: &quot;dGVzdA==&quot;
+  }
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

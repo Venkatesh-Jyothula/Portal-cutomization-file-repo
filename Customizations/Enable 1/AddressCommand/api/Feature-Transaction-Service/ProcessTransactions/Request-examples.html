@@ -1,0 +1,1015 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Request examples </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Request examples ">
+      
+      <link rel="icon" href="../../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../../public/main.js'
+    import { init } from './../../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="request-examples">Request examples</h1>
+
+<h2 id="create-features-and-establish-relationships">Create features and establish relationships</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;tref&quot;: 1,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 704
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;tref&quot;: 2,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 19733,
+      &quot;attributes&quot;: {
+        &quot;CATEGORY&quot;: &quot;2&quot;,
+        &quot;ANGULAR_POSITION&quot;: 90,
+        &quot;SEWAGE_CATEGORY&quot;: &quot;1&quot;
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 19743,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT M(4570684 5829980 3141592)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_FNO&quot;: 700
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19600,
+      &quot;attributes&quot;: {
+        &quot;CATEGORY&quot;: &quot;1&quot;,
+        &quot;MATERIAL&quot;: &quot;2&quot;,
+        &quot;PROFILE&quot;: &quot;1&quot;,
+        &quot;SEWAGE_CATEGORY&quot;: &quot;1&quot;,
+        &quot;PROFILE_HEIGHT&quot;: 250
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19610,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;LINESTRING (4570678 5829980, 4570698 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 19616,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570688 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;G3E_RNO&quot;: 700
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 3,
+      &quot;G3E_FNO&quot;: 705
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 3,
+      &quot;G3E_CNO&quot;: 19776,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570678 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 3,
+      &quot;relatedfref&quot;: 2,
+      &quot;G3E_RNO&quot;: 702
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_FNO&quot;: 701
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19633,
+      &quot;attributes&quot;: {
+        &quot;CATEGORY&quot;: &quot;1&quot;,
+        &quot;MATERIAL&quot;: &quot;2&quot;,
+        &quot;PROFILE&quot;: &quot;1&quot;,
+        &quot;SEWAGE_CATEGORY&quot;: &quot;1&quot;,
+        &quot;PROFILE_HEIGHT&quot;: 80
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19643,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;LINESTRING (4570684 5829970, 4570684 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_CNO&quot;: 19647,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT M (4570684 5829975 1570000)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 1,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 4,
+      &quot;relatednode&quot;: 2,
+      &quot;G3E_RNO&quot;: 70
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_FNO&quot;: 702
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 19676,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570677.5 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570677.5 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_CNO&quot;: 19679,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570679 5829982)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 5,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;relatednode&quot;: 1,
+      &quot;G3E_RNO&quot;: 70
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 3,
+      &quot;relatedfref&quot;: 5,
+      &quot;G3E_RNO&quot;: 702
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_FNO&quot;: 703
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 19700,
+      &quot;attributes&quot;: {
+        &quot;CATEGORY&quot;: &quot;4&quot;,
+        &quot;SEWAGE_CATEGORY&quot;: &quot;1&quot;
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 19710,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570684 5829970)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 6,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570684 5829970)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 6,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 4,
+      &quot;relatednode&quot;: 1,
+      &quot;G3E_RNO&quot;: 70
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_FNO&quot;: 702
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 19676,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570698.5 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 722,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570699 5829980)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 7,
+      &quot;G3E_CNO&quot;: 19679,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4570700 5829982)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationship&quot;,
+      &quot;fref&quot;: 7,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 2,
+      &quot;relatednode&quot;: 2,
+      &quot;G3E_RNO&quot;: 70,
+      &quot;attributes&quot;: {
+        &quot;LENGTH&quot;: 5.2
+      }
+    }
+  ]
+}
+</code></pre>
+<h2 id="update-feature">Update feature</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 323,
+      &quot;G3E_FID&quot;: 3734937
+    },
+    {
+      &quot;type&quot;: &quot;UpdateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 5933,
+      &quot;G3E_CID&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;TYPE&quot;: &quot;900&quot;
+      }
+    },
+    {
+      &quot;type&quot;: &quot;UpdateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 5951,
+      &quot;G3E_CID&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;G3E_ALIGNMENT&quot;: 9,
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT ZM(4502002.34412099 5925501.26070564 0 750000)&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<h2 id="delete-component">Delete component</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 323,
+      &quot;G3E_FID&quot;: 3734948
+    },
+    {
+      &quot;type&quot;: &quot;DeleteComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 390,
+      &quot;G3E_CID&quot;: 1
+    }
+  ]
+}
+</code></pre>
+<h2 id="delete-feature">Delete feature</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;DeleteFeature&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 323,
+      &quot;G3E_FID&quot;: 3735014
+    }
+  ]
+}
+</code></pre>
+<h2 id="establish-relationships">Establish relationships</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 306,
+      &quot;G3E_FID&quot;: 12344
+    },
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_FNO&quot;: 306,
+      &quot;G3E_FID&quot;: 54662
+    },
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 3,
+      &quot;G3E_FNO&quot;: 306,
+      &quot;G3E_FID&quot;: 22223333
+    },
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 4,
+      &quot;G3E_FNO&quot;: 306,
+      &quot;G3E_FID&quot;: 33334444
+    },
+    {
+      &quot;type&quot;: &quot;UpdateFeature&quot;,
+      &quot;fref&quot;: 5,
+      &quot;G3E_FNO&quot;: 306,
+      &quot;G3E_FID&quot;: 44445555
+    },
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-edge connectivity on node 1&quot;,
+
+      &quot;G3E_RNO&quot;: 30,
+
+      &quot;fref&quot;: 1,
+      &quot;node&quot;: 1,
+
+      &quot;relatedfref&quot;: 2,
+      &quot;relatednode&quot;: 1,
+
+      &quot;attributes&quot;: {
+        &quot;CONNECTION_STATE&quot;: &quot;0&quot;,
+        &quot;LENGTH&quot;: 10
+      }
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-edge connectivity on node 2&quot;,
+
+      &quot;G3E_RNO&quot;: 30,
+
+      &quot;fref&quot;: 1,
+      &quot;node&quot;: 2,
+
+      &quot;relatedfref&quot;: 3,
+      &quot;relatednode&quot;: 1
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Ownership (child-to-parent)&quot;,
+
+      &quot;G3E_RNO&quot;: 216,
+
+      &quot;fref&quot;: 1,
+      &quot;relatedfref&quot;: 4
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Ownership (child-to-parent, second owner)&quot;,
+
+      &quot;G3E_RNO&quot;: 216,
+
+      &quot;fref&quot;: 1,
+      &quot;node&quot;: 2,
+
+      &quot;relatedfref&quot;: 5
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Ownership (parent-to-child)&quot;,
+
+      &quot;G3E_RNO&quot;: 217,
+
+      &quot;fref&quot;: 2,
+      &quot;relatedfref&quot;: 1
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Ownership (parent-to-child, second owner)&quot;,
+
+      &quot;G3E_RNO&quot;: 217,
+
+      &quot;fref&quot;: 2,
+      &quot;relatedfref&quot;: 1,
+      &quot;relatednode&quot;: 2
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Many-to-Many Ownership (child-to-parent)&quot;,
+
+      &quot;G3E_RNO&quot;: 704,
+
+      &quot;fref&quot;: 1,
+      &quot;relatedfref&quot;: 5
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Many-to-Many Ownership (parent-to-child)&quot;,
+
+      &quot;G3E_RNO&quot;: 705,
+
+      &quot;fref&quot;: 5,
+      &quot;relatedfref&quot;: 1
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-Ordered connectivity on node 1 (linear feature)&quot;,
+
+      &quot;G3E_RNO&quot;: 8,
+
+      &quot;fref&quot;: 5,
+      &quot;node&quot;: 1,
+      &quot;relatedfref&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;G3E_PATHCOST&quot;: 0.001
+      }
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-Ordered connectivity on node 2 (linear feature)&quot;,
+
+      &quot;G3E_RNO&quot;: 8,
+
+      &quot;fref&quot;: 5,
+      &quot;node&quot;: 2,
+      &quot;relatedfref&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;G3E_PATHCOST&quot;: 0.001
+      }
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-Ordered connectivity on linear node 1 (point feature)&quot;,
+
+      &quot;G3E_RNO&quot;: 13,
+
+      &quot;fref&quot;: 2,
+      &quot;relatedfref&quot;: 3,
+      &quot;relatednode&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;G3E_PATHCOST&quot;: 0.001
+      }
+    },
+
+    {
+      &quot;type&quot;: &quot;EstablishRelationhip&quot;,
+      &quot;_remark&quot;: &quot;Establish Node-Ordered connectivity on linear node 2 (point feature)&quot;,
+
+      &quot;G3E_RNO&quot;: 13,
+
+      &quot;fref&quot;: 2,
+      &quot;relatedfref&quot;: 3,
+      &quot;relatednode&quot;: 2,
+      &quot;attributes&quot;: {
+        &quot;G3E_PATHCOST&quot;: 0.001
+      }
+    }
+  ]
+}
+</code></pre>
+<h2 id="create-detail-and-attach-detail-to-feature">Create detail and attach detail to feature</h2>
+<pre><code class="lang-json">{
+  &quot;transactions&quot;: [
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_FNO&quot;: 630
+    },
+    {
+      &quot;type&quot;: &quot;CreateDetail&quot;,
+      &quot;dref&quot;: 1,
+      &quot;attributes&quot;: {
+        &quot;USERNAME&quot;: &quot;Gas Test Detail #001&quot;,
+        &quot;LEGEND&quot;: 13,
+        &quot;MBRXLO&quot;: 4502786,
+        &quot;MBRYLO&quot;: 5925544,
+        &quot;MBRXHI&quot;: 4502790,
+        &quot;MBRYHI&quot;: 5925549
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;tref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16500,
+      &quot;attributes&quot;: {
+        &quot;ID&quot;: &quot;Test plant #1&quot;,
+        &quot;NUM&quot;: &quot;Test plant #1&quot;,
+        &quot;SUBUNIT&quot;: &quot;611&quot;,
+        &quot;CATEGORY&quot;: &quot;4&quot;
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16510,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4502788 5925546)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16515,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT (4502788 5925548)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;AttachDetail&quot;,
+      &quot;fref&quot;: 1,
+      &quot;dref&quot;: 1
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;dref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16518,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POINT  (4502788 5925548.5)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 1,
+      &quot;dref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16514,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;POLYGON((4502786 5925544, 4502790 5925544,4502790 5925548,4502786 5925548,4502786 5925544))&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateFeature&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_FNO&quot;: 606
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;G3E_CNO&quot;: 16133,
+      &quot;attributes&quot;: {
+        &quot;MID&quot;: 325,
+        &quot;SUBUNIT&quot;: &quot;623&quot;,
+        &quot;CATEGORY&quot;: &quot;4&quot;,
+        &quot;MATERIAL&quot;: &quot;900&quot;
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;dref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16143,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;LINESTRING(4502778 5925546, 4502788 5925546)&quot;
+        }
+      }
+    },
+    {
+      &quot;type&quot;: &quot;CreateComponent&quot;,
+      &quot;fref&quot;: 2,
+      &quot;dref&quot;: 1,
+      &quot;G3E_CNO&quot;: 16144,
+      &quot;attributes&quot;: {
+        &quot;G3E_GEOMETRY&quot;: {
+          &quot;wkt&quot;: &quot;LINESTRING(4502786.85 5925546.01, 4502787.81 5925545.69, 4502789.34 5925544.94)&quot;
+        }
+      }
+    }
+  ]
+}
+</code></pre>
+<h2 id="create-detail--create-feature-with-two-detail-references">Create detail – create feature with two detail references</h2>
+<pre><code class="lang-json">{
+    &quot;transactions&quot;: [
+        {
+            &quot;type&quot;: &quot;CreateFeature&quot;,
+            &quot;fref&quot;: 1,
+            &quot;G3E_FNO&quot;: 630
+        },
+        {
+            &quot;type&quot;: &quot;CreateDetail&quot;,
+            &quot;dref&quot;: 1,
+            &quot;attributes&quot;: {
+                &quot;USERNAME&quot;: &quot;Gas Test Detail #001&quot;,
+                &quot;LEGEND&quot;: 13,
+                &quot;MBRXLO&quot;: 4502786,
+                &quot;MBRYLO&quot;: 5925544,
+                &quot;MBRXHI&quot;: 4502790,
+                &quot;MBRYHI&quot;: 5925549
+            }
+        },        
+        {
+            &quot;type&quot;: &quot;CreateDetail&quot;,
+            &quot;dref&quot;: 2,
+            &quot;attributes&quot;: {
+                &quot;USERNAME&quot;: &quot;Gas Test Detail #002&quot;,
+                &quot;LEGEND&quot;: 13,
+                &quot;MBRXLO&quot;: 4502787,
+                &quot;MBRYLO&quot;: 5925545,
+                &quot;MBRXHI&quot;: 4502791,
+                &quot;MBRYHI&quot;: 5925550
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;tref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16500,
+            &quot;attributes&quot;: {
+                &quot;ID&quot;: &quot;Test plant #1&quot;,
+                &quot;NUM&quot;: &quot;Test plant #1&quot;,
+                &quot;SUBUNIT&quot;: &quot;611&quot;,
+                &quot;CATEGORY&quot;: &quot;4&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16510,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;POINT (4502788 5925546)&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16515,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;POINT (4502788 5925548)&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;tref&quot;: 1001,
+            &quot;G3E_CNO&quot;: 16509
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;tref&quot;: 1002,
+            &quot;G3E_CNO&quot;: 16509
+        },
+        {
+            &quot;type&quot;: &quot;AttachDetail&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 1,
+            &quot;componenttref&quot;: 1001
+        },
+        {
+            &quot;type&quot;: &quot;AttachDetail&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 2,
+            &quot;componenttref&quot;: 1002
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16518,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;POINT  (4502788 5925548.5)&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16514,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;POLYGON((4502786 5925544, 4502790 5925544,4502790 5925548,4502786 5925548,4502786 5925544))&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 2,
+            &quot;G3E_CNO&quot;: 697,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;LINESTRING(4502786 5925546, 4502788 5925546)&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateFeature&quot;,
+            &quot;fref&quot;: 2,
+            &quot;G3E_FNO&quot;: 606
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;G3E_CNO&quot;: 16133,
+            &quot;attributes&quot;: {
+                &quot;MID&quot;: 325,
+                &quot;SUBUNIT&quot;: &quot;623&quot;,
+                &quot;CATEGORY&quot;: &quot;4&quot;,
+                &quot;MATERIAL&quot;: &quot;900&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16143,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                     &quot;wkt&quot;: &quot;LINESTRING(4502778 5925546, 4502788 5925546)&quot;
+                }
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16144,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                     &quot;wkt&quot;: &quot;LINESTRING(4502786.85 5925546.01, 4502787.81 5925545.69, 4502789.34 5925544.94)&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<h2 id="update-detail--add-graphic-component-to-detail">Update detail – add graphic component to detail</h2>
+<pre><code class="lang-json">{
+    &quot;transactions&quot;: [
+        {
+            &quot;type&quot;: &quot;UpdateDetail&quot;,
+            &quot;dref&quot;: 1,
+            &quot;G3E_DETAILID&quot;: 123
+        },
+        {
+            &quot;type&quot;: &quot;CreateFeature&quot;,
+            &quot;fref&quot;: 2,
+            &quot;G3E_FNO&quot;: 606
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;G3E_CNO&quot;: 16133,
+            &quot;attributes&quot;: {
+                &quot;MID&quot;: 325,
+                &quot;SUBUNIT&quot;: &quot;623&quot;,
+                &quot;CATEGORY&quot;: &quot;4&quot;,
+                &quot;MATERIAL&quot;: &quot;900&quot;
+            }
+        },
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16143,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                     &quot;wkt&quot;: &quot;LINESTRING(4502788 5925546, 4502798 5925546)&quot;
+                }
+            }
+        },        
+        {
+            &quot;type&quot;: &quot;CreateComponent&quot;,
+            &quot;fref&quot;: 2,
+            &quot;dref&quot;: 1,
+            &quot;G3E_CNO&quot;: 16144,
+            &quot;attributes&quot;: {
+                &quot;G3E_GEOMETRY&quot;: {
+                    &quot;wkt&quot;: &quot;LINESTRING(4502787 5925547, 4502788 5925546)&quot;
+                }
+            }
+        }
+    ]
+}
+</code></pre>
+<h2 id="detach-detail--remove-detail-reference-from-feature">Detach detail – remove detail reference from feature</h2>
+<pre><code class="lang-json">{
+    &quot;transactions&quot;: [
+        {
+            &quot;type&quot;: &quot;UpdateFeature&quot;,
+            &quot;fref&quot;: 1,
+            &quot;G3E_FNO&quot;: 630,
+            &quot;G3E_FID&quot;: 123
+        },
+        {
+            &quot;type&quot;: &quot;UpdateDetail&quot;,
+            &quot;dref&quot;: 1,
+            &quot;G3E_DETAILID&quot;: 456
+        },
+        {
+            &quot;type&quot;: &quot;DetachDetail&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 1
+        }
+    ]
+}
+</code></pre>
+<h2 id="detach-detail--remove-detail-reference-from-specific-component-instance">Detach detail – remove detail reference from specific component instance</h2>
+<pre><code class="lang-json">{
+    &quot;transactions&quot;: [
+        {
+            &quot;type&quot;: &quot;UpdateFeature&quot;,
+            &quot;fref&quot;: 1,
+            &quot;G3E_FNO&quot;: 630,
+            &quot;G3E_FID&quot;: 123
+        },
+        {
+            &quot;type&quot;: &quot;UpdateDetail&quot;,
+            &quot;dref&quot;: 1,
+            &quot;G3E_DETAILID&quot;: 456
+        },
+        {
+            &quot;type&quot;: &quot;UpdateComponent&quot;,
+            &quot;fref&quot;: 1,
+            &quot;tref&quot;: 1002,
+            &quot;G3E_CNO&quot;: 16509,
+            &quot;G3E_CID&quot;: 1
+        },
+        {
+            &quot;type&quot;: &quot;DetachDetail&quot;,
+            &quot;fref&quot;: 1,
+            &quot;dref&quot;: 1,
+            &quot;componenttref&quot;: 1002
+        }
+    ]
+}
+</code></pre>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

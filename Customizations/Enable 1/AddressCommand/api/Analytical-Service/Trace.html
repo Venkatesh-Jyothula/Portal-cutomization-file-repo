@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Trace </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Trace ">
+      
+      <link rel="icon" href="../../wsfavicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      
+  </head>
+
+  <script type="module">
+    import options from './../../public/main.js'
+    import { init } from './../../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="trace">Trace</h1>
+
+<h1 id="trace-api-overview">Trace API Overview</h1>
+<p>The HxGN NetWorks Analytical web service provides methods that allow clients to perform metadata defined traces of the HxGN NetWorks Core data's connectivity model.</p>
+<h1 id="supported-trace-workflows">Supported Trace Workflows</h1>
+<h2 id="dynamically-discover-the-analytical-service">Dynamically discover the Analytical service</h2>
+<p>Call the <code>NetWorksSolutionService/{alias}/analytical</code> method to retrieve information on the deployed analytical service for this configuration.</p>
+<p>Initialize the client to use the Analytical service trace functionality:
+Call the <code>/Trace/SeedFnos</code> method to retrieve the list of feature types that can start a trace. This information could be used by the client to enable trace workflows when the selected feature type is in the list of seed Fnos.</p>
+<h2 id="perform-a-predefined-trace">Perform a predefined trace</h2>
+<p>When the user selects a feature and the feature type (FNO) matches one of the trace seed Fnos, the client can call <code>/Trace/Types/{fno}</code> to get the list of predefined trace definitions for that feature type. Each trace definition includes a user visible name to display, the trace mappingId and the trace type (from G3E_TRACETYPES table).</p>
+<p>When the user selects the desired trace definition, the client uses the corresponding trace MappingId value to call the <code>/Trace/Parameters/{mappingId}</code> method to retrieve the full description of the trace inputs that are needed to execute the trace. The response tells the client whether hint and / or goal features need to be determined and whether there are trace attribute values that need to be collected from the user for the trace filter or stop criteria.</p>
+<p>If the trace parameter's PromptForHint property is true, then call the <code>/Trace/Hint?SeedFID={seedFid}&amp;MappingId={mappingId}</code> method to get a list of candidate features that can serve as the hint feature for the trace. If the trace definition's PromptForGoal property is true, then the client directs the user to select a terminating feature for the trace. If the GoalFnoCandidates list is not null, then the terminating feature's type must match one of the Fnos in the GoalFnoCandidates list.</p>
+<p>If the trace parameter's Attributes property is not empty, then the client must use the information to collect attribute values that will be used by the trace filter or stop criteria. If the Attributes IsPickListAttribute property is true, the client can call <code>/Trace/Picklistvalues/{ano}</code> to get the Json array of picklist key-value pairs to display to the user.</p>
+<p>The user must supply a name for the trace results. The client can call <code>/Trace/Exists/{traceName}</code> to determine whether or not the specified trace result name already exists. If it does exist, the client can either get another name from the user, or ask the user if he wants to overwrite the previous trace results that are associated with the specified name. The trace result UserName and Overwrite properties are part of the execute method's POST body.</p>
+<p>When all trace parameter values have been collected and formatted into the POST body Json format, call the /trace/execute method to run the trace in the database, store the trace results in database tables and get the trace number (TNO) for the result set as the response.</p>
+<h2 id="spatially-restrict-trace-execution">Spatially restrict trace execution</h2>
+<p>The set of features returned by a trace execution can be restricted to just those feature that are within a spatial area. The spatial area can be defined in the trace execute POST body as either an AOI parameter or a SpatialFilter parameter - but not both.</p>
+<p>An array of AOI objects is returned from the <code>{analyticalService}/Areas</code> controller. The client could display the areas and let the user pick an area of interest to restrict his trace to. Alternatively, the client could allow the user to create a GeoJson polygon and send it as the &quot;SpatialFilter&quot; parameter in the POST body. In both cases, the metadata defined values for AOI threshold limits and the ability to override the limits will be applied.</p>
+<h2 id="measure-features-in-a-trace-result">Measure features in a trace result</h2>
+<p>Any trace execution result set can be augmented with the measurement of the features. If the MeasureFeatures parameter in the POST body is set to true, then the three additional columns, LENGTH, AREA, and PERCENT, are added to the results. For linear geometry features, the LENGTH column contains the measured length in the units of the current configuration. Likewise, area geometry features contain the measured area. If the search result was spatially restricted by either an Aoi or an adhoc spatial filter, then the PERCENT column contains the ratio of the measure of the part of the feature geometry that is inside the spatial boundary divided by the measure of the total geometry. By default, all measurements are done using the curved Earth reference space, but the client can override that by setting the MeasureOnCurvedEarth parameter to false, which will measure using the projection reference space.</p>
+<h2 id="display-the-trace-results-on-the-map-view">Display the trace results on the map view</h2>
+<p>The response to any successful trace execution includes the trace number of the result set. This trace number (TNO) is the &quot;handle&quot; to the saved trace results in the database. The dynamic layer name for this trace result is <code>Trace.{tno}</code>. To display the results on the map view, the client first calls the WMS GetLayer method with LAYERS=Trace.{tno} to get the GetCapabilities response that includes the bounding box to fit the map to in a subsequent call to the WMS GetMap method that also specifies the <code>LAYERS=Trace.{tno}</code>. (See WMS Service methods for details).</p>
+<h2 id="retrieve-previously-saved-trace-results">Retrieve previously saved trace results</h2>
+<p>When a trace is executed, the trace results are saved in tables in the database until the client explicitly deletes them. Call the <code>/Trace/Traces</code> method to get a Json list of the trace number (TNO) and trace name of every saved trace result set. This list could be presented to the user so he can select a previously executed trace for redisplay or for custom processing.</p>
+<p>Call the <code>/Trace/Results/{tno}</code> method to return a Json array of the trace results. The client could display the information as a data grid to allow the user to examine the features in the trace one at a time.</p>
+<h2 id="augment-the-trace-results">Augment the Trace Results</h2>
+<p>Any trace result set can be augmented with new attributes by providing the AUGMENT optional parameter. User can provide attribute numbers and attribute field name as input to the AUGMENT parameter. Call the <code>/Trace/Results/{tno}?Augment={Attribute Number}&amp;Augment={ComponentName.AttributeFieldName}</code> to retrieve augmented parameters along with the trace result set.</p>
+<h2 id="aggregation-on-trace-results">Aggregation on Trace Results</h2>
+<p>Aggregation can be performed on the result set by providing aggregate optional parameters. Supported aggregates are SUM, MIN, MAX, AVG, GROUPBY, ORDERBY and DISTINCT. User can provide attribute numbers or response field names that needs to participate in the aggregate operation. Simple arithmetic operations can also be performed on the response fields for aggregation. Supported operators for arithmetic operation are +, -, *, /. The arithmetic expression will be evaluated for each response item and then the resulting aggregation will be performed. Call the <code>/Trace/Results/{tno}?Sum={parameterName}&amp;Min={parameterName}&amp;Max={parameterName}&amp;Avg={parameterName}</code> to perform aggregation on the trace result set.</p>
+<h2 id="substitute-on-trace-results">Substitute on Trace Results</h2>
+<p>Substitute operation can be performed on the result set parameters by providing the SUBST optional parameter. It is performed on individual attributes or attributes in specific ranges. All the operators supported by DataTable can be used in substitute operation. Call the <code>/Trace/Results/{tno}?Subst={Substitute ParameterName},{Condition},{Substituted Value}</code> to perform substitution functionality on the trace result set.</p>
+<h2 id="function-call-on-trace-results">Function Call on Trace Results</h2>
+<p>An Oracle function which returns a scalar value can be executed by providing the FUNCTION optional parameter. The resultant value is added as a new parameter to the Trace result set. Call the <code>/Trace/Results/{tno}?Function={OracleFunctionName}@{ParameterName}</code> to execute the oracle function and add to the trace result set.</p>
+<h2 id="delete-trace-results">Delete trace results</h2>
+<p>Call the <code>/trace/delete/{trace name}</code> method to cleanup the saved trace results in the database. It is the client's responsibility to do this cleanup since it is the only one that knows when it is finished working with a specific trace result.</p>
+<h1 id="methods">Methods</h1>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Uri</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetTraceTypes.html">/Types</a></td>
+<td>Returns all trace definitions which are present in the connected database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetTraceTypesFno.html">/Types/{FeatureNumber}</a></td>
+<td>Returns the list of trace definitions for the given feature number which are present in the connected database.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetTraceParameters.html">/Parameters/{TraceMappingID}</a></td>
+<td>Returns the trace parameters for the given trace mapping identifier.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/DeleteTrace.html">/Delete/{TraceName}</a></td>
+<td>Deletes the trace if exists.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/DoesTraceExist.html">/Exists/{TraceName}</a></td>
+<td>Returns true if the given tracename exists.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetPicklistKeyValues.html">/PickListValues/{ANO}</a></td>
+<td>Returns the picklist values for the given attribute number.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Trace/ExecuteTrace.html">/Execute</a></td>
+<td>Executes the trace and returns a tracenumber for the given input parameters.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetHintFeatureCandidate.html">/hint?SeedFID={seedFID}&amp;mappingID={mappingID}</a></td>
+<td>Returns the list of hint feature instances for the given seedFid and mappingID.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetSeedFeatureCandidate.html">/SeedFNOs</a></td>
+<td>Returns all the FNO's that are eligible to perform trace.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetMappingId.html">/MappingId?TraceId={TraceID}&amp;SeedFno={SeedFNO}&amp;TraceType={TraceType}&amp;TraceUsername={TraceUsername}</a></td>
+<td>Returns the MappingId for the given TraceId, SeedFno, and either TraceType or TraceUsername.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="Trace/GetTraceReports.html">/Reports/{mappingId}</a></td>
+<td>Returns the list of valid report for given mappingID.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Trace/ComputeMarkers.html">/ComputeMarkers/{tno}?rpno={rpno}</a></td>
+<td>Computes marker points for executed cost constraint trace.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="Trace/ComputeMarkerPoints.html">/computemarkerpoints</a></td>
+<td>Computes the marker location points for an executed trace based on user defined stop criteria.</td>
+</tr>
+</tbody>
+</table>
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>HxGN<sup>®</sup> NetWorks Web Services and Portal</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
