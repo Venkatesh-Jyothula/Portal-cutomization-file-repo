@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feature Relationships</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 12px;
+      gap: 10px;
+    }
+
+    /* ── Header ───────────────────────────────────────────────────── */
+    .header {
+      background: #1a3b5d;
+      color: #fff;
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .header h2 { font-size: 14px; font-weight: 600; }
+    .header .meta { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+
+    /* ── Toolbar ──────────────────────────────────────────────────── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .toolbar input[type=text] {
+      flex: 1;
+      padding: 5px 10px;
+      border: 1px solid #c0c8d4;
+      border-radius: 4px;
+      font-size: 12px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .toolbar input[type=text]:focus { border-color: #1a3b5d; }
+    .toolbar label { font-size: 12px; white-space: nowrap; }
+    .toolbar select {
+      padding: 5px 8px;
+      border: 1px solid #c0c8d4;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .btn {
+      padding: 5px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+    .btn-primary { background: #1a3b5d; color: #fff; }
+    .btn-primary:hover { background: #245080; }
+    .btn-secondary { background: #e3e8ee; color: #333; }
+    .btn-secondary:hover { background: #cdd5df; }
+
+    /* ── Stats bar ────────────────────────────────────────────────── */
+    .stats {
+      font-size: 12px;
+      color: #555;
+      flex-shrink: 0;
+    }
+    .stats strong { color: #1a3b5d; }
+
+    /* ── Table wrapper ────────────────────────────────────────────── */
+    .table-wrapper {
+      flex: 1;
+      overflow: auto;
+      border-radius: 6px;
+      border: 1px solid #d0d7e2;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      background: #1a3b5d;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    thead th:hover { background: #245080; }
+    thead th.sorted-asc::after  { content: ' ▲'; font-size: 10px; }
+    thead th.sorted-desc::after { content: ' ▼'; font-size: 10px; }
+    tbody tr { border-bottom: 1px solid #e8ecf2; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #eef2f8; }
+    tbody td { padding: 7px 10px; font-size: 12px; vertical-align: middle; }
+    tbody td .fid-chip {
+      display: inline-block;
+      background: #e3e8ee;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 11px;
+      color: #444;
+      font-family: monospace;
+    }
+    tbody td .relation-badge {
+      display: inline-block;
+      background: #dde8f5;
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: #1a3b5d;
+      font-weight: 600;
+    }
+    .highlight-btn {
+      padding: 3px 8px;
+      font-size: 11px;
+      background: #1a3b5d;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .highlight-btn:hover { background: #245080; }
+
+    /* ── Empty / loading state ────────────────────────────────────── */
+    .status-msg {
+      text-align: center;
+      color: #888;
+      padding: 40px 20px;
+      font-size: 13px;
+    }
+    .status-msg .icon { font-size: 36px; display: block; margin-bottom: 8px; }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    .footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h2 id="titleText">Feature Relationships</h2>
+      <div class="meta" id="metaText">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="Search by name, type, FID…" oninput="applyFilters()" />
+    <label>Relationship type:</label>
+    <select id="rnFilter" onchange="applyFilters()">
+      <option value="">All</option>
+    </select>
+    <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+    <button class="btn btn-primary" onclick="highlightAll()">Highlight All</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats" id="statsBar"></div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table id="relTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Relationship Name</th>
+          <th onclick="sortTable(1)">Feature Type</th>
+          <th onclick="sortTable(2)">Label / Asset ID</th>
+          <th onclick="sortTable(3)">FNO</th>
+          <th onclick="sortTable(4)">FID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="relBody">
+        <tr><td colspan="6" class="status-msg"><span class="icon">⏳</span>Loading relationships…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button class="btn btn-secondary" onclick="window.close ? window.close() : parent.$NWP && parent.$NWP.closeActiveWindow()">Close</button>
+  </div>
+
+</div>
+
+<script>
+// ── Globals ────────────────────────────────────────────────────────────────
+var allRows        = [];   // full dataset
+var filteredRows   = [];   // after filters applied
+var sortColIndex   = -1;
+var sortDir        = 'asc';
+
+// ── Bootstrap ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function () {
+  var raw = getQueryParam('data');
+  if (!raw) {
+    showStatusMsg('⚠️', 'No feature data supplied.');
+    return;
+  }
+
+  var payload;
+  try { payload = JSON.parse(decodeURIComponent(raw)); }
+  catch (e) { showStatusMsg('❌', 'Could not parse feature data.'); return; }
+
+  document.getElementById('titleText').textContent =
+    'Relationships – ' + (payload.featureName || ('FNO:' + payload.fno + ' FID:' + payload.fid));
+  document.getElementById('metaText').textContent =
+    'FNO: ' + payload.fno + '  |  FID: ' + payload.fid;
+
+  allRows = payload.relationships || [];
+
+  if (allRows.length === 0) {
+    showStatusMsg('🔗', 'No relationships found for this feature.');
+    return;
+  }
+
+  // Populate relationship-type filter
+  var rnFilter  = document.getElementById('rnFilter');
+  var uniqueRNs = [...new Set(allRows.map(function(r){ return r.rno; }).filter(Boolean))];
+  uniqueRNs.sort().forEach(function(rno) {
+    var opt = document.createElement('option');
+    opt.value = rno;
+    opt.textContent = 'RNO ' + rno;
+    rnFilter.appendChild(opt);
+  });
+
+  applyFilters();
+});
+
+// ── Query-string helper ────────────────────────────────────────────────────
+function getQueryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+// ── Filter & render ────────────────────────────────────────────────────────
+function applyFilters() {
+  var search = document.getElementById('searchInput').value.toLowerCase();
+  var rno    = document.getElementById('rnFilter').value;
+
+  filteredRows = allRows.filter(function (row) {
+    var matchSearch =
+      !search ||
+      (row.label           || '').toLowerCase().includes(search) ||
+      (row.featureTypeName || '').toLowerCase().includes(search) ||
+      (row.relationName    || '').toLowerCase().includes(search) ||
+      String(row.fid).includes(search);
+
+    var matchRno = !rno || String(row.rno) === rno;
+    return matchSearch && matchRno;
+  });
+
+  renderTable();
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('rnFilter').value    = '';
+  applyFilters();
+}
+
+function renderTable() {
+  var tbody = document.getElementById('relBody');
+  tbody.innerHTML = '';
+
+  document.getElementById('statsBar').innerHTML =
+    'Showing <strong>' + filteredRows.length + '</strong> of <strong>' + allRows.length + '</strong> relationship(s)';
+
+  if (filteredRows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="status-msg"><span class="icon">🔍</span>No results match the current filter.</td></tr>';
+    return;
+  }
+
+  filteredRows.forEach(function (row) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><span class="relation-badge">' + esc(row.relationName || ('RNO ' + row.rno)) + '</span></td>' +
+      '<td>' + esc(row.featureTypeName) + '</td>' +
+      '<td>' + esc(row.label) + '</td>' +
+      '<td><span class="fid-chip">' + esc(String(row.fno)) + '</span></td>' +
+      '<td><span class="fid-chip">' + esc(String(row.fid)) + '</span></td>' +
+      '<td>' +
+        '<button class="highlight-btn" onclick="highlightFeature(' + row.fno + ',' + row.fid + ')">Highlight</button>' +
+      '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Sorting ────────────────────────────────────────────────────────────────
+function sortTable(colIndex) {
+  if (sortColIndex === colIndex) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortColIndex = colIndex;
+    sortDir = 'asc';
+  }
+
+  // Update header classes
+  document.querySelectorAll('thead th').forEach(function (th, i) {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (i === colIndex) th.classList.add('sorted-' + sortDir);
+  });
+
+  var keys = ['relationName', 'featureTypeName', 'label', 'fno', 'fid'];
+  var key  = keys[colIndex];
+  if (!key) return;
+
+  filteredRows.sort(function (a, b) {
+    var va = String(a[key] || '').toLowerCase();
+    var vb = String(b[key] || '').toLowerCase();
+    return sortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+  });
+
+  renderTable();
+}
+
+// ── Portal interactions ────────────────────────────────────────────────────
+
+/**
+ * Highlight a single related feature on the map.
+ */
+function highlightFeature(fno, fid) {
+  try {
+    parent.$NWP.features.fetchGTechFeatures({ G3E_FNO: fno, G3E_FID: fid })
+      .then(function (result) {
+        if (result.success && result.data && result.data.length > 0) {
+          parent.$NWP.features.highlight(result.data, true, true);
+        } else {
+          alert('Feature not found on the current map view.');
+        }
+      });
+  } catch (e) {
+    console.error('[FeatureRelationships] Highlight error:', e);
+  }
+}
+
+/**
+ * Highlight ALL currently displayed related features.
+ */
+function highlightAll() {
+  if (filteredRows.length === 0) return;
+
+  var requests = filteredRows.map(function (row) {
+    return { G3E_FNO: row.fno, G3E_FID: row.fid };
+  });
+
+  try {
+    parent.$NWP.features.fetchGTechFeatures(requests)
+      .then(function (result) {
+        if (result.success && result.data && result.data.length > 0) {
+          parent.$NWP.features.highlight(result.data, true, true);
+        } else {
+          alert('No features found on the current map view.');
+        }
+      });
+  } catch (e) {
+    console.error('[FeatureRelationships] Highlight-all error:', e);
+  }
+}
+
+// ── Utilities ──────────────────────────────────────────────────────────────
+function esc(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showStatusMsg(icon, message) {
+  document.getElementById('relBody').innerHTML =
+    '<tr><td colspan="6" class="status-msg"><span class="icon">' + icon + '</span>' + message + '</td></tr>';
+  document.getElementById('statsBar').textContent = '';
+}
+</script>
+</body>
+</html>
